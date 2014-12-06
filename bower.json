@@ -1,0 +1,19 @@
+{
+  "name": "subunit",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sghall/subunit",
+  "authors": [
+    "shall <hall.steven.g@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "threejs": "*"
+  }
+}
