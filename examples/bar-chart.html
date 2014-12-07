@@ -14,9 +14,8 @@
 
     var scene  = new THREE.Scene();
 
-    var camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+    var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
     camera.position.set( 0, 0, 350 );
-
 
     var light = new THREE.AmbientLight(0xffffff);
     scene.add(light);
@@ -108,30 +107,36 @@
         this.position.set(x0, y0, 240);
       });
 
-    // bars.each(function (d) {
-    //   new TWEEN.Tween(this.position)
-    //     .delay(3000)
-    //     .to({ 
-    //       x: Math.random() * 300, 
-    //       y: Math.random() * 100, 
-    //       z: Math.random() * 300}, 9000)
-    //     .start();
+    bars.each(function (d) {
+      new TWEEN.Tween(this.position)
+        .delay(5000)
+        .to({ 
+          x: Math.random() * 300, 
+          y: Math.random() * 100, 
+          z: Math.random() * 300}, 9000)
+        .start();
 
-    //   new TWEEN.Tween(this.rotation)
-    //     .delay(3000)
-    //     .to({ 
-    //       x: Math.random() * 100, 
-    //       y: Math.random() * 100, 
-    //       z: Math.random() * 100}, 9000)
-    //     .start();
-    // });
+      new TWEEN.Tween(this.rotation)
+        .delay(5000)
+        .to({ 
+          x: Math.random() * 100, 
+          y: Math.random() * 100, 
+          z: Math.random() * 100}, 9000)
+        .start();
+    });
 
     var raycaster = new THREE.Raycaster();
 
     function onMouseDown (event) {
 
       var vector = new THREE.Vector3();
-      vector.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight ) * 2 + 1, 0.5);
+
+      var mouse = {
+        x: (event.clientX / window.innerWidth) * 2 - 1,
+        y: -(event.clientY / window.innerHeight ) * 2 + 1
+      };
+
+      vector.set(mouse.x, mouse.y , 0.5);
       vector.unproject(camera);
 
       raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
