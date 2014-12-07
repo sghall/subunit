@@ -1,8 +1,8 @@
 import { extend_selection } from "./core/extend_selection";
 
-var che = {};
+var subunit = {};
 
-che.select = function (object) {
+subunit.select = function (object) {
   var node = typeof object === "function" ? object(): object;
   var root = extend_selection([[new THREE.Object3D()]]);
   root.parentNode = node;
@@ -12,8 +12,8 @@ che.select = function (object) {
   return root;
 };
 
-che.selectObject = function (object) {
+subunit.selectObject = function (object) {
   return extend_selection([[object]]);
 };
 
-this.che = che;
+this.subunit = subunit;

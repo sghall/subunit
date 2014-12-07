@@ -445,9 +445,9 @@
       return object;
     }
 
-    var src$index$$che = {};
+    var src$index$$subunit = {};
 
-    src$index$$che.select = function (object) {
+    src$index$$subunit.select = function (object) {
       var node = typeof object === "function" ? object(): object;
       var root = $$core$extend_selection$$extend_selection([[new THREE.Object3D()]]);
       root.parentNode = node;
@@ -457,11 +457,11 @@
       return root;
     };
 
-    src$index$$che.selectObject = function (object) {
+    src$index$$subunit.selectObject = function (object) {
       return $$core$extend_selection$$extend_selection([[object]]);
     };
 
-    this.che = src$index$$che;
+    this.subunit = src$index$$subunit;
 }).call(this);
 
 //# sourceMappingURL=subunit.js.map

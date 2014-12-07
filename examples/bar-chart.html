@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="../bower_components/threejs/build/three.js"></script>
+    <script src="vendor/d3.js"></script>
+    <script src="vendor/tween.min.js"></script>
+    <script src="../dist/subunit.js"></script>
+  </head>
+  <body>
+  <script type="text/javascript">
+
+    var scene  = new THREE.Scene();
+
+    var camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.set( 0, 0, 350 );
+
+
+    var light = new THREE.AmbientLight(0xffffff);
+    scene.add(light);
+
+    var light = new THREE.DirectionalLight('#36648B', 2);
+    light.position.set( 10, 10, 10 ).normalize();
+    scene.add(light);
+
+    var canvas = d3.select("body").append("canvas")
+      .attr("width", window.innerWidth)
+      .attr("height", window.innerHeight);
+
+    canvas.node().getContext("webgl");
+
+    var renderer = new THREE.WebGLRenderer({canvas: canvas.node()});
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    var blue = new THREE.MeshPhongMaterial({ 
+      ambient: '#030303', 
+      color: '#4183c4', 
+      specular: '#009900', 
+      shininess: 10
+    });
+
+    var green = new THREE.MeshPhongMaterial({ 
+      ambient: '#030303', 
+      color: '#83c441', 
+      specular: '#009900', 
+      shininess: 10
+    });
+
+    var data = [
+      {letter: 'A', frequency: .08167},
+      {letter: 'B', frequency: .01492},
+      {letter: 'C', frequency: .02780},
+      {letter: 'D', frequency: .04253},
+      {letter: 'E', frequency: .12702},
+      {letter: 'F', frequency: .02288},
+      {letter: 'G', frequency: .02022},
+      {letter: 'H', frequency: .06094},
+      {letter: 'I', frequency: .06973},
+      {letter: 'J', frequency: .00153},
+      {letter: 'K', frequency: .00747},
+      {letter: 'L', frequency: .04025},
+      {letter: 'M', frequency: .02517},
+      {letter: 'N', frequency: .06749},
+      {letter: 'O', frequency: .07507},
+      {letter: 'P', frequency: .01929},
+      {letter: 'Q', frequency: .00098},
+      {letter: 'R', frequency: .05987},
+      {letter: 'S', frequency: .06333},
+      {letter: 'T', frequency: .09056},
+      {letter: 'U', frequency: .02758},
+      {letter: 'V', frequency: .01037},
+      {letter: 'W', frequency: .02465},
+      {letter: 'X', frequency: .00150},
+      {letter: 'Y', frequency: .01971},
+      {letter: 'Z', frequency: .00074}];
+
+    var size = [300, 50]
+
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, size[0]], .2, 1);
+
+    var y = d3.scale.linear()
+        .range([size[1], 0]);
+
+    x.domain(data.map(function (d) { return d.letter; }));
+    y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+    var base = subunit.select(scene)
+      .each(function () {
+        this.position.set(-(size[0] / 2), 0, 0);
+      });
+
+    var bars = base.selectAll(".bar")
+      .data(data).enter()
+      .append("mesh")
+      .attr("class", "bar")
+      .attr("material", blue)
+      .attr("geometry", function (d) {
+        var w = x.rangeBand();
+        var h = size[1] - y(d.frequency);
+        return new THREE.BoxGeometry(w, h, 5);
+      })
+      .each(function (d) {
+        var x0 = x(d.letter);
+        var y0 = - y(d.frequency) / 2;
+        this.position.set(x0, y0, 240);
+      });
+
+    // bars.each(function (d) {
+    //   new TWEEN.Tween(this.position)
+    //     .delay(3000)
+    //     .to({ 
+    //       x: Math.random() * 300, 
+    //       y: Math.random() * 100, 
+    //       z: Math.random() * 300}, 9000)
+    //     .start();
+
+    //   new TWEEN.Tween(this.rotation)
+    //     .delay(3000)
+    //     .to({ 
+    //       x: Math.random() * 100, 
+    //       y: Math.random() * 100, 
+    //       z: Math.random() * 100}, 9000)
+    //     .start();
+    // });
+
+    var raycaster = new THREE.Raycaster();
+
+    function onMouseDown (event) {
+
+      var vector = new THREE.Vector3();
+      vector.set((event.clientX / window.innerWidth) * 2 - 1, - (event.clientY / window.innerHeight ) * 2 + 1, 0.5);
+      vector.unproject(camera);
+
+      raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
+
+      var target = raycaster.intersectObjects(bars[0]);
+
+      if (target.length) {
+        console.log(target);
+        subunit.selectObject(target[0].object)
+          .attr("material", function (d) {
+            if (this.material === blue) {
+              return green;
+            } else {
+              return blue;
+            }
+          });
+      }
+    }
+
+    document.addEventListener('click', onMouseDown, false);
+
+    function render(time) {
+
+      TWEEN.update(time);
+      requestAnimationFrame(render);
+      renderer.render(scene, camera);
+    }
+    render();
+
+  </script>
+  </body>
+</html>
