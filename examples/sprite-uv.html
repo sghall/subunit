@@ -15,7 +15,7 @@
     var scene  = new THREE.Scene();
 
     var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set( 0, 0, 350 );
+    camera.position.set( 0, 0, 10 );
 
     var light = new THREE.AmbientLight(0xffffff);
     scene.add(light);
@@ -100,10 +100,10 @@
       vertices[ i*3 + 2 ] = vertexPositions[i][2];
     }
 
-    geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-    var material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-    var mesh = new THREE.Mesh( geometry, material );
-
+    geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
+    var material = new THREE.MeshBasicMaterial( { color: 0x000000 });
+    var mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
 
 
