@@ -7,6 +7,7 @@
     <script src="../bower_components/threejs/build/three.js"></script>
     <script src="vendor/d3.js"></script>
     <script src="vendor/tween.min.js"></script>
+    <script src="vendor/OrbitControls.js"></script>
     <script src="../dist/subunit.js"></script>
   </head>
   <body>
@@ -15,14 +16,20 @@
     var scene  = new THREE.Scene();
 
     var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
-    camera.position.set( 0, 0, 10 );
+    camera.position.set( 0, 0, 50 );
 
-    var light = new THREE.AmbientLight(0xffffff);
-    scene.add(light);
+    var controls = new THREE.OrbitControls( camera );
+    controls.damping = 0.5;
+    controls.addEventListener( 'change', render );
 
-    var light = new THREE.DirectionalLight('#36648B', 2);
-    light.position.set( 10, 10, 10 ).normalize();
-    scene.add(light);
+   // add subtle ambient lighting
+    var ambientLight = new THREE.AmbientLight(0x222222);
+    scene.add(ambientLight);
+    
+    // directional lighting
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(1, 1, 10).normalize();
+    scene.add(directionalLight);
 
     var canvas = d3.select("body").append("canvas")
       .attr("width", window.innerWidth)
@@ -82,13 +89,13 @@
     var geometry = new THREE.BufferGeometry();
 
     var vertexPositions = [ 
-      [-1.0, -1.0,  1.0],
-      [ 1.0, -1.0,  1.0],
-      [ 1.0,  1.0,  1.0],
+      [-10.0, -10.0,  10.0],
+      [ 10.0, -10.0,  10.0],
+      [ 10.0,  10.0,  10.0],
 
-      [ 1.0,  1.0,  1.0],
-      [-1.0,  1.0,  1.0],
-      [-1.0, -1.0,  1.0]
+      [ 10.0,  10.0,  10.0],
+      [-10.0,  10.0,  10.0],
+      [-10.0, -10.0,  10.0]
     ];
 
     var vertices = new Float32Array(vertexPositions.length * 3);
@@ -100,14 +107,28 @@
     }
 
     geometry.addAttribute('position', new THREE.BufferAttribute( vertices, 3 ));
-    var material = new THREE.MeshBasicMaterial( { color: 0x000000 });
-    var mesh = new THREE.Mesh(geometry, material);
+
+    var texture  = THREE.ImageUtils.loadTexture('images/zombie.jpg');
+    var n = new THREE.MeshPhongMaterial({map: texture});
+
+    var m = new THREE.MeshPhongMaterial({
+        specular: '#a9fcff',
+        color: '#00abb1',
+        emissive: '#006063',
+        shininess: 100 
+      });
+
+    var geometry = new THREE.BoxGeometry(10, 10, 1);
+
+    var d = new THREE.MeshFaceMaterial([m, m, m, m, n, m]);
+
+    var mesh = new THREE.Mesh(geometry, d);
     mesh.position.set(2, 2, 0);
-    mesh.scale.set(2, 2, 1);
+    mesh.scale.set(2, 2, 2);
 
     scene.add(mesh);
 
-    console.log(mesh)
+    console.log(texture, mesh)
 
     // var base = subunit.select(scene)
     //   .each(function () {
@@ -148,13 +169,18 @@
     //     .start();
     // });
 
-    function render(time) {
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      // render();
+    }
 
+    function render(time) {
       TWEEN.update(time);
-      requestAnimationFrame(render);
+      // requestAnimationFrame(render);
       renderer.render(scene, camera);
     }
-    render();
+    animate();
 
   </script>
   </body>
