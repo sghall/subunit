@@ -19,8 +19,8 @@
       d3.json('assets/zombies.json', function init(err, data) {
 
         renderer = new THREE.WebGLRenderer();
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
         renderer.setClearColor('#EAEAEA');
 
         d3.select("canvas").style("opacity", 0)
@@ -42,44 +42,7 @@
 
         var movie = THREE.ImageUtils.loadTexture('assets/zombies.jpg');
         var matrl = new THREE.MeshLambertMaterial({map: movie, side: THREE.DoubleSide});
-        var plane = new THREE.PlaneGeometry(300, 450);
-
-        // function getAttr(items) {
-
-        //   var spriteW = d3.max(items, function (d) {
-        //     return d.width + d.positionX;
-        //   });
-
-        //   var spriteH = d3.max(items, function (d) {
-        //     return d.height + d.positionY;
-        //   });
-
-        //   var getImageCoords = function (obj) {
-        //     return [
-        //       [obj.px1, obj.py1], // TOP LEFT
-        //       [obj.px1, obj.py2], // BOT LEFT
-        //       [obj.px2, obj.py1], // TOP RIGHT
-        //       [obj.px2, obj.py2]  // BOT RIGHT
-        //     ];
-        //   };
-
-        //   var getUV = function (item) {
-        //     var perm = d3.permute;
-
-        //     var coords = getImageCoords({
-        //       px1: item.positionX / spriteW,
-        //       py1: item.positionY / spriteH,
-        //       px2: (item.positionX + item.width) / spriteW,
-        //       py2: (item.positionY + item.height) / spriteH
-        //     });
-
-        //     item.uv = d3.merge(perm(coords, [0, 1, 3]), perm(coords, [1, 2, 3]));
-
-        //     return item;
-        //   };
-
-        //   return items.map(getUV);
-        // }
+        var plane = new THREE.PlaneBufferGeometry(300, 450);
 
         function getUVs(items) {
 
@@ -93,38 +56,44 @@
 
           var getImageCoords = function (obj) {
             return [
-              new THREE.Vector2(obj.px1, obj.py1),
-              new THREE.Vector2(obj.px2, obj.py1),
-              new THREE.Vector2(obj.px2, obj.py2),
-              new THREE.Vector2(obj.px1, obj.py2)
+              [obj.px1, obj.py1],
+              [obj.px2, obj.py1],
+              [obj.px2, obj.py2],
+              [obj.px1, obj.py2]
             ];
           };
 
-          var getUV = function (item, i) {
-            var perm = d3.permute;
+          var getUVAttr = function (item, i) {
+
+            var arr32 = new Float32Array(12);
 
             var coords = getImageCoords({
-              px1: item.positionX / spriteW,
+              px1: (item.positionX + item.width) / spriteW,
               py1: 1 - ((item.positionY + item.height) / spriteH),
-              px2: (item.positionX + item.width) / spriteW,
+              px2: item.positionX / spriteW,
               py2: 1 - (item.positionY / spriteH)
             });
 
-            if (i === 7) {
-              console.log("item", item, coords, spriteW, spriteH);
-            }
+            d3.merge([
+              d3.merge(d3.permute(coords, [2, 3, 1])),
+              d3.merge(d3.permute(coords, [0, 1, 2]))
+            ])
+            .forEach(function (value, i) {
+              arr32[i] = value;
+            });
 
-            item.uv = [perm(coords, [3, 0, 2]), perm(coords, [0, 1, 2])];
-
-            return item;
+            return arr32;
           };
 
-          return items.map(getUV);
+          return items.map(getUVAttr);
         }
 
         console.log("uvs", getUVs(data.images))
 
-        plane.faceVertexUvs[0] = getUVs(data.images)[0].uv
+        // plane.faceVertexUvs[0] = getUVs(data.images)[0].uv
+        plane.addAttribute( 'uv', new THREE.BufferAttribute(getUVs(data.images)[8], 2 ));
+
+
 
         console.log(geometry, plane, data);
 
