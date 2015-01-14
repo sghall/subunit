@@ -447,6 +447,11 @@
 
     var src$index$$subunit = {};
 
+    if ( typeof module === 'object' ) {
+      module.exports = src$index$$subunit;
+    }
+
+
     src$index$$subunit.select = function (object) {
       var node = typeof object === "function" ? object(): object;
       var root = $$core$extend_selection$$extend_selection([[new THREE.Object3D()]]);

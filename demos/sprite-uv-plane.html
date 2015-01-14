@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="../bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="../dist/subunit.js"></script>
+  </head>
+  <body>
+    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
+    <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
+    <script type='module'>
+
+      import { camera, scene, renderer } from 'modules/scene';
+      import { getUVs } from 'modules/sprite-uvs';
+
+      var mesh;
+
+      d3.json('data/zombies.json', function init(err, data) {
+
+        var texture = THREE.ImageUtils.loadTexture('images/carpet.jpg');
+        texture.anisotropy = renderer.getMaxAnisotropy();
+
+        var material = new THREE.MeshLambertMaterial({map: texture, side: THREE.DoubleSide});
+        var geometry = new THREE.BoxGeometry(300, 450, 10);
+
+        var movie = THREE.ImageUtils.loadTexture('images/zombies.jpg');
+        var matrl = new THREE.MeshLambertMaterial({map: movie, side: THREE.DoubleSide});
+        var plane = new THREE.PlaneBufferGeometry(300, 450);
+
+        console.log("uvs", getUVs(data.images))
+
+        plane.faceVertexUvs[0] = getUVs(data.images)[10].uv
+
+        console.log(geometry, plane, data);
+
+        mesh = new THREE.Mesh(plane, matrl);
+
+        scene.add(mesh);
+
+        window.addEventListener('resize', onWindowResize, false);
+        animate();
+
+      });
+
+      function onWindowResize() {
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize( window.innerWidth, window.innerHeight );
+
+      }
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+
+        mesh.rotation.x += 0.05;
+        mesh.rotation.y += 0.01;
+
+        renderer.render( scene, camera );
+
+      }
+
+    </script>
+  </body>
+</html>

@@ -18,12 +18,7 @@
   "homepage": "https://github.com/sghall/subunit",
   "devDependencies": {
     "gulp": "^3.8.10",
-    "gulp-concat": "^2.4.2",
     "gulp-jshint": "^1.9.0",
-    "gulp-shell": "^0.2.11",
-    "gulp-sourcemaps": "^1.2.8",
-    "gulp-traceur": "^0.14.1",
-    "gulp-uglify": "^1.0.2",
-    "gulp-watch": "^3.0.0"
+    "gulp-shell": "^0.2.11"
   }
 }
