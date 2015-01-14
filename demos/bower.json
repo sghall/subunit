@@ -10,6 +10,7 @@
   "private": true,
   "dependencies": {
     "d3": "~3.5.3",
-    "stats.js": "*"
+    "stats.js": "*",
+    "tweenjs": "*"
   }
 }
