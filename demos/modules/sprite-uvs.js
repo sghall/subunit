@@ -1,3 +1,8 @@
+// This module takes the JSON ouput from Node-Sprite
+// It's a data map of what's in the image file
+// npm install node-sprite
+// https://github.com/naltatis/node-sprite
+
 export function mapUVs (items) {
 
   var spriteW = d3.max(items, function (d) {

@@ -40,7 +40,8 @@
               return geometry;
             })
             .each(function (d, i) {
-              var c = sphere(i, data.images.length, 350);
+              var c = sphere(i, data.images.length, 450);
+
               this.scale.set(0.5, 0.5, 0.5);
               this.position.set(c.pos.x, c.pos.y, c.pos.z);
               this.rotation.set(c.rot.x, c.rot.y, c.rot.z);

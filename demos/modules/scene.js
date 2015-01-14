@@ -8,7 +8,7 @@ renderer.setClearColor('#EAEAEA');
 d3.select("canvas").style("opacity", 0)
 d3.select("canvas").transition().duration(2000).style("opacity", 1)
 
-export var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 2000);
+export var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
 camera.position.z = 1000;
 
 export var scene = new THREE.Scene();
