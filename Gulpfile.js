@@ -2,7 +2,7 @@ var gulp   = require('gulp');
 var jshint = require('gulp-jshint');
 var shell  = require('gulp-shell');
 
-gulp.task('compile', function () {
+gulp.task('convert', function () {
   return gulp.src('src/index.js')
     .pipe(shell('compile-modules convert src/index.js -o dist/subunit.js'))
 });
@@ -13,7 +13,7 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('default', ['compile', 'lint'])
+gulp.task('default', ['convert', 'lint'])
 
 var watcher = gulp.watch('src/**/*.js', ['default']);
 

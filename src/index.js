@@ -6,7 +6,6 @@ if ( typeof module === 'object' ) {
   module.exports = subunit;
 }
 
-
 subunit.select = function (object) {
   var node = typeof object === "function" ? object(): object;
   var root = extend_selection([[new THREE.Object3D()]]);

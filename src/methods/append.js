@@ -9,10 +9,6 @@ export function append (name) {
 function _selection_creator(name) {
   if (typeof name === "function") {
     return name;
-  } else if (name === "scene") {
-    return function () { console.log("scene"); };
-  } else if (name === "camera") {
-    return function () { console.log("camera"); };
   } else if (name === "mesh") {
     return function (data) { 
       var node = new THREE.Mesh();
