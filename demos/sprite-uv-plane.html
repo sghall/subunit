@@ -11,59 +11,56 @@
   <body>
     <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
     <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
-    <script type='module'>
+    <script type="module">
 
       import { camera, scene, renderer } from 'modules/scene';
-      import { getUVs } from 'modules/sprite-uvs';
+      import { mapUVs } from 'modules/sprite-uvs';
+      import { sphere } from 'modules/layouts';
 
-      var mesh;
+      d3.json('data/zombies.json', function (err, data) {
 
-      d3.json('data/zombies.json', function init(err, data) {
+        var uvsMap = mapUVs(data.images);
 
-        var texture = THREE.ImageUtils.loadTexture('images/carpet.jpg');
-        texture.anisotropy = renderer.getMaxAnisotropy();
+        var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg');
+        var material = new THREE.MeshLambertMaterial({map: sprite, side: THREE.DoubleSide});
 
-        var material = new THREE.MeshLambertMaterial({map: texture, side: THREE.DoubleSide});
-        var geometry = new THREE.BoxGeometry(300, 450, 10);
+        var base = subunit.select(scene);
 
-        var movie = THREE.ImageUtils.loadTexture('images/zombies.jpg');
-        var matrl = new THREE.MeshLambertMaterial({map: movie, side: THREE.DoubleSide});
-        var plane = new THREE.PlaneBufferGeometry(300, 450);
+        var zombies = base.selectAll(".zombie")
+          .data(data.images).enter()
+          .append("mesh")
+            .attr("class", "zombie")
+            .attr("material", material)
+            .attr("geometry", function (d) {
+              var geometry = new THREE.PlaneBufferGeometry(300, 430);
+              var uvAttr = new THREE.BufferAttribute(uvsMap(d), 2);
 
-        console.log("uvs", getUVs(data.images))
+              geometry.addAttribute('uv', uvAttr);
 
-        plane.faceVertexUvs[0] = getUVs(data.images)[10].uv
+              return geometry;
+            })
+            .each(function (d, i) {
+              var c = sphere(i, data.images.length, 350);
+              this.scale.set(0.5, 0.5, 0.5);
+              this.position.set(c.pos.x, c.pos.y, c.pos.z);
+              this.rotation.set(c.rot.x, c.rot.y, c.rot.z);
+            });
 
-        console.log(geometry, plane, data);
+          var theta = 0;
 
-        mesh = new THREE.Mesh(plane, matrl);
+          function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
 
-        scene.add(mesh);
+            theta += 0.01;
 
-        window.addEventListener('resize', onWindowResize, false);
-        animate();
+            base.each(function (d) {
+              this.rotation.set(theta, theta, 0);
+            })
 
+          }
+          animate();
       });
-
-      function onWindowResize() {
-
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize( window.innerWidth, window.innerHeight );
-
-      }
-
-      function animate() {
-
-        requestAnimationFrame( animate );
-
-        mesh.rotation.x += 0.05;
-        mesh.rotation.y += 0.01;
-
-        renderer.render( scene, camera );
-
-      }
 
     </script>
   </body>

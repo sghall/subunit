@@ -1,4 +1,4 @@
-export function getUVs (items) {
+export function mapUVs (items) {
 
   var spriteW = d3.max(items, function (d) {
     return d.width + d.positionX;
@@ -17,7 +17,7 @@ export function getUVs (items) {
     ];
   };
 
-  var getUVAttr = function (item, i) {
+  return function (item, i) {
 
     var arr32 = new Float32Array(12);
 
@@ -38,6 +38,4 @@ export function getUVs (items) {
 
     return arr32;
   };
-
-  return items.map(getUVAttr);
 }

@@ -1,17 +1,8 @@
 {
   "name": "zombies",
-  "checksum": "6f2b38830278bdae0cef77a3e21a46d5",
-  "shortsum": "6f2b3",
+  "checksum": "4b41b144d8e2827d8188a62fe6c53f84",
+  "shortsum": "4b41b",
   "images": [
-    {
-      "name": "default",
-      "filename": "default.jpg",
-      "checksum": "f2c1498ebc997386138604f26381b6cd",
-      "width": 640,
-      "height": 640,
-      "positionX": 0,
-      "positionY": 0
-    },
     {
       "name": "movie_200872",
       "filename": "movie_200872.jpg",
@@ -19,7 +10,7 @@
       "width": 300,
       "height": 387,
       "positionX": 0,
-      "positionY": 642
+      "positionY": 0
     },
     {
       "name": "movie_206213",
@@ -28,7 +19,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 1031
+      "positionY": 389
     },
     {
       "name": "movie_208448",
@@ -37,7 +28,7 @@
       "width": 300,
       "height": 433,
       "positionX": 0,
-      "positionY": 1483
+      "positionY": 841
     },
     {
       "name": "movie_209182",
@@ -46,7 +37,7 @@
       "width": 300,
       "height": 431,
       "positionX": 0,
-      "positionY": 1918
+      "positionY": 1276
     },
     {
       "name": "movie_209567",
@@ -55,7 +46,7 @@
       "width": 300,
       "height": 427,
       "positionX": 0,
-      "positionY": 2351
+      "positionY": 1709
     },
     {
       "name": "movie_209871",
@@ -64,7 +55,7 @@
       "width": 300,
       "height": 416,
       "positionX": 0,
-      "positionY": 2780
+      "positionY": 2138
     },
     {
       "name": "movie_211400",
@@ -73,7 +64,7 @@
       "width": 300,
       "height": 424,
       "positionX": 0,
-      "positionY": 3198
+      "positionY": 2556
     },
     {
       "name": "movie_219247",
@@ -82,7 +73,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 3624
+      "positionY": 2982
     },
     {
       "name": "movie_220720",
@@ -91,7 +82,7 @@
       "width": 300,
       "height": 426,
       "positionX": 0,
-      "positionY": 4076
+      "positionY": 3434
     },
     {
       "name": "movie_222283",
@@ -100,7 +91,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 4504
+      "positionY": 3862
     },
     {
       "name": "movie_257373",
@@ -109,7 +100,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 4956
+      "positionY": 4314
     },
     {
       "name": "movie_259391",
@@ -118,7 +109,7 @@
       "width": 300,
       "height": 453,
       "positionX": 0,
-      "positionY": 5408
+      "positionY": 4766
     },
     {
       "name": "movie_286223",
@@ -127,7 +118,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 5863
+      "positionY": 5221
     },
     {
       "name": "movie_289732",
@@ -136,7 +127,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 6315
+      "positionY": 5673
     },
     {
       "name": "movie_306285",
@@ -145,7 +136,7 @@
       "width": 300,
       "height": 450,
       "positionX": 0,
-      "positionY": 6767
+      "positionY": 6125
     }
   ]
 }
