@@ -6,14 +6,20 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="../bower_components/threejs/build/three.js"></script>
     <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="../dist/subunit.js"></script>
   </head>
+  <style>
+    body, html {
+      margin: 0px;
+    }
+  </style>
   <body>
     <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
     <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
     <script type="module">
 
-      import { camera, scene, renderer } from 'modules/scene';
+      import { camera, scene, renderer, stats } from 'modules/scene';
       import { uvMapper } from 'modules/sprite-uvs';
       import { sphere } from 'modules/layouts';
 
@@ -53,10 +59,14 @@
           requestAnimationFrame(animate);
           renderer.render(scene, camera);
 
+          stats.update();
+
           theta += 0.01;
 
+          base.node().rotation.y = theta;
+
           zombies.each(function (d) {
-            this.rotation.set(theta, theta, 0);
+            this.rotation.set(theta + 0.01, theta, 0);
           })
 
         }
