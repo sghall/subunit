@@ -14,12 +14,12 @@
     <script type="module">
 
       import { camera, scene, renderer } from 'modules/scene';
-      import { mapUVs } from 'modules/sprite-uvs';
+      import { uvMapper } from 'modules/sprite-uvs';
       import { sphere } from 'modules/layouts';
 
       d3.json('data/zombies.json', function (err, data) {
 
-        var uvsMap = mapUVs(data.images);
+        var uvsMap = uvMapper(data.images);
 
         var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg');
         var material = new THREE.MeshLambertMaterial({map: sprite, side: THREE.DoubleSide});
@@ -40,29 +40,28 @@
               return geometry;
             })
             .each(function (d, i) {
-              var c = sphere(i, data.images.length, 450);
+              var c = sphere(i, data.images.length, 700);
 
               this.scale.set(0.5, 0.5, 0.5);
               this.position.set(c.pos.x, c.pos.y, c.pos.z);
               this.rotation.set(c.rot.x, c.rot.y, c.rot.z);
             });
 
-          var theta = 0;
+        var theta = 0;
 
-          function animate() {
-            requestAnimationFrame(animate);
-            renderer.render(scene, camera);
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
 
-            theta += 0.01;
+          theta += 0.01;
 
-            base.each(function (d) {
-              this.rotation.set(theta, theta, 0);
-            })
+          zombies.each(function (d) {
+            this.rotation.set(theta, theta, 0);
+          })
 
-          }
-          animate();
+        }
+        animate();
       });
-
     </script>
   </body>
 </html>

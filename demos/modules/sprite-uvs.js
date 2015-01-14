@@ -3,7 +3,7 @@
 // npm install node-sprite
 // https://github.com/naltatis/node-sprite
 
-export function mapUVs (items) {
+export function uvMapper (items) {
 
   var spriteW = d3.max(items, function (d) {
     return d.width + d.positionX;
