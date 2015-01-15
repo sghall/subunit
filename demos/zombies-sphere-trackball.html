@@ -6,6 +6,7 @@
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="controls/TrackballControls.js"></script>
     <script src="../dist/subunit.js"></script>
   </head>
   <style>
@@ -16,7 +17,7 @@
   </style>
   <body>
     <h3 style="position:absolute;left:9px;top:9px;z-index:1">
-      50 Zombie Movies - WebGL Demo
+      Zombie Sphere - Trackball Controls - WebGL Demo
     </h3>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
@@ -27,6 +28,12 @@
       import { sphere } from 'modules/layouts';
 
       d3.json('data/zombies.json', function (err, data) {
+
+        var controls = new THREE.TrackballControls(camera, renderer.domElement);
+
+        controls.rotateSpeed = 0.5;
+        controls.minDistance = 100;
+        controls.maxDistance = 6000;
 
         var uvsMap = uvMapper(data.images);
 
@@ -50,32 +57,21 @@
               return geometry;
             })
             .each(function (d, i) {
-              var c = sphere(i, data.images.length, 750);
+              var c = sphere(i, data.images.length, 525);
 
-              this.scale.set(0.5, 0.5, 0.5);
+              this.scale.set(0.35, 0.35, 0.35);
               this.position.set(c.pos.x, c.pos.y, c.pos.z);
               this.rotation.set(c.rot.x, c.rot.y, c.rot.z);
             });
-
-        var theta = 0;
-        var gamma = 0;
 
         function animate() {
           requestAnimationFrame(animate);
           renderer.render(scene, camera);
 
+          controls.update();
           stats.update();
-
-          theta += 0.01;
-          gamma += 0.04;
-
-          root.node().rotation.y = theta;
-
-          zombies.each(function () {
-            this.rotation.set(gamma, theta, 0);
-          })
-
         }
+
         animate();
       });
     </script>
