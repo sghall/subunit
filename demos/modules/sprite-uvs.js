@@ -1,24 +1,23 @@
 // This module takes the JSON ouput from Node-Sprite
-// It's a data map of what's in the image file
 // npm install node-sprite
 // https://github.com/naltatis/node-sprite
 
-export function uvMapper (items) {
+export function uvMapper (images) {
 
-  var spriteW = d3.max(items, function (d) {
+  var spriteW = d3.max(images, function (d) {
     return d.width + d.positionX;
   });
 
-  var spriteH = d3.max(items, function (d) {
+  var spriteH = d3.max(images, function (d) {
     return d.height + d.positionY;
   });
 
-  var getImageCoords = function (obj) {
+  var getImageCoords = function (img) {
     return [
-      [obj.px1, obj.py1],
-      [obj.px2, obj.py1],
-      [obj.px2, obj.py2],
-      [obj.px1, obj.py2]
+      [img.px1, img.py1],
+      [img.px2, img.py1],
+      [img.px2, img.py2],
+      [img.px1, img.py2]
     ];
   };
 

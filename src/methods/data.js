@@ -104,7 +104,7 @@ export function data(value, key) {
   return update;
 }
 
-function che_class(ctor, properties) {
+function subunit_class(ctor, properties) {
   try {
     for (var key in properties) {
       Object.defineProperty(ctor.prototype, key, {
@@ -117,37 +117,37 @@ function che_class(ctor, properties) {
   }
 }
 
-var che_map_prefix = "\0",
-    che_map_prefixCode = che_map_prefix.charCodeAt(0);
+var subunit_map_prefix = "\0",
+    subunit_map_prefixCode = subunit_map_prefix.charCodeAt(0);
 
-function che_map_has(key) {
-  return che_map_prefix + key in this;
+function subunit_map_has(key) {
+  return subunit_map_prefix + key in this;
 }
 
-function che_map_remove(key) {
-  key = che_map_prefix + key;
+function subunit_map_remove(key) {
+  key = subunit_map_prefix + key;
   return key in this && delete this[key];
 }
 
-function che_map_keys() {
+function subunit_map_keys() {
   var keys = [];
   this.forEach(function (key) { keys.push(key); });
   return keys;
 }
 
-function che_map_size() {
+function subunit_map_size() {
   var size = 0;
   for (var key in this) {
-     if (key.charCodeAt(0) === che_map_prefixCode) {
+     if (key.charCodeAt(0) === subunit_map_prefixCode) {
        ++size;
      }
   }
   return size;
 }
 
-function che_map_empty() {
+function subunit_map_empty() {
   for (var key in this) {
-    if (key.charCodeAt(0) === che_map_prefixCode) {
+    if (key.charCodeAt(0) === subunit_map_prefixCode) {
       return false;
     }
   }
@@ -156,16 +156,16 @@ function che_map_empty() {
 
 function Che_Map() {}
 
-che_class(Che_Map, {
-  has: che_map_has,
+subunit_class(Che_Map, {
+  has: subunit_map_has,
   get: function(key) {
-    return this[che_map_prefix + key];
+    return this[subunit_map_prefix + key];
   },
   set: function(key, value) {
-    return this[che_map_prefix + key] = value;
+    return this[subunit_map_prefix + key] = value;
   },
-  remove: che_map_remove,
-  keys: che_map_keys,
+  remove: subunit_map_remove,
+  keys: subunit_map_keys,
   values: function() {
     var values = [];
     this.forEach(function (key, value) { values.push(value); });
@@ -176,11 +176,11 @@ che_class(Che_Map, {
     this.forEach(function (key, value) { entries.push({key: key, value: value}); });
     return entries;
   },
-  size: che_map_size,
-  empty: che_map_empty,
+  size: subunit_map_size,
+  empty: subunit_map_empty,
   forEach: function(f) {
     for (var key in this) {
-      if (key.charCodeAt(0) === che_map_prefixCode) {
+      if (key.charCodeAt(0) === subunit_map_prefixCode) {
         f.call(this, key.substring(1), this[key]);
       }
     } 

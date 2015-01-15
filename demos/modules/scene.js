@@ -1,14 +1,15 @@
+
 var canvas = d3.select("body").append("canvas")
   .attr("width", window.innerWidth)
   .attr("height", window.innerHeight)
   .style("opacity", 0)
-  .style('background-color', '#EAEAEA');
+  .style('background-color', '#EAEAEA')
+
+canvas.transition().duration(2000).style("opacity", 1);
 
 canvas.node().getContext("webgl");
 
 export var renderer = new THREE.WebGLRenderer({canvas: canvas.node()});
-
-canvas.transition().duration(1500).style("opacity", 1);
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);

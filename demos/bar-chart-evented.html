@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <script src="../bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="../dist/subunit.js"></script>
+  </head>
+  <style>
+    body, html {
+      margin: 0px;
+      font-family: helvetica, arial;
+    }
+  </style>
+  <body>
+    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
+      Clickable Bar Chart - WebGL Demo
+    </h3>
+    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
+    <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
+    <script type="module">
+
+      import { camera, scene, renderer, stats } from 'modules/scene';
+      import { mouseDown } from 'modules/events';
+
+      d3.json('data/letters.json', function (err, data) {
+
+        var size = [2000, 600] // Width, Height
+
+        var x = d3.scale.ordinal()
+          .rangeRoundBands([0, size[0]], 0.1, 1);
+
+        var y = d3.scale.linear()
+          .range([size[1], 0]);
+
+        var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
+        var material2 = new THREE.MeshPhongMaterial({color: '#666666'});
+
+        x.domain(data.map(function (d) { return d.letter; }));
+        y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+        var base = subunit.select(scene)
+          .each(function () {
+            this.position.set(-size[0] / 2, 0, 0);
+          });
+
+        var bars = base.selectAll(".bar")
+          .data(data).enter()
+          .append("mesh")
+          .attr("class", "bar")
+          .attr("material", material1)
+          .attr("geometry", function (d) {
+            var w = x.rangeBand();
+            var h = size[1] - y(d.frequency);
+            return new THREE.BoxGeometry(w, h, 5);
+          })
+          .each(function (d) {
+            var x0 = x(d.letter);
+            var y0 = - y(d.frequency) / 2;
+            this.position.set(x0, y0, 240);
+          });
+
+        document.addEventListener('click', mouseDown(camera, bars, function (event) {
+          if (this.material === material1) {
+            return material2;
+          } else {
+            return material1;
+          }
+        }), false);
+
+        function animate() {
+          stats.update();
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+
+        animate();
+      });
+    </script>
+  </body>
+</html>
