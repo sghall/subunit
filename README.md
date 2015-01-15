@@ -16,7 +16,7 @@ To run the demos...do another bower install in the demos folder to load the depe
 cd subunit/demos
 bower install
 ```
-Run the demos from the root folder...
+Run the a local server from the root folder...
 
 ```html
 cd subunit
