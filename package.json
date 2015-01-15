@@ -1,6 +1,6 @@
 {
   "name": "subunit",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "threejs webgl d3",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "https://github.com/sghall/subunit.git"
   },
   "author": "Steve Hall <shall@delimited.io> (http://delimited.io/)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sghall/subunit/issues"
   },
