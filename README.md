@@ -10,4 +10,10 @@ Still here?  Ok.  Check it out using bower...
 bower install subunit
 ```
 
-To run the demos, do another bower install in the demos folder to load the dependencies.
+To run the demos...do another bower install in the demos folder to load the dependencies.
+
+```html
+cd demos
+bower install
+python -m SimpleHTTPServer 8000 (or your favorite local server)
+```
