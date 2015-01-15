@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="../dist/subunit.js"></script>
+  </head>
+  <style>
+    body, html {
+      margin: 0px;
+      font-family: helvetica, arial;
+    }
+  </style>
+  <body>
+    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
+      50 Zombie Movies - WebGL Demo
+    </h3>
+    <script src="traceur/traceur.js"></script>
+    <script src="traceur/bootstrap.js"></script>
+    <script type="module">
+
+      import { camera, scene, renderer, stats } from 'modules/scene';
+      import { uvMapper } from 'modules/sprite-uvs';
+      import { sphere } from 'modules/layouts';
+
+      d3.json('data/zombies.json', function (err, data) {
+
+        var uvsMap = uvMapper(data.images);
+
+        var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg');
+        var options = {map: sprite, side: THREE.DoubleSide};
+        var material = new THREE.MeshLambertMaterial(options);
+
+        var root = subunit.select(scene);
+
+        var zombies = root.selectAll(".zombie")
+          .data(data.images).enter()
+          .append("mesh")
+            .attr("class", "zombie")
+            .attr("material", material)
+            .attr("geometry", function (d) {
+              var geometry = new THREE.PlaneBufferGeometry(300, 430);
+              var buffer = new THREE.BufferAttribute(uvsMap(d), 2);
+
+              geometry.addAttribute('uv', buffer);
+
+              return geometry;
+            })
+            .each(function (d, i) {
+              var c = sphere(i, data.images.length, 750);
+
+              this.scale.set(0.5, 0.5, 0.5);
+              this.position.set(c.pos.x, c.pos.y, c.pos.z);
+              this.rotation.set(c.rot.x, c.rot.y, c.rot.z);
+            });
+
+        var theta = 0;
+        var gamma = 0;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+
+          stats.update();
+
+          theta += 0.01;
+          gamma += 0.04;
+
+          root.node().rotation.y = theta;
+
+          zombies.each(function () {
+            this.rotation.set(gamma, theta, 0);
+          })
+
+        }
+        animate();
+      });
+    </script>
+  </body>
+</html>
