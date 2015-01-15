@@ -36,7 +36,7 @@ export function uvMapper (images) {
       d3.merge(d3.permute(coords, [2, 3, 1])),
       d3.merge(d3.permute(coords, [0, 1, 2]))
     ])
-    .forEach(function (value, i) {
+    .forEach(function (value, i) { // hmmm
       arr32[i] = value;
     });
 

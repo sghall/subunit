@@ -3,7 +3,7 @@ var canvas = d3.select("body").append("canvas")
   .attr("width", window.innerWidth)
   .attr("height", window.innerHeight)
   .style("opacity", 0)
-  .style('background-color', '#EAEAEA')
+  .style('background-color', '#EAEAEA');
 
 canvas.transition().duration(2000).style("opacity", 1);
 
@@ -19,7 +19,7 @@ camera.position.z = 1000;
 
 export var scene = new THREE.Scene();
 
-var light = new THREE.HemisphereLight('#ffffff', '#666666', 1.5)
+var light = new THREE.HemisphereLight('#ffffff', '#666666', 1.5);
 scene.add(light);
 
 export var stats = new Stats();
