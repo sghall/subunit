@@ -11,10 +11,6 @@
     function $$$methods$append$$_selection_creator(name) {
       if (typeof name === "function") {
         return name;
-      } else if (name === "scene") {
-        return function () { console.log("scene"); };
-      } else if (name === "camera") {
-        return function () { console.log("camera"); };
       } else if (name === "mesh") {
         return function (data) { 
           var node = new THREE.Mesh();
@@ -225,7 +221,7 @@
       return update;
     }
 
-    function $$$methods$data$$che_class(ctor, properties) {
+    function $$$methods$data$$subunit_class(ctor, properties) {
       try {
         for (var key in properties) {
           Object.defineProperty(ctor.prototype, key, {
@@ -238,37 +234,37 @@
       }
     }
 
-    var $$$methods$data$$che_map_prefix = "\0",
-        $$$methods$data$$che_map_prefixCode = $$$methods$data$$che_map_prefix.charCodeAt(0);
+    var $$$methods$data$$subunit_map_prefix = "\0",
+        $$$methods$data$$subunit_map_prefixCode = $$$methods$data$$subunit_map_prefix.charCodeAt(0);
 
-    function $$$methods$data$$che_map_has(key) {
-      return $$$methods$data$$che_map_prefix + key in this;
+    function $$$methods$data$$subunit_map_has(key) {
+      return $$$methods$data$$subunit_map_prefix + key in this;
     }
 
-    function $$$methods$data$$che_map_remove(key) {
-      key = $$$methods$data$$che_map_prefix + key;
+    function $$$methods$data$$subunit_map_remove(key) {
+      key = $$$methods$data$$subunit_map_prefix + key;
       return key in this && delete this[key];
     }
 
-    function $$$methods$data$$che_map_keys() {
+    function $$$methods$data$$subunit_map_keys() {
       var keys = [];
       this.forEach(function (key) { keys.push(key); });
       return keys;
     }
 
-    function $$$methods$data$$che_map_size() {
+    function $$$methods$data$$subunit_map_size() {
       var size = 0;
       for (var key in this) {
-         if (key.charCodeAt(0) === $$$methods$data$$che_map_prefixCode) {
+         if (key.charCodeAt(0) === $$$methods$data$$subunit_map_prefixCode) {
            ++size;
          }
       }
       return size;
     }
 
-    function $$$methods$data$$che_map_empty() {
+    function $$$methods$data$$subunit_map_empty() {
       for (var key in this) {
-        if (key.charCodeAt(0) === $$$methods$data$$che_map_prefixCode) {
+        if (key.charCodeAt(0) === $$$methods$data$$subunit_map_prefixCode) {
           return false;
         }
       }
@@ -277,16 +273,16 @@
 
     function $$$methods$data$$Che_Map() {}
 
-    $$$methods$data$$che_class($$$methods$data$$Che_Map, {
-      has: $$$methods$data$$che_map_has,
+    $$$methods$data$$subunit_class($$$methods$data$$Che_Map, {
+      has: $$$methods$data$$subunit_map_has,
       get: function(key) {
-        return this[$$$methods$data$$che_map_prefix + key];
+        return this[$$$methods$data$$subunit_map_prefix + key];
       },
       set: function(key, value) {
-        return this[$$$methods$data$$che_map_prefix + key] = value;
+        return this[$$$methods$data$$subunit_map_prefix + key] = value;
       },
-      remove: $$$methods$data$$che_map_remove,
-      keys: $$$methods$data$$che_map_keys,
+      remove: $$$methods$data$$subunit_map_remove,
+      keys: $$$methods$data$$subunit_map_keys,
       values: function() {
         var values = [];
         this.forEach(function (key, value) { values.push(value); });
@@ -297,11 +293,11 @@
         this.forEach(function (key, value) { entries.push({key: key, value: value}); });
         return entries;
       },
-      size: $$$methods$data$$che_map_size,
-      empty: $$$methods$data$$che_map_empty,
+      size: $$$methods$data$$subunit_map_size,
+      empty: $$$methods$data$$subunit_map_empty,
       forEach: function(f) {
         for (var key in this) {
-          if (key.charCodeAt(0) === $$$methods$data$$che_map_prefixCode) {
+          if (key.charCodeAt(0) === $$$methods$data$$subunit_map_prefixCode) {
             f.call(this, key.substring(1), this[key]);
           }
         } 
@@ -450,7 +446,6 @@
     if ( typeof module === 'object' ) {
       module.exports = src$index$$subunit;
     }
-
 
     src$index$$subunit.select = function (object) {
       var node = typeof object === "function" ? object(): object;
