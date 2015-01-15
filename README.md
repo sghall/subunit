@@ -2,7 +2,7 @@ Subunit
 
 Library for D3 Selections in THREE.js
 
-Currently in Early Dev Mode - These are not the droids you're looking for.
+Currently in very early dev mode - these are not the droids you're looking for.
 
 Still here?  Ok.  Check it out using bower...
 
