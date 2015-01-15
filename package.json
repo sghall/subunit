@@ -1,7 +1,7 @@
 {
   "name": "subunit",
   "version": "0.1.1",
-  "description": "threejs webgl d3",
+  "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
