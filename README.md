@@ -13,7 +13,12 @@ bower install subunit
 To run the demos...do another bower install in the demos folder to load the dependencies.
 
 ```html
-cd demos
+cd subunit/demos
 bower install
+```
+Run the demos from the root folder...
+
+```html
+cd subunit
 python -m SimpleHTTPServer 8000 (or your favorite local server)
 ```
