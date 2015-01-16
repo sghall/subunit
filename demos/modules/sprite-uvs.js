@@ -23,8 +23,6 @@ export function uvMapper (images) {
 
   return function (item, i) {
 
-    var arr32 = new Float32Array(12);
-
     var coords = getImageCoords({
       px1: (item.positionX + item.width) / spriteW,
       py1: 1 - ((item.positionY + item.height) / spriteH),
@@ -32,14 +30,9 @@ export function uvMapper (images) {
       py2: 1 - (item.positionY / spriteH)
     });
 
-    d3.merge([
+    return new Float32Array(d3.merge([
       d3.merge(d3.permute(coords, [2, 3, 1])),
       d3.merge(d3.permute(coords, [0, 1, 2]))
-    ])
-    .forEach(function (value, i) { // hmmm
-      arr32[i] = value;
-    });
-
-    return arr32;
+    ]));
   };
 }
