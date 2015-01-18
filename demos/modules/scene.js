@@ -9,7 +9,7 @@ canvas.transition().duration(2000).style("opacity", 1);
 
 canvas.node().getContext("webgl");
 
-export var renderer = new THREE.WebGLRenderer({canvas: canvas.node()});
+export var renderer = new THREE.WebGLRenderer({canvas: canvas.node(), antialias: true});
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);

@@ -22,7 +22,6 @@ export function uvMapper (images) {
   };
 
   return function (item, i) {
-
     var coords = getImageCoords({
       px1: (item.positionX + item.width) / spriteW,
       py1: 1 - ((item.positionY + item.height) / spriteH),
