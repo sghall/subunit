@@ -5,7 +5,7 @@ var canvas = d3.select("body").append("canvas")
   .style("opacity", 0)
   .style('background-color', '#EAEAEA');
 
-canvas.transition().duration(2000).style("opacity", 1);
+canvas.transition().duration(1000).style("opacity", 1);
 
 canvas.node().getContext("webgl");
 

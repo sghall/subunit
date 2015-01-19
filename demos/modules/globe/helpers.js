@@ -12,9 +12,9 @@ export var position = point.attributes.position.clone();
 export var uvs = point.attributes.uv.clone();
 export var normals = point.attributes.normal.clone();
 
-export function setPosition(item, d) {
-  var gamma = (90  - +d.lon) * Math.PI / 180;
-  var theta = (180 - +d.lat) * Math.PI / 180;
+export function move(item, d) {
+  var gamma = (90  - d.lat) * Math.PI / 180;
+  var theta = (180 - d.lng) * Math.PI / 180;
 
   var x = 200 * Math.sin(gamma) * Math.cos(theta);
   var y = 200 * Math.cos(gamma);
@@ -23,7 +23,7 @@ export function setPosition(item, d) {
   item.position.set(x, y, z);
 }
 
-export var getMaterial = (function () {
+export var color = (function () {
   var cache = {};
 
   return function (value) {

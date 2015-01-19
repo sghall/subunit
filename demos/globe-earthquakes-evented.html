@@ -13,28 +13,31 @@
     body, html {
       margin: 0px;
       font-family: helvetica, arial;
+      color: #888;
     }
   </style>
   <body>
-    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
-      Earthquakes - WebGL Demo
-    </h3>
-    <div id="container"></div>
+    <div style="position:absolute;left:9px;top:9px;z-index:1">
+      <h3>Earthquakes - WebGL Demo</h3>
+      <div id="msg">Click an earthquake...</div>
+    </div>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
     <script type="module">
 
       import { scene, renderer, camera, stats } from 'modules/scene';
       import { earthMaterial } from 'modules/globe/shaderMaterials';
-      import { position, uvs, normals, setPosition, getMaterial } from 'modules/globe/helpers';
+      import { position, uvs, normals, move, color } from 'modules/globe/helpers';
       import { raycast } from 'modules/events';
 
-      d3.csv('data/earthquakes.csv', function (err, data) {
+      d3.json('data/earthquakes.json', function (err, data) {
 
-        var magScale = d3.scale.pow().exponent(2)
+        console.log("Total Data Points: ", data.length)
+
+        var magScale = d3.scale.pow().exponent(3)
           .range([0, 100]).domain([0, 10]);
 
-        var highlight = getMaterial(10);
+        var highlight = color(10);
 
         var controls = new THREE.TrackballControls(camera, renderer.domElement);
         controls.rotateSpeed = 0.5;
@@ -57,7 +60,7 @@
           .data(data).enter()
           .append("mesh")
           .attr("material", function (d) {
-            return getMaterial(+d.mag);
+            return color(d.mag);
           })
           .attr("geometry", function (d) {
             var geom = new THREE.BufferGeometry();
@@ -69,22 +72,24 @@
             return geom;
           })
           .each(function (d) {
-            setPosition(this, d);
+            move(this, d);
             this.lookAt(center);
-            this.scale.z = magScale(Math.max(+d.mag, 0.1));
+            this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
           })
           .on('click', function (event, d) {
+            d3.select('#msg').html(d.dsc);
+
             if (this.material !== highlight) {
               this.material = highlight;
             } else {
-              this.material = getMaterial(+d.mag);
+              this.material = color(+d.mag);
             }
           });
 
         base.node().rotation.y = Math.PI;
-        base.node().rotation.x = Math.PI / 8;
-        base.node().scale.set(2, 2, 2);
+        base.node().rotation.x = Math.PI / 4;
+        base.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, points, 'click');
 
