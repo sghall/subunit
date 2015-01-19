@@ -1,12 +1,3 @@
-export function paintFaces(geom, color) {
-  for (var i = 0; i < geom.geometry.faces.length; i++) {
-    geom.geometry.faces[i].color = new THREE.Color(color);
-  }
-  if (geom.matrixAutoUpdate) {
-    geom.updateMatrix();
-  }
-}
-
 var pointGeometry = new THREE.BoxGeometry(0.5, 0.5, 1);
 pointGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
 
