@@ -28,7 +28,7 @@
       import { scene, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
       import { earthMaterial } from 'modules/globe/shaderMaterials';
-      import { position, uvs, normals, move, color } from 'modules/globe/helpers';
+      import { quake, move, color } from 'modules/globe/helpers';
 
       d3.json('data/earthquakes.json', function (err, data) {
 
@@ -41,14 +41,6 @@
         controls.rotateSpeed = 0.5;
         controls.minDistance = 100;
         controls.maxDistance = 6000;
-
-        var center = new THREE.Vector3(0,0,0);
-
-        var quake = new THREE.BufferGeometry();
-
-        quake.addAttribute('position', position);
-        quake.addAttribute('uv', uvs);
-        quake.addAttribute('normal', normals);
 
         var base = subunit.select(scene);
 
@@ -69,7 +61,7 @@
           })
           .each(function (d) {
             move(this, d);
-            this.lookAt(center);
+            this.lookAt(base.node().position);
             this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
           })

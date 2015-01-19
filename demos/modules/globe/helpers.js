@@ -1,16 +1,8 @@
 var pointGeometry = new THREE.BoxGeometry(0.5, 0.5, 1);
 pointGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
 
-var point = new THREE.BufferGeometry()
-point.fromGeometry(pointGeometry);
-
-var colorScale = d3.scale.quantile()
-  .range(['#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
-  .domain([0,10]);
-
-export var position = point.attributes.position.clone();
-export var uvs = point.attributes.uv.clone();
-export var normals = point.attributes.normal.clone();
+export var quake = new THREE.BufferGeometry()
+quake.fromGeometry(pointGeometry);
 
 export function move(item, d) {
   var gamma = (90  - d.lat) * Math.PI / 180;
@@ -22,6 +14,10 @@ export function move(item, d) {
 
   item.position.set(x, y, z);
 }
+
+var colorScale = d3.scale.quantile()
+  .range(['#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
+  .domain([0,10]);
 
 export var color = (function () {
   var cache = {};
