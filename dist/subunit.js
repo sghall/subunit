@@ -84,6 +84,21 @@
       var args = $$$core$utils$$array(arguments);
       callback.apply(args[0] = this, args);
       return this;
+    }function $$$methods$use$$use(model, callback) {
+      return $$$methods$use$$_selection_use(this, function(node, i, j) {
+        callback.call(model, node.__data__, i, j);
+      });
+    }
+
+    function $$$methods$use$$_selection_use(groups, callback) {
+      for (var j = 0, m = groups.length; j < m; j++) {
+        for (var group = groups[j], i = 0, n = group.length, node; i < n; i++) {
+          if (node = group[i]) {
+            callback(node, i, j);
+          } 
+        }
+      }
+      return groups;
     }
 
     var $$$core$extend_enter$$enterMethods = {};
@@ -92,6 +107,7 @@
     $$$core$extend_enter$$enterMethods.empty  = $$$methods$empty$$empty;
     $$$core$extend_enter$$enterMethods.node   = $$$methods$node$$node;
     $$$core$extend_enter$$enterMethods.call   = $$$methods$call$$call;
+    $$$core$extend_enter$$enterMethods.use    = $$$methods$use$$use;
 
     $$$core$extend_enter$$enterMethods.select = function(selector) {
       var subgroups = [], subgroup, upgroup, group;
@@ -432,6 +448,7 @@
     $$core$extend_selection$$selectionMethods.filter = $$$methods$filter$$filter;
     $$core$extend_selection$$selectionMethods.datum  = $$$methods$datum$$datum;
     $$core$extend_selection$$selectionMethods.each   = $$$methods$each$$each;
+    $$core$extend_selection$$selectionMethods.select = $$$methods$selectAll$$selectAll;
     $$core$extend_selection$$selectionMethods.selectAll = $$$methods$selectAll$$selectAll;
 
     function $$core$extend_selection$$extend_selection(object) {
