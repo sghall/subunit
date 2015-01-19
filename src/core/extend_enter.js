@@ -1,7 +1,8 @@
 import { append } from "../methods/append";
-import {  empty } from "../methods/empty";
-import {  node  } from "../methods/node";
-import {  call  } from "../methods/call";
+import { empty } from "../methods/empty";
+import { node } from "../methods/node";
+import { call } from "../methods/call";
+import { use } from "../methods/use";
 
 import { extend_selection } from "./extend_selection";
 
@@ -11,6 +12,7 @@ enterMethods.append = append;
 enterMethods.empty  = empty;
 enterMethods.node   = node;
 enterMethods.call   = call;
+enterMethods.use    = use;
 
 enterMethods.select = function(selector) {
   var subgroups = [], subgroup, upgroup, group;

@@ -22,6 +22,7 @@ selectionMethods.attr   = attr;
 selectionMethods.filter = filter;
 selectionMethods.datum  = datum;
 selectionMethods.each   = each;
+selectionMethods.select = selectAll;
 selectionMethods.selectAll = selectAll;
 
 export function extend_selection(object) {
