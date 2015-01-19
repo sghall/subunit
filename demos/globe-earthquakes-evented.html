@@ -60,7 +60,7 @@
             return color(d.mag);
           })
           .each(function (d) {
-            move(this, d);
+            move(this, d.lat, d.lng);
             this.lookAt(base.node().position);
             this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
