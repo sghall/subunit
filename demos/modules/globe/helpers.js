@@ -4,9 +4,9 @@ pointGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
 export var quake = new THREE.BufferGeometry()
 quake.fromGeometry(pointGeometry);
 
-export function move(item, d) {
-  var gamma = (90  - d.lat) * Math.PI / 180;
-  var theta = (180 - d.lng) * Math.PI / 180;
+export function move(item, lat, lng) {
+  var gamma = (90  - lat) * Math.PI / 180;
+  var theta = (180 - lng) * Math.PI / 180;
 
   var x = 200 * Math.sin(gamma) * Math.cos(theta);
   var y = 200 * Math.cos(gamma);
