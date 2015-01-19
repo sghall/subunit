@@ -7,7 +7,7 @@ export function paintFaces(geom, color) {
   }
 }
 
-export function setPosition(geom, lat, lng) {
+export function setPosition(item, lat, lng) {
   var gamma = (90  - lng) * Math.PI / 180;
   var theta = (180 - lat) * Math.PI / 180;
 
@@ -15,7 +15,7 @@ export function setPosition(geom, lat, lng) {
   var y = 200 * Math.cos(gamma);
   var z = 200 * Math.sin(gamma) * Math.sin(theta);
 
-  geom.position.set(x, y, z);
+  item.position.set(x, y, z);
 }
 
 

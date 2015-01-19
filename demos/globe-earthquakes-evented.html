@@ -27,8 +27,11 @@
       import { scene, renderer, camera, stats } from 'modules/scene';
       import { setPosition, paintFaces } from 'modules/globe-helpers';
       import { earth } from 'modules/globe-shaderMaterials';
+      import { mouseDown } from 'modules/events';
 
       d3.csv('data/earthquakes.csv', function (err, data) {
+
+        data = data.slice(0, 500);
 
         var colorScale = d3.scale.quantile()
           .range(['#ffffff','#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
@@ -40,10 +43,13 @@
         var baseGeometry = new THREE.Geometry();
 
         var material = new THREE.MeshPhongMaterial({
-          color: '#CD853F',
-          vertexColors: THREE.FaceColors,
-          morphTargets: false
+          color: '#ffffff',
         });
+
+        var material2 = new THREE.MeshPhongMaterial({
+          color: '#CD853F'
+        });
+
 
         var geometry = new THREE.SphereGeometry(200, 40, 30);
 
@@ -57,30 +63,61 @@
         controls.minDistance = 100;
         controls.maxDistance = 6000;
 
+        var center = new THREE.Vector3(0,0,0);
+
         var pointGeometry = new THREE.BoxGeometry(0.5, 0.5, 1);
         pointGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
 
-        var center = new THREE.Vector3(0,0,0);
+
+        var model = new THREE.BufferGeometry()
+        model.fromGeometry(pointGeometry);
+
+        console.log("bufferGeom", model, data);
+
         var point = new THREE.Mesh(pointGeometry);
 
         var base = subunit.select(scene);
 
-        base.selectAll('.point')
+        var points = base.selectAll('.point')
           .data(data).enter()
-          .use(point, function (d, i) {
-            setPosition(this, +d.lat, +d.lon);
-            this.lookAt(center);
+          .append("mesh")
+          .attr("geometry", function (d) {
+            var geom = new THREE.BufferGeometry();
 
+            var pos = model.attributes.position.clone();
+            var uvs = model.attributes.uv.clone();
+            var nrm = model.attributes.normal.clone();
+
+            geom.addAttribute('position', pos);
+            geom.addAttribute('uv', uvs);
+            geom.addAttribute('normal', nrm);
+
+            return geom;
+          })
+          .attr("material", material2)
+          .each(function (d) {
+            var gamma = (90  - +d.lon) * Math.PI / 180;
+            var theta = (180 - +d.lat) * Math.PI / 180;
+
+            var x = 200 * Math.sin(gamma) * Math.cos(theta);
+            var y = 200 * Math.cos(gamma);
+            var z = 200 * Math.sin(gamma) * Math.sin(theta);
+
+            this.position.set(x, y, z);
+            this.lookAt(center);
             this.scale.z = Math.max(scale(+d.mag), 0.1);
             this.updateMatrix();
-            paintFaces(this, colorScale(+d.mag));
+          })
 
-            this.updateMatrix();
-            baseGeometry.merge(this.geometry, this.matrix);
-          });
+        console.log(scene);
 
-        var mesh = new THREE.Mesh(baseGeometry, material);
-        scene.add(mesh);
+        document.addEventListener('click', mouseDown(camera, points, function (event) {
+          if (this.material === material) {
+            return material2;
+          } else {
+            return material;
+          }
+        }), false);
 
         function animate() {
           requestAnimationFrame(animate);
