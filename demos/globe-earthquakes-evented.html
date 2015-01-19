@@ -25,99 +25,66 @@
     <script type="module">
 
       import { scene, renderer, camera, stats } from 'modules/scene';
-      import { setPosition, paintFaces } from 'modules/globe-helpers';
-      import { earth } from 'modules/globe-shaderMaterials';
-      import { mouseDown } from 'modules/events';
+      import { earthMaterial } from 'modules/globe/shaderMaterials';
+      import { position, uvs, normals, setPosition, getMaterial } from 'modules/globe/helpers';
+      import { raycast } from 'modules/events';
 
       d3.csv('data/earthquakes.csv', function (err, data) {
 
-        data = data.slice(0, 500);
+        // data = data.slice(0, 20)
 
-        var colorScale = d3.scale.quantile()
-          .range(['#ffffff','#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
-          .domain([0,10]);
-
-        var scale = d3.scale.pow().exponent(2)
+        var magScale = d3.scale.pow().exponent(2)
           .range([0, 100]).domain([0, 10]);
 
-        var baseGeometry = new THREE.Geometry();
-
-        var material = new THREE.MeshPhongMaterial({
-          color: '#ffffff',
-        });
-
-        var material2 = new THREE.MeshPhongMaterial({
-          color: '#CD853F'
-        });
-
-
-        var geometry = new THREE.SphereGeometry(200, 40, 30);
-
-        var mesh = new THREE.Mesh(geometry, earth);
-        mesh.rotation.y = Math.PI;
-        scene.add(mesh);
+        var highlight = getMaterial(10);
 
         var controls = new THREE.TrackballControls(camera, renderer.domElement);
-
         controls.rotateSpeed = 0.5;
         controls.minDistance = 100;
         controls.maxDistance = 6000;
 
         var center = new THREE.Vector3(0,0,0);
 
-        var pointGeometry = new THREE.BoxGeometry(0.5, 0.5, 1);
-        pointGeometry.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
-
-
-        var model = new THREE.BufferGeometry()
-        model.fromGeometry(pointGeometry);
-
-        console.log("bufferGeom", model, data);
-
-        var point = new THREE.Mesh(pointGeometry);
-
         var base = subunit.select(scene);
+
+        var globe = base.append("mesh")
+          .attr("material", earthMaterial)
+          .attr("geometry", function () {
+            return new THREE.SphereGeometry(200, 40, 30);
+          })
+
+        globe.node().rotation.y = Math.PI;
 
         var points = base.selectAll('.point')
           .data(data).enter()
           .append("mesh")
+          .attr("material", function (d) {
+            return getMaterial(+d.mag);
+          })
           .attr("geometry", function (d) {
             var geom = new THREE.BufferGeometry();
 
-            var pos = model.attributes.position.clone();
-            var uvs = model.attributes.uv.clone();
-            var nrm = model.attributes.normal.clone();
-
-            geom.addAttribute('position', pos);
+            geom.addAttribute('position', position);
             geom.addAttribute('uv', uvs);
-            geom.addAttribute('normal', nrm);
+            geom.addAttribute('normal', normals);
 
             return geom;
           })
-          .attr("material", material2)
           .each(function (d) {
-            var gamma = (90  - +d.lon) * Math.PI / 180;
-            var theta = (180 - +d.lat) * Math.PI / 180;
-
-            var x = 200 * Math.sin(gamma) * Math.cos(theta);
-            var y = 200 * Math.cos(gamma);
-            var z = 200 * Math.sin(gamma) * Math.sin(theta);
-
-            this.position.set(x, y, z);
+            setPosition(this, d);
             this.lookAt(center);
-            this.scale.z = Math.max(scale(+d.mag), 0.1);
+            this.scale.z = magScale(Math.max(+d.mag, 0.1));
             this.updateMatrix();
           })
+          .on('click', function (event, d) {
+            if (this.material !== highlight) {
+              this.material = highlight;
+            } else {
+              this.material = getMaterial(+d.mag);
+            }
+          });
 
-        console.log(scene);
-
-        document.addEventListener('click', mouseDown(camera, points, function (event) {
-          if (this.material === material) {
-            return material2;
-          } else {
-            return material;
-          }
-        }), false);
+        raycast(camera, points, 'click');
 
         function animate() {
           requestAnimationFrame(animate);

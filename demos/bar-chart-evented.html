@@ -23,7 +23,7 @@
     <script type="module">
 
       import { camera, scene, renderer, stats } from 'modules/scene';
-      import { mouseDown } from 'modules/events';
+      import { raycast } from 'modules/events';
 
       d3.json('data/letters.json', function (err, data) {
 
@@ -35,8 +35,8 @@
         var y = d3.scale.linear()
           .range([size[1], 0]);
 
-        var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
-        var material2 = new THREE.MeshPhongMaterial({color: '#666666'});
+        var blue = new THREE.MeshPhongMaterial({color: '#4183c4'});
+        var grey = new THREE.MeshPhongMaterial({color: '#666666'});
 
         x.domain(data.map(function (d) { return d.letter; }));
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
@@ -50,7 +50,7 @@
           .data(data).enter()
           .append("mesh")
           .attr("class", "bar")
-          .attr("material", material1)
+          .attr("material", blue)
           .attr("geometry", function (d) {
             var w = x.rangeBand();
             var h = size[1] - y(d.frequency);
@@ -60,15 +60,16 @@
             var x0 = x(d.letter);
             var y0 = - y(d.frequency) / 2;
             this.position.set(x0, y0, 240);
+          })
+          .on('click', function (event, d) {
+            if (this.material === blue) {
+              this.material = grey;
+            } else {
+              this.material = blue;
+            }
           });
 
-        document.addEventListener('click', mouseDown(camera, bars, function (event) {
-          if (this.material === material1) {
-            return material2;
-          } else {
-            return material1;
-          }
-        }), false);
+        raycast(camera, bars, 'click');
 
         function animate() {
           stats.update();

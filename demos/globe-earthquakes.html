@@ -25,8 +25,8 @@
     <script type="module">
 
       import { scene, renderer, camera, stats } from 'modules/scene';
-      import { setPosition, paintFaces } from 'modules/globe-helpers';
-      import { earth } from 'modules/globe-shaderMaterials';
+      import { setPosition, paintFaces } from 'modules/globe/helpers';
+      import { earthMaterial } from 'modules/globe/shaderMaterials';
 
       d3.csv('data/earthquakes.csv', function (err, data) {
 
@@ -47,7 +47,7 @@
 
         var geometry = new THREE.SphereGeometry(200, 40, 30);
 
-        var mesh = new THREE.Mesh(geometry, earth);
+        var mesh = new THREE.Mesh(geometry, earthMaterial);
         mesh.rotation.y = Math.PI;
         scene.add(mesh);
 
