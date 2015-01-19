@@ -26,13 +26,11 @@
     <script type="module">
 
       import { scene, renderer, camera, stats } from 'modules/scene';
+      import { raycast } from 'modules/events';
       import { earthMaterial } from 'modules/globe/shaderMaterials';
       import { position, uvs, normals, move, color } from 'modules/globe/helpers';
-      import { raycast } from 'modules/events';
 
       d3.json('data/earthquakes.json', function (err, data) {
-
-        console.log("Total Data Points: ", data.length)
 
         var magScale = d3.scale.pow().exponent(3)
           .range([0, 100]).domain([0, 10]);
@@ -46,6 +44,12 @@
 
         var center = new THREE.Vector3(0,0,0);
 
+        var quake = new THREE.BufferGeometry();
+
+        quake.addAttribute('position', position);
+        quake.addAttribute('uv', uvs);
+        quake.addAttribute('normal', normals);
+
         var base = subunit.select(scene);
 
         var globe = base.append("mesh")
@@ -56,20 +60,12 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var points = base.selectAll('.point')
+        var quakes = base.selectAll('.point')
           .data(data).enter()
           .append("mesh")
+          .attr("geometry", quake)
           .attr("material", function (d) {
             return color(d.mag);
-          })
-          .attr("geometry", function (d) {
-            var geom = new THREE.BufferGeometry();
-
-            geom.addAttribute('position', position);
-            geom.addAttribute('uv', uvs);
-            geom.addAttribute('normal', normals);
-
-            return geom;
           })
           .each(function (d) {
             move(this, d);
@@ -83,7 +79,7 @@
             if (this.material !== highlight) {
               this.material = highlight;
             } else {
-              this.material = color(+d.mag);
+              this.material = color(d.mag);
             }
           });
 
@@ -91,7 +87,7 @@
         base.node().rotation.x = Math.PI / 4;
         base.node().scale.set(2.75, 2.75, 2.75);
 
-        raycast(camera, points, 'click');
+        raycast(camera, quakes, 'click');
 
         function animate() {
           requestAnimationFrame(animate);
