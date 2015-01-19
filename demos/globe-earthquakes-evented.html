@@ -31,8 +31,6 @@
 
       d3.csv('data/earthquakes.csv', function (err, data) {
 
-        // data = data.slice(0, 20)
-
         var magScale = d3.scale.pow().exponent(2)
           .range([0, 100]).domain([0, 10]);
 
@@ -50,7 +48,7 @@
         var globe = base.append("mesh")
           .attr("material", earthMaterial)
           .attr("geometry", function () {
-            return new THREE.SphereGeometry(200, 40, 30);
+            return new THREE.SphereGeometry(200, 40, 40);
           })
 
         globe.node().rotation.y = Math.PI;
@@ -83,6 +81,10 @@
               this.material = getMaterial(+d.mag);
             }
           });
+
+        base.node().rotation.y = Math.PI;
+        base.node().rotation.x = Math.PI / 8;
+        base.node().scale.set(2, 2, 2);
 
         raycast(camera, points, 'click');
 
