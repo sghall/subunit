@@ -414,6 +414,57 @@
       }
       return groups;
     }
+    function $$$methods$on$$on(type, listener) {
+      return this.each($$$methods$on$$selection_on(type, listener));
+    }
+
+    function $$$methods$on$$selection_on(type, listener) {
+
+      var wrapped = function () {
+        return function (event) {
+          return listener.call(this, event, this.__data__);
+        };
+      };
+
+      function onRemove() {
+        this.removeEventListener(type, wrapped());
+      }
+
+      function onAdd() {
+        this.addEventListener(type, wrapped());
+      }
+
+      return listener === null ? onRemove: onAdd;
+    }function $$$methods$select$$select(selector) {
+      var subgroups = [], subgroup, subnode, group, node;
+
+      selector = $$$methods$select$$selection_selector(selector);
+
+      for (var j = -1, m = this.length; ++j < m;) {
+        subgroups.push(subgroup = []);
+        subgroup.parentNode = (group = this[j]).parentNode;
+
+        for (var i = -1, n = group.length; ++i < n;) {
+          if (node = group[i]) {
+            subgroup.push(subnode = selector.call(node, node.__data__, i, j));
+            if (subnode && "__data__" in node) {
+              subnode.__data__ = node.__data__;
+            }
+          } else {
+            subgroup.push(null);
+          }
+        }
+      }
+
+      return $$core$extend_selection$$extend_selection(subgroups);
+    }
+
+    function $$$methods$select$$selection_selector(selector) {
+      return typeof selector === "function" ? selector : function() {
+        return $$$core$utils$$search(selector, this);
+      };
+    }
+
     function $$$methods$selectAll$$selectAll(selector) {
       var subgroups = [], subgroup, node;
 
@@ -448,7 +499,9 @@
     $$core$extend_selection$$selectionMethods.filter = $$$methods$filter$$filter;
     $$core$extend_selection$$selectionMethods.datum  = $$$methods$datum$$datum;
     $$core$extend_selection$$selectionMethods.each   = $$$methods$each$$each;
-    $$core$extend_selection$$selectionMethods.select = $$$methods$selectAll$$selectAll;
+    $$core$extend_selection$$selectionMethods.on     = $$$methods$on$$on;
+
+    $$core$extend_selection$$selectionMethods.select    = $$$methods$select$$select;
     $$core$extend_selection$$selectionMethods.selectAll = $$$methods$selectAll$$selectAll;
 
     function $$core$extend_selection$$extend_selection(object) {
