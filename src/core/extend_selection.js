@@ -8,6 +8,9 @@ import {  attr  } from "../methods/attr";
 import { filter } from "../methods/filter";
 import {  datum } from "../methods/datum";
 import {  each  } from "../methods/each";
+import {  on } from "../methods/on";
+
+import { select } from "../methods/select";
 import { selectAll } from "../methods/selectAll";
 
 var selectionMethods = {};
@@ -22,7 +25,9 @@ selectionMethods.attr   = attr;
 selectionMethods.filter = filter;
 selectionMethods.datum  = datum;
 selectionMethods.each   = each;
-selectionMethods.select = selectAll;
+selectionMethods.on     = on;
+
+selectionMethods.select    = select;
 selectionMethods.selectAll = selectAll;
 
 export function extend_selection(object) {
