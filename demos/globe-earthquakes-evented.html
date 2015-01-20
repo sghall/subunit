@@ -27,7 +27,6 @@
 
       import { scene, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
-      import { earthMaterial } from 'modules/globe/shaderMaterials';
       import { quake, move, color } from 'modules/globe/helpers';
 
       d3.json('data/earthquakes.json', function (err, data) {
@@ -44,8 +43,11 @@
 
         var base = subunit.select(scene);
 
+        var texture = THREE.ImageUtils.loadTexture('images/world-black.jpg');
+        var earth = new THREE.MeshLambertMaterial({map: texture});
+
         var globe = base.append("mesh")
-          .attr("material", earthMaterial)
+          .attr("material", earth)
           .attr("geometry", function () {
             return new THREE.SphereGeometry(200, 40, 40);
           })
