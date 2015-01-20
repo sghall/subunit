@@ -18,7 +18,7 @@ function _selection_creator(name) {
       this.add(node);
       return node;
     };
-  } else {
+  } else if (name === "g") {
     return function (data) { 
       var node = new THREE.Object3D();
       node.__data__ = data;
@@ -27,5 +27,7 @@ function _selection_creator(name) {
       this.add(node);
       return node;
     };
+  } else {
+    throw new Error("The append method accepts 'mesh' or 'g' only");
   }
 }
