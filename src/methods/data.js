@@ -26,8 +26,8 @@ export function data(value, key) {
         nodeData;
 
     if (key) {
-      var nodeByKeyValue = new Che_Map(),
-          dataByKeyValue = new Che_Map(),
+      var nodeByKeyValue = new Subunit_Map(),
+          dataByKeyValue = new Subunit_Map(),
           keyValues = [], keyValue;
 
       for (i = -1; ++i < n;) {
@@ -154,9 +154,9 @@ function subunit_map_empty() {
   return true;
 }
 
-function Che_Map() {}
+function Subunit_Map() {}
 
-subunit_class(Che_Map, {
+subunit_class(Subunit_Map, {
   has: subunit_map_has,
   get: function(key) {
     return this[subunit_map_prefix + key];
