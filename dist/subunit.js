@@ -20,7 +20,7 @@
           this.add(node);
           return node;
         };
-      } else {
+      } else if (name === "g") {
         return function (data) { 
           var node = new THREE.Object3D();
           node.__data__ = data;
@@ -29,6 +29,8 @@
           this.add(node);
           return node;
         };
+      } else {
+        throw new Error("The append method accepts 'mesh' or 'g' only");
       }
     }function $$$methods$empty$$empty() {
       return !this.node();
@@ -159,8 +161,8 @@
             nodeData;
 
         if (key) {
-          var nodeByKeyValue = new $$$methods$data$$Che_Map(),
-              dataByKeyValue = new $$$methods$data$$Che_Map(),
+          var nodeByKeyValue = new $$$methods$data$$Subunit_Map(),
+              dataByKeyValue = new $$$methods$data$$Subunit_Map(),
               keyValues = [], keyValue;
 
           for (i = -1; ++i < n;) {
@@ -287,9 +289,9 @@
       return true;
     }
 
-    function $$$methods$data$$Che_Map() {}
+    function $$$methods$data$$Subunit_Map() {}
 
-    $$$methods$data$$subunit_class($$$methods$data$$Che_Map, {
+    $$$methods$data$$subunit_class($$$methods$data$$Subunit_Map, {
       has: $$$methods$data$$subunit_map_has,
       get: function(key) {
         return this[$$$methods$data$$subunit_map_prefix + key];
