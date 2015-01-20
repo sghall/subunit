@@ -27,11 +27,7 @@ fs.readFile("../../data/all_month.geojson", 'utf8', function (err, json) {
     recs.push(record);
   }
 
-  // recs = recs.filter(function (d) {
-  //   return d.distance < 100;
-  // }).sort(function (a, b) {
-  //   return b.magnitude - a.magnitude; 
-  // });
+  recs.sort(function (a, b) { return a.distance - b.distance; });
 
   fs.writeFile('../../data/earthquakes.json', JSON.stringify(recs), function (err) {
     if (err) throw err;
