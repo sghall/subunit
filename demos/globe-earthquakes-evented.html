@@ -29,21 +29,23 @@
       import { raycast } from 'modules/events';
       import { quake, move, color } from 'modules/globe/helpers';
 
+      var texture = THREE.ImageUtils.loadTexture('images/world-black.jpg');
+      var magScale = d3.scale.pow().exponent(3)
+        .range([0, 100]).domain([0, 10]);
+
+      var highlight = color(10);
+
+      var controls = new THREE.TrackballControls(camera, renderer.domElement);
+      controls.rotateSpeed = 0.5;
+      controls.minDistance = 100;
+      controls.maxDistance = 6000;
+
       d3.json('data/earthquakes.json', function (err, data) {
 
-        var magScale = d3.scale.pow().exponent(3)
-          .range([0, 100]).domain([0, 10]);
 
-        var highlight = color(10);
-
-        var controls = new THREE.TrackballControls(camera, renderer.domElement);
-        controls.rotateSpeed = 0.5;
-        controls.minDistance = 100;
-        controls.maxDistance = 6000;
 
         var base = subunit.select(scene);
 
-        var texture = THREE.ImageUtils.loadTexture('images/world-black.jpg');
         var earth = new THREE.MeshLambertMaterial({map: texture});
 
         var globe = base.append("mesh")
