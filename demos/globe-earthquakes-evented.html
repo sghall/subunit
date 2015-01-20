@@ -13,7 +13,7 @@
     body, html {
       margin: 0px;
       font-family: helvetica, arial;
-      color: #888;
+      color: #d94801;
     }
   </style>
   <body>
@@ -29,9 +29,15 @@
       import { raycast } from 'modules/events';
       import { quake, move, color } from 'modules/globe/helpers';
 
-      var texture = THREE.ImageUtils.loadTexture('images/world-black.jpg');
+      var img = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
+        d3.select(renderer.domElement)
+          .transition().duration(2000).style("opacity", 1);
+      });
+
+      var earth = new THREE.MeshPhongMaterial({map: img, shininess: 0.5});
+
       var magScale = d3.scale.pow().exponent(3)
-        .range([0, 100]).domain([0, 10]);
+        .range([0, 150]).domain([0, 10]);
 
       var highlight = color(10);
 
@@ -42,11 +48,9 @@
 
       d3.json('data/earthquakes.json', function (err, data) {
 
-
+        data = d3.shuffle(data).slice(0, 1000);
 
         var base = subunit.select(scene);
-
-        var earth = new THREE.MeshLambertMaterial({map: texture});
 
         var globe = base.append("mesh")
           .attr("material", earth)
@@ -56,9 +60,10 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var quakes = base.selectAll('.point')
+        var quakes = base.selectAll(".point")
           .data(data).enter()
           .append("mesh")
+          .attr("class", "point")
           .attr("geometry", quake)
           .attr("material", function (d) {
             return color(d.mag);
@@ -69,8 +74,8 @@
             this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
           })
-          .on('click', function (event, d) {
-            d3.select('#msg').html(d.dsc);
+          .on("click", function (event, d) {
+            d3.select("#msg").html(d.dsc);
 
             if (this.material !== highlight) {
               this.material = highlight;
@@ -84,19 +89,19 @@
         base.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, quakes, 'click');
-
-        function animate() {
-          requestAnimationFrame(animate);
-          render();
-        }
-
-        function render() {
-          stats.update();
-          controls.update();
-          renderer.render(scene, camera);
-        }
-        animate();
       });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        render();
+      }
+
+      function render() {
+        stats.update();
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
     </script>
   </body>
 </html>
