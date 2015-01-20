@@ -49,9 +49,9 @@
 
         data = d3.shuffle(data).slice(0, 1000);
 
-        var base = subunit.select(scene);
+        var root = subunit.select(scene);
 
-        var globe = base.append("mesh")
+        var globe = root.append("mesh")
           .attr("material", earth)
           .attr("geometry", function () {
             return new THREE.SphereGeometry(200, 40, 40);
@@ -59,7 +59,7 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var quakes = base.selectAll(".point")
+        var quakes = root.selectAll(".point")
           .data(data).enter()
           .append("mesh")
           .attr("class", "point")
@@ -69,7 +69,7 @@
           })
           .each(function (d) {
             move(this, d.lat, d.lng);
-            this.lookAt(base.node().position);
+            this.lookAt(root.node().position);
             this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
           })
@@ -83,9 +83,9 @@
             }
           });
 
-        base.node().rotation.y = Math.PI;
-        base.node().rotation.x = Math.PI / 4;
-        base.node().scale.set(2.75, 2.75, 2.75);
+        root.node().rotation.y = Math.PI;
+        root.node().rotation.x = Math.PI / 4;
+        root.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, quakes, 'click');
       });

@@ -43,12 +43,10 @@
         x.domain(data.map(function (d) { return d.letter; }));
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-        var base = subunit.select(scene)
-          .each(function () {
-            this.position.set(-size[0] / 2, 0, 0);
-          });
+        var root = subunit.select(scene)
+        root.node().position.set(-size[0] / 2, 0, 0);
 
-        var bars = base.selectAll(".bar")
+        var bars = root.selectAll(".bar")
           .data(data).enter()
           .append("mesh")
           .attr("class", "bar")
