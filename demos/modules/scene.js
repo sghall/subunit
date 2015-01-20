@@ -1,5 +1,5 @@
 
-var canvas = d3.select("body").append("canvas")
+export var canvas = d3.select("body").append("canvas")
   .attr("width", window.innerWidth)
   .attr("height", window.innerHeight)
   .style("opacity", 0)

@@ -22,9 +22,11 @@
     <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
     <script type="module">
 
-      import { camera, scene, renderer, stats } from 'modules/scene';
+      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
 
       d3.json('data/letters.json', function (err, data) {
+
+        canvas.style("opacity", 1);
 
         var size = [2000, 600] // Width, Height
 

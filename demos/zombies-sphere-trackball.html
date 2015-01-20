@@ -23,11 +23,13 @@
     <script src="traceur/bootstrap.js"></script>
     <script type="module">
 
-      import { camera, scene, renderer, stats } from 'modules/scene';
+      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
       import { uvMapper } from 'modules/sprite-uvs';
       import { sphere } from 'modules/layouts';
 
       d3.json('data/zombies.json', function (err, data) {
+
+        canvas.transition().duration(2000).style("opacity", 1);
 
         var controls = new THREE.TrackballControls(camera, renderer.domElement);
 
