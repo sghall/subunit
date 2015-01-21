@@ -27,7 +27,7 @@ export function select(selector) {
 
 function selection_selector(selector) {
   return typeof selector === "function" ? selector : function() {
-    return search(selector, this);
+    return search(this, selector);
   };
 }
 

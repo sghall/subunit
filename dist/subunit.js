@@ -546,7 +546,7 @@
 
     function $$$methods$select$$selection_selector(selector) {
       return typeof selector === "function" ? selector : function() {
-        return $$$core$utils$$search(selector, this);
+        return $$$core$utils$$search(this, selector);
       };
     }
 
