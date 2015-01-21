@@ -29,9 +29,7 @@ export function search(node, selector) {
     return result.push(node);
   };
 
-  for (var i = 0; i < node.children.length; i++) {
-    node.children[i].traverse(searchIterator);
-  }
+  node.traverse(searchIterator);
 
   return result;
 }
