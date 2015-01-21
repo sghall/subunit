@@ -18,15 +18,15 @@ describe('subunit.select', function() {
   });
 
   it('should return an Array', function() {
-    chai.expect(root).to.be.instanceOf(Array);
+    chai.expect(root).to.be.instanceof(Array);
   });
 
   it('should return an Array of Arrays', function() {
-    chai.expect(root[0]).to.be.instanceOf(Array);
+    chai.expect(root[0]).to.be.instanceof(Array);
   });
 
   it('selection.node() should be a THREE.Object3D', function() {
-    chai.expect(root.node()).to.be.instanceOf(THREE.Object3D);
+    chai.expect(root.node()).to.be.instanceof(THREE.Object3D);
   });
 
 });
@@ -39,21 +39,41 @@ describe('subunit.selectObject', function() {
   });
 
   it('should return an Array', function() {
-    chai.expect(selection).to.be.instanceOf(Array);
+    chai.expect(selection).to.be.instanceof(Array);
   });
 
   it('should return an Array of Arrays', function() {
-    chai.expect(selection[0]).to.be.instanceOf(Array);
+    chai.expect(selection[0]).to.be.instanceof(Array);
   });
 
   it('Selection.node() should be a THREE.Object3D', function() {
-    chai.expect(selection.node()).to.be.instanceOf(THREE.Object3D);
+    chai.expect(selection.node()).to.be.instanceof(THREE.Object3D);
   });
 });
 
 //********************************************************
 // SELECTION METHODS
 //********************************************************
+
+describe('selection.data', function() {
+
+  it('selection.data method should exist', function() {
+    chai.expect(root.data).to.exist;
+  });
+
+  it('should return an Array', function() {
+    chai.expect(root.data([1])).to.be.instanceof(Array);
+  });
+
+  it('should return an Array of Arrays', function() {
+    chai.expect(root.data([1])).to.be.instanceof(Array);
+  });
+
+  it('should return enter selection', function() {
+    chai.expect(root.data([1]).enter).to.exist;
+  });
+
+});
 
 describe('selection.select', function() {
 
@@ -75,14 +95,6 @@ describe('selection.attr', function() {
 
   it('selection.attr method should exist', function() {
     chai.expect(root.attr).to.exist;
-  });
-
-});
-
-describe('selection.data', function() {
-
-  it('selection.data method should exist', function() {
-    chai.expect(root.data).to.exist;
   });
 
 });
