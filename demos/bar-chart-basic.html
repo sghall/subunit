@@ -31,8 +31,7 @@
         var y = d3.scale.linear()
           .range([size[1], 0]);
 
-        var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
-        var material2 = new THREE.MeshPhongMaterial({color: '#666666'});
+        var material = new THREE.MeshPhongMaterial({color: '#4183c4'});
 
         x.domain(data.map(function (d) { return d.letter; }));
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
@@ -44,7 +43,7 @@
           .data(data).enter()
           .append("mesh")
           .attr("class", "bar")
-          .attr("material", material1)
+          .attr("material", material)
           .attr("geometry", function (d) {
             var w = x.rangeBand();
             var h = size[1] - y(d.frequency);
