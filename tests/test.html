@@ -19,8 +19,10 @@
       onload = function(){
         var runner = mocha.run();
         runner.on('end', function() {
-          if(!this.failures){
-            console.log(this.failures);
+          if(this.failures){
+            console.log("failures");
+          } else {
+            console.log("success");
           }
         });
       };

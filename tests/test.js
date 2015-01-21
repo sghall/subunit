@@ -38,6 +38,14 @@ describe('subunit.selectObject', function() {
     chai.expect(subunit.selectObject).to.exist;
   });
 
+  it('should return an Array', function() {
+    chai.expect(selection).to.be.instanceOf(Array);
+  });
+
+  it('should return an Array of Arrays', function() {
+    chai.expect(selection[0]).to.be.instanceOf(Array);
+  });
+
   it('Selection.node() should be a THREE.Object3D', function() {
     chai.expect(selection.node()).to.be.instanceOf(THREE.Object3D);
   });
