@@ -1,6 +1,89 @@
 (function() {
     "use strict";
-    function $$$methods$append$$append (name) {
+    function $$$methods$classed$$classed(name, value) {
+      if (arguments.length < 2) {
+
+        if (typeof name === "string") {
+          var node = this.node();
+          var n = (name = $$$methods$classed$$selection_classes(name)).length;
+          var i = -1;
+
+          if (value = node.__class__.length) {
+            while (++i < n) {
+              if (value.indexOf(name[i]) === -1) {
+                 return false;
+              }
+            }
+          }
+
+          return true;
+        }
+
+        for (value in name) {
+          this.each($$$methods$classed$$selection_classed(value, name[value]));
+        }
+
+        return this;
+      }
+
+      return this.each($$$methods$classed$$selection_classed(name, value));
+    }
+
+    // var requote_regEx = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
+
+    // function requote(s) {
+    //   return s.replace(requote_regEx, "\\$&");
+    // }
+
+    // function selection_classedRegEx(name) {
+    //   return new RegExp("(?:^|\\s+)" + requote(name) + "(?:\\s+|$)", "g");
+    // }
+
+    function $$$methods$classed$$selection_classes(name) {
+      return (name + "").trim().split(/^|\s+/);
+    }
+
+    function $$$methods$classed$$selection_classed(name, value) {
+      name = $$$methods$classed$$selection_classes(name)
+        .map($$$methods$classed$$selection_classedName);
+
+      var n = name.length;
+
+      function classedConstant() {
+        var i = -1;
+        while (++i < n) {
+          name[i](this, value);
+        }
+      }
+
+      function classedFunction() {
+        var i = -1, x = value.apply(this, arguments);
+        while (++i < n) {
+          name[i](this, x);
+        }
+      }
+
+      return typeof value === "function" ?
+        classedFunction: 
+        classedConstant;
+    }
+
+    function $$$methods$classed$$selection_classedName(name) {
+      return function(node, value) {
+        var index;
+
+        if (node.__class__) {
+          index = node.__class__.indexOf(name);
+          if (value && index === -1) {
+            return node.__class__.push(name);
+          } else if (index !== -1){
+            return delete node.__class__[index];
+          }
+        }
+
+        return;
+      };
+    }function $$$methods$append$$append (name) {
       name = $$$methods$append$$_selection_creator(name);
 
       return this.select(function() {
@@ -485,23 +568,24 @@
 
     function $$$methods$selectAll$$_selection_selectorAll(selector) {
       return typeof selector === "function" ? selector : function() {
-        return $$$core$utils$$search(this, selector, true);
+        return $$$core$utils$$search(this, selector);
       };
     }
 
     var $$core$extend_selection$$selectionMethods = {};
 
-    $$core$extend_selection$$selectionMethods.append = $$$methods$append$$append;
-    $$core$extend_selection$$selectionMethods.empty  = $$$methods$empty$$empty;
-    $$core$extend_selection$$selectionMethods.node   = $$$methods$node$$node;
-    $$core$extend_selection$$selectionMethods.call   = $$$methods$call$$call;
-    $$core$extend_selection$$selectionMethods.data   = $$$methods$data$$data;
-    $$core$extend_selection$$selectionMethods.remove = $$$methods$remove$$remove;
-    $$core$extend_selection$$selectionMethods.attr   = $$$methods$attr$$attr;
-    $$core$extend_selection$$selectionMethods.filter = $$$methods$filter$$filter;
-    $$core$extend_selection$$selectionMethods.datum  = $$$methods$datum$$datum;
-    $$core$extend_selection$$selectionMethods.each   = $$$methods$each$$each;
-    $$core$extend_selection$$selectionMethods.on     = $$$methods$on$$on;
+    $$core$extend_selection$$selectionMethods.classed = $$$methods$classed$$classed;
+    $$core$extend_selection$$selectionMethods.append  = $$$methods$append$$append;
+    $$core$extend_selection$$selectionMethods.empty   = $$$methods$empty$$empty;
+    $$core$extend_selection$$selectionMethods.node    = $$$methods$node$$node;
+    $$core$extend_selection$$selectionMethods.call    = $$$methods$call$$call;
+    $$core$extend_selection$$selectionMethods.data    = $$$methods$data$$data;
+    $$core$extend_selection$$selectionMethods.remove  = $$$methods$remove$$remove;
+    $$core$extend_selection$$selectionMethods.attr    = $$$methods$attr$$attr;
+    $$core$extend_selection$$selectionMethods.filter  = $$$methods$filter$$filter;
+    $$core$extend_selection$$selectionMethods.datum   = $$$methods$datum$$datum;
+    $$core$extend_selection$$selectionMethods.each    = $$$methods$each$$each;
+    $$core$extend_selection$$selectionMethods.on      = $$$methods$on$$on;
 
     $$core$extend_selection$$selectionMethods.select    = $$$methods$select$$select;
     $$core$extend_selection$$selectionMethods.selectAll = $$$methods$selectAll$$selectAll;
