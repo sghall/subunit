@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="controls/TrackballControls.js"></script>
+    <script src="../dist/subunit.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div style="position:absolute;left:9px;top:9px;z-index:1">
+      <h3>Earthquakes (~7,800 meshes) - WebGL Demo</h3>
+      <div id="msg">Click an earthquake...</div>
+    </div>
+    <div id="loading">Loading...</div>
+    <script src="traceur/traceur.js"></script>
+    <script src="traceur/bootstrap.js"></script>
+    <script type="module">
+
+      import { scene, canvas, renderer, camera, stats } from 'modules/scene';
+      import { raycast } from 'modules/events';
+      import { quake, move, color } from 'modules/globe/helpers';
+
+      var img = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
+        canvas.transition().duration(2000)
+          .style("opacity", 1);
+        d3.select("#loading").transition().duration(2000)
+          .style("opacity", 0).remove();
+      });
+
+      var earth = new THREE.MeshPhongMaterial({map: img, shininess: 0.5});
+
+      var magScale = d3.scale.pow().exponent(3)
+        .range([0, 150]).domain([0, 10]);
+
+      var highlight = color(10);
+
+      var controls = new THREE.TrackballControls(camera, renderer.domElement);
+      controls.rotateSpeed = 0.5;
+      controls.minDistance = 100;
+      controls.maxDistance = 6000;
+
+      d3.json('data/earthquakes.json', function (err, json) {
+
+        var root = subunit.select(scene);
+
+        var globe = root.append("mesh")
+          .attr("material", earth)
+          .attr("geometry", function () {
+            return new THREE.SphereGeometry(200, 40, 40);
+          });
+
+        globe.node().rotation.y = Math.PI;
+
+        var quakes = root.selectAll(".point")
+          .data(json).enter()
+          .append("mesh")
+          .attr("class", "point")
+          .attr("geometry", quake)
+          .attr("material", function (d) {
+            return color(d.mag);
+          })
+          .each(function (d) {
+            move(this, d.lat, d.lng);
+            this.lookAt(root.node().position);
+            this.scale.z = Math.max(magScale(d.mag), 0.1);
+            this.updateMatrix();
+          })
+          .on("click", function (event, d) {
+            d3.select("#msg").html(d.dsc);
+
+            if (this.material !== highlight) {
+              this.material = highlight;
+            } else {
+              this.material = color(d.mag);
+            }
+          });
+
+        root.node().rotation.y = Math.PI;
+        root.node().rotation.x = Math.PI / 4;
+        root.node().scale.set(2.75, 2.75, 2.75);
+
+        raycast(camera, quakes[0], 'click');
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        render();
+      }
+
+      function render() {
+        stats.update();
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>

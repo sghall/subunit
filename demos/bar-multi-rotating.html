@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="controls/TrackballControls.js"></script>
+    <script src="../dist/subunit.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
+      Rotating Bar Charts (clickable) - WebGL Demo
+    </h3>
+    <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
+    <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
+    <script type="module">
+
+      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
+      import { raycast } from 'modules/events';
+
+      d3.json('data/letters.json', function (err, data) {
+
+        canvas.style("opacity", 1);
+
+        var size = [3000, 700] // Width, Height
+
+        var x = d3.scale.ordinal()
+          .rangeRoundBands([0, size[0] + 50], 0.2, 1);
+
+        var y = d3.scale.linear()
+          .range([size[1], 0]);
+
+        var controls = new THREE.TrackballControls(camera, renderer.domElement);
+        controls.rotateSpeed = 0.5;
+        controls.minDistance = 100;
+        controls.maxDistance = 6000;
+
+        var blue = new THREE.MeshPhongMaterial({color: '#261758'});
+        var grey = new THREE.MeshPhongMaterial({color: '#666666'});
+
+        x.domain(d3.range(data.length));
+        y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+        var root = subunit.select(scene);
+        root.node().position.set(0, 0, -1500);
+
+        data = [ // Redefine the data for multiple charts
+          {
+            color: '#AA8439', 
+            data: data.sort(function (a,b) { 
+              return b.frequency - a.frequency
+            }).slice()
+          },
+          {
+            color: '#7887AB', 
+            data: data.sort(function (a,b) { 
+              return a.frequency - b.frequency
+            }).slice()
+          },
+          {
+            color: '#D4C26A', 
+            data: data.sort(function (a,b) { 
+              return b.frequency - a.frequency
+            }).slice()
+          },
+          {
+            color: '#4F628E', 
+            data: data.sort(function (a,b) { 
+              return a.frequency - b.frequency
+            }).slice()
+          }
+        ];
+
+        var container = root.append("g");
+
+        var charts = container.selectAll(".chart")
+          .data(data).enter()
+          .append("g")
+          .each(function (d, i) {
+            this.position.x = size[0] / 2;
+            this.position.y = i * size[1];
+          });
+
+        charts.append("mesh")
+          .attr("material", function (d) {
+            return new THREE.MeshPhongMaterial({color: d.color });
+          })
+          .attr("geometry", function (d) {
+            return new THREE.PlaneBufferGeometry(size[0], size[1]);
+          })
+
+        var bars = charts.selectAll(".bar")
+          .data(function (d) { return d.data; }).enter()
+          .append("mesh")
+          .attr("class", "bar")
+          .attr("material", blue)
+          .attr("geometry", function (d) {
+            var w = x.rangeBand();
+            var h = size[1] - y(d.frequency);
+            return new THREE.BoxGeometry(w, h, 5);
+          })
+          .each(function (d, i) {
+            var x0 = x(i) - (size[0] / 2);
+            var y0 = -y(d.frequency) / 2;
+            this.position.set(x0, y0, 0);
+          })
+          .on('click', function (event, d) {
+            if (this.material === blue) {
+              this.material = grey;
+            } else {
+              this.material = blue;
+            }
+          });
+
+        container.node().position.y = (-size[1] * 2) + size[1] / 2;
+        container.node().position.x = -size[0] / 2;
+
+        console.log(scene)
+        raycast(camera, d3.merge(bars), 'click');
+
+        var theta = 0;
+        var gamma = 0;
+
+        setTimeout(function () {
+          gamma = 1;
+        }, 2000);
+
+        function animate() {
+          stats.update();
+          controls.update();
+
+          if (gamma) {
+            theta += 0.003;
+
+            root.node().rotation.y = theta;
+
+            bars.each(function (d, i) {
+              this.rotation.x = theta * ((i + 1) * 4);
+            });
+          }
+
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+
+        animate();
+      });
+    </script>
+  </body>
+</html>

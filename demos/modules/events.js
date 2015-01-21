@@ -1,6 +1,6 @@
 var raycaster = new THREE.Raycaster();
 
-export function raycast(camera, selection, type) {
+export function raycast(camera, items, type) {
 
   var listener = function(event) {
     var vector = new THREE.Vector3();
@@ -15,7 +15,7 @@ export function raycast(camera, selection, type) {
 
     raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
 
-    var target = raycaster.intersectObjects(selection[0]);
+    var target = raycaster.intersectObjects(items);
 
     if (target.length) {
       target[0].type = type;

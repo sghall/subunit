@@ -8,29 +8,27 @@
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="controls/TrackballControls.js"></script>
     <script src="../dist/subunit.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <style>
-    body, html {
-      margin: 0px;
-      font-family: helvetica, arial;
-      color: #d94801;
-    }
-  </style>
   <body>
     <div style="position:absolute;left:9px;top:9px;z-index:1">
-      <h3>Earthquakes - WebGL Demo</h3>
+      <h3>Earthquakes (1000 meshes) - WebGL Demo</h3>
       <div id="msg">Click an earthquake...</div>
     </div>
+    <div id="loading">Loading...</div>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
     <script type="module">
 
-      import { scene, canvas, renderer, camera, light, stats } from 'modules/scene';
+      import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
       import { quake, move, color } from 'modules/globe/helpers';
 
       var img = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
-        canvas.transition().duration(2000).style("opacity", 1);
+        canvas.transition().duration(2000)
+          .style("opacity", 1);
+        d3.select("#loading").transition().duration(2000)
+          .style("opacity", 0).remove();
       });
 
       var earth = new THREE.MeshPhongMaterial({map: img, shininess: 0.5});
@@ -45,9 +43,9 @@
       controls.minDistance = 100;
       controls.maxDistance = 6000;
 
-      d3.json('data/earthquakes.json', function (err, data) {
+      d3.json('data/earthquakes.json', function (err, json) {
 
-        data = d3.shuffle(data).slice(0, 1000);
+        json = d3.shuffle(json).slice(0, 1000);
 
         var root = subunit.select(scene);
 
@@ -55,12 +53,12 @@
           .attr("material", earth)
           .attr("geometry", function () {
             return new THREE.SphereGeometry(200, 40, 40);
-          })
+          });
 
         globe.node().rotation.y = Math.PI;
 
         var quakes = root.selectAll(".point")
-          .data(data).enter()
+          .data(json).enter()
           .append("mesh")
           .attr("class", "point")
           .attr("geometry", quake)
@@ -87,7 +85,7 @@
         root.node().rotation.x = Math.PI / 4;
         root.node().scale.set(2.75, 2.75, 2.75);
 
-        raycast(camera, quakes, 'click');
+        raycast(camera, quakes[0], 'click');
       });
 
       function animate() {
