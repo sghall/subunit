@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/sghall/subunit",
   "devDependencies": {
+    "chai": "^1.10.0",
     "gulp": "^3.8.10",
     "gulp-jshint": "^1.9.0",
-    "gulp-shell": "^0.2.11"
+    "gulp-shell": "^0.2.11",
+    "mocha": "^2.1.0"
   }
 }
