@@ -54,6 +54,14 @@ describe('selection.selectAll', function() {
 
 });
 
+describe('selection.attr', function() {
+
+  it('selection.attr method should exist', function() {
+    chai.expect(root.attr).to.exist;
+  });
+
+});
+
 describe('selection.data', function() {
 
   it('selection.data method should exist', function() {
@@ -66,6 +74,78 @@ describe('selection.append', function() {
 
   it('selection.append method should exist', function() {
     chai.expect(root.append).to.exist;
+  });
+
+});
+
+describe('selection.datum', function() {
+
+  it('selection.datum method should exist', function() {
+    chai.expect(root.datum).to.exist;
+  });
+
+});
+
+describe('selection.call', function() {
+
+  it('selection.call method should exist', function() {
+    chai.expect(root.call).to.exist;
+  });
+
+});
+
+describe('selection.classed', function() {
+
+  it('selection.classed method should exist', function() {
+    chai.expect(root.classed).to.exist;
+  });
+
+});
+
+describe('selection.remove', function() {
+
+  it('selection.remove method should exist', function() {
+    chai.expect(root.remove).to.exist;
+  });
+
+});
+
+describe('selection.empty', function() {
+
+  it('selection.empty method should exist', function() {
+    chai.expect(root.empty).to.exist;
+  });
+
+});
+
+describe('selection.filter', function() {
+
+  it('selection.filter method should exist', function() {
+    chai.expect(root.filter).to.exist;
+  });
+
+});
+
+describe('selection.on', function() {
+
+  it('selection.on method should exist', function() {
+    chai.expect(root.on).to.exist;
+  });
+
+});
+
+describe('selection.each', function() {
+
+  it('selection.each method should exist', function() {
+    chai.expect(root.each).to.exist;
+  });
+
+});
+
+describe('selection.node', function() {
+
+  it('selection.node method should exist', function() {
+    chai.expect(root.node).to.exist;
   });
 
 });
