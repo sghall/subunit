@@ -24,14 +24,15 @@
       import { raycast } from 'modules/events';
       import { quake, move, color } from 'modules/globe/helpers';
 
-      var img = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
+      var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
           .style("opacity", 1);
+
         d3.select("#loading").transition().duration(2000)
           .style("opacity", 0).remove();
       });
 
-      var earth = new THREE.MeshPhongMaterial({map: img, shininess: 0.5});
+      var earth = new THREE.MeshPhongMaterial({map: world, shininess: 0.5});
 
       var magScale = d3.scale.pow().exponent(3)
         .range([0, 150]).domain([0, 10]);
