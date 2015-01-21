@@ -12,7 +12,7 @@
   </head>
   <body>
     <h3 style="position:absolute;left:9px;top:9px;z-index:1">
-      Rotating Bar Charts (clickable) - WebGL Demo
+      Rotating Bar (clickable bars) - WebGL Demo
     </h3>
     <script src="https://google.github.io/traceur-compiler/bin/traceur.js"></script>
     <script src="https://google.github.io/traceur-compiler/src/bootstrap.js"></script>
@@ -23,12 +23,13 @@
 
       d3.json('data/letters.json', function (err, data) {
 
-        canvas.style("opacity", 1);
+        canvas.transition().duration(500)
+          .style("opacity", 1);
 
         var size = [3000, 700] // Width, Height
 
         var x = d3.scale.ordinal()
-          .rangeRoundBands([0, size[0] + 50], 0.2, 1);
+          .rangeRoundBands([0, size[0]], 0.2);
 
         var y = d3.scale.linear()
           .range([size[1], 0]);
@@ -39,13 +40,12 @@
         controls.maxDistance = 6000;
 
         var blue = new THREE.MeshPhongMaterial({color: '#261758'});
-        var grey = new THREE.MeshPhongMaterial({color: '#666666'});
+        var grey = new THREE.MeshPhongMaterial({color: '#aaaaaa'});
 
         x.domain(d3.range(data.length));
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
         var root = subunit.select(scene);
-        root.node().position.set(0, 0, -1500);
 
         data = [ // Redefine the data for multiple charts
           {
@@ -79,18 +79,22 @@
         var charts = container.selectAll(".chart")
           .data(data).enter()
           .append("g")
+          .classed("chart", true)
           .each(function (d, i) {
-            this.position.x = size[0] / 2;
             this.position.y = i * size[1];
           });
 
         charts.append("mesh")
+          .attr("class", "backing")
           .attr("material", function (d) {
             return new THREE.MeshPhongMaterial({color: d.color });
           })
           .attr("geometry", function (d) {
             return new THREE.PlaneBufferGeometry(size[0], size[1]);
           })
+          .each(function (d, i) {
+            this.position.x = size[0] / 2;
+          });
 
         var bars = charts.selectAll(".bar")
           .data(function (d) { return d.data; }).enter()
@@ -103,7 +107,7 @@
             return new THREE.BoxGeometry(w, h, 5);
           })
           .each(function (d, i) {
-            var x0 = x(i) - (size[0] / 2);
+            var x0 = x(i) + x.rangeBand() / 2 ;
             var y0 = -y(d.frequency) / 2;
             this.position.set(x0, y0, 0);
           })
@@ -115,11 +119,14 @@
             }
           });
 
+        container.node().position.x = - size[0] / 2;
         container.node().position.y = (-size[1] * 2) + size[1] / 2;
-        container.node().position.x = -size[0] / 2;
 
-        console.log(scene)
+        camera.position.z = 2500;
+
         raycast(camera, d3.merge(bars), 'click');
+
+        console.log(scene);
 
         var theta = 0;
         var gamma = 0;
@@ -136,6 +143,10 @@
             theta += 0.003;
 
             root.node().rotation.y = theta;
+
+            charts.each(function (d, i) {
+              this.rotation.x = theta * 4;
+            });
 
             bars.each(function (d, i) {
               this.rotation.x = theta * ((i + 1) * 4);
