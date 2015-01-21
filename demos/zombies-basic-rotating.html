@@ -13,6 +13,7 @@
     <div style="position:absolute;left:9px;top:9px;z-index:1">
       <h3>50 Rotating Zombie Movies - WebGL Demo</h3>
     </div>
+    <div id="loading">Loading...</div>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
     <script type="module">
@@ -21,14 +22,18 @@
       import { uvMapper } from 'modules/sprite-uvs';
       import { sphere } from 'modules/layouts';
 
-      d3.json('data/zombies.json', function (err, data) {
-
+      var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg', null, function () {
         canvas.transition().duration(2000)
           .style("opacity", 1);
 
+        d3.select("#loading").transition().duration(2000)
+          .style("opacity", 0).remove();
+      });
+
+      d3.json('data/zombies.json', function (err, data) {
+
         var uvsMap = uvMapper(data.images);
 
-        var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg');
         var options = {map: sprite, side: THREE.DoubleSide};
         var material = new THREE.MeshLambertMaterial(options);
 
