@@ -13,13 +13,22 @@ var points = [
 
 describe('subunit.select', function() {
 
-  it('Subunit.select method should exist', function() {
+  it('subunit.select method should exist', function() {
     chai.expect(subunit.select).to.exist;
   });
 
-  it('Selection.node() should be a THREE.Object3D', function() {
+  it('should return an Array', function() {
+    chai.expect(root).to.be.instanceOf(Array);
+  });
+
+  it('should return an Array of Arrays', function() {
+    chai.expect(root[0]).to.be.instanceOf(Array);
+  });
+
+  it('selection.node() should be a THREE.Object3D', function() {
     chai.expect(root.node()).to.be.instanceOf(THREE.Object3D);
   });
+
 });
 
 describe('subunit.selectObject', function() {
