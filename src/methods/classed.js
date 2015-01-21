@@ -3,9 +3,10 @@ export function classed(name, value) {
   if (arguments.length < 2) {
 
     if (typeof name === "string") {
-      var node = this.node(),
-          n = (name = selection_classes(name)).length,
-          i = -1;
+      var node = this.node();
+      var n = (name = selection_classes(name)).length;
+      var i = -1;
+
       if (value = node.__class__.length) {
         while (++i < n) {
           if (value.indexOf(name[i]) === -1) {

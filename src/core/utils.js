@@ -29,7 +29,9 @@ export function search(node, selector) {
     return result.push(node);
   };
 
-  node.traverse(searchIterator);
+  for (var i = 0; i < node.children.length; i++) {
+    node.children[i].traverse(searchIterator);
+  }
 
   return result;
 }

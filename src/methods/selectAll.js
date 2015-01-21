@@ -19,7 +19,7 @@ export function selectAll(selector) {
 
 function _selection_selectorAll(selector) {
   return typeof selector === "function" ? selector : function() {
-    return search(this, selector, true);
+    return search(this, selector);
   };
 }
 

@@ -1,3 +1,4 @@
+import { classed } from "../methods/classed";
 import { append } from "../methods/append";
 import {  empty } from "../methods/empty";
 import {  node  } from "../methods/node";
@@ -15,17 +16,18 @@ import { selectAll } from "../methods/selectAll";
 
 var selectionMethods = {};
 
-selectionMethods.append = append;
-selectionMethods.empty  = empty;
-selectionMethods.node   = node;
-selectionMethods.call   = call;
-selectionMethods.data   = data;
-selectionMethods.remove = remove;
-selectionMethods.attr   = attr;
-selectionMethods.filter = filter;
-selectionMethods.datum  = datum;
-selectionMethods.each   = each;
-selectionMethods.on     = on;
+selectionMethods.classed = classed;
+selectionMethods.append  = append;
+selectionMethods.empty   = empty;
+selectionMethods.node    = node;
+selectionMethods.call    = call;
+selectionMethods.data    = data;
+selectionMethods.remove  = remove;
+selectionMethods.attr    = attr;
+selectionMethods.filter  = filter;
+selectionMethods.datum   = datum;
+selectionMethods.each    = each;
+selectionMethods.on      = on;
 
 selectionMethods.select    = select;
 selectionMethods.selectAll = selectAll;
