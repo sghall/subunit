@@ -1,10 +1,10 @@
 Subunit
 
-Library for D3 Selections in THREE.js
+D3 Style Selections in THREE.js
 
-Currently in very early dev mode - these are not the droids you're looking for.
+Still in very active development mode.  Lots of changes to come, so expect them.
 
-Still here?  Ok.  Check it out using bower...
+Check it out using bower...
 
 ```html
 bower install subunit
