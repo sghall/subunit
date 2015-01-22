@@ -32,3 +32,8 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize( window.innerWidth, window.innerHeight );
 }
+
+d3.select("body")
+  .append("div")
+  .attr("id", "link")
+  .html('<a href="http://github.com/sghall/subunit">SubUnit</a>');
