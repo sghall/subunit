@@ -16,7 +16,7 @@ subunit.select = function (object) {
   return root;
 };
 
-subunit.selectObject = function (object) {
+subunit.object = function (object) {
   return extend_selection([[object]]);
 };
 

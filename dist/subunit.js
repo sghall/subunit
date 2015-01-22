@@ -613,7 +613,7 @@
       return root;
     };
 
-    src$index$$subunit.selectObject = function (object) {
+    src$index$$subunit.object = function (object) {
       return $$core$extend_selection$$extend_selection([[object]]);
     };
 

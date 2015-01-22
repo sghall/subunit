@@ -31,11 +31,11 @@ describe('subunit.select', function() {
 
 });
 
-describe('subunit.selectObject', function() {
-  var selection = subunit.selectObject(root.node());
+describe('subunit.object', function() {
+  var selection = subunit.object(root.node());
 
-  it('Subunit.selectObject method should exist', function() {
-    chai.expect(subunit.selectObject).to.exist;
+  it('subunit.object method should exist', function() {
+    chai.expect(subunit.object).to.exist;
   });
 
   it('should return an Array', function() {
@@ -46,7 +46,7 @@ describe('subunit.selectObject', function() {
     chai.expect(selection[0]).to.be.instanceof(Array);
   });
 
-  it('Selection.node() should be a THREE.Object3D', function() {
+  it('selection.node() should be a THREE.Object3D', function() {
     chai.expect(selection.node()).to.be.instanceof(THREE.Object3D);
   });
 });
