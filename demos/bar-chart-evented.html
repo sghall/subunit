@@ -38,7 +38,7 @@
         x.domain(data.map(function (d) { return d.letter; }));
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-        var root = subunit.select(scene)
+        var root = SubUnit.select(scene)
         root.node().position.set(-size[0] / 2, 0, 0);
 
         var bars = root.selectAll(".bar")

@@ -22,7 +22,7 @@
 
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
-      import { quake, move, color } from 'modules/globe/helpers';
+      import { getCoords, color } from 'modules/globe/helpers';
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
@@ -32,40 +32,37 @@
           .style("opacity", 0).remove();
       });
 
+      var quake = new THREE.BoxGeometry(0.5, 0.5, 1);
+      quake.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
+
       var earth = new THREE.MeshPhongMaterial({map: world, shininess: 0.5});
+      var sphere = new THREE.SphereGeometry(200, 40, 40);
 
       var magScale = d3.scale.pow().exponent(3)
         .range([0, 150]).domain([0, 10]);
 
       var highlight = color(10);
 
-      var controls = new THREE.TrackballControls(camera, renderer.domElement);
-      controls.rotateSpeed = 0.5;
-      controls.minDistance = 100;
-      controls.maxDistance = 6000;
-
       d3.json('data/earthquakes.json', function (err, json) {
 
-        var root = subunit.select(scene);
+        var root = SubUnit.select(scene);
 
         var globe = root.append("mesh")
           .attr("material", earth)
-          .attr("geometry", function () {
-            return new THREE.SphereGeometry(200, 40, 40);
-          });
+          .attr("geometry", sphere);
 
         globe.node().rotation.y = Math.PI;
 
-        var quakes = root.selectAll(".point")
+        var quakes = root.selectAll(".quake")
           .data(json).enter()
           .append("mesh")
-          .attr("class", "point")
+          .attr("class", "quake")
           .attr("geometry", quake)
           .attr("material", function (d) {
             return color(d.mag);
           })
           .each(function (d) {
-            move(this, d.lat, d.lng);
+            this.position.copy(getCoords(d.lat, d.lng));
             this.lookAt(root.node().position);
             this.scale.z = Math.max(magScale(d.mag), 0.1);
             this.updateMatrix();
@@ -87,6 +84,11 @@
         raycast(camera, quakes[0], 'click');
       });
 
+      var cntrl = new THREE.TrackballControls(camera, renderer.domElement);
+      cntrl.rotateSpeed = 0.5;
+      cntrl.minDistance = 100;
+      cntrl.maxDistance = 6000;
+
       function animate() {
         requestAnimationFrame(animate);
         render();
@@ -94,7 +96,7 @@
 
       function render() {
         stats.update();
-        controls.update();
+        cntrl.update();
         renderer.render(scene, camera);
       }
       animate();

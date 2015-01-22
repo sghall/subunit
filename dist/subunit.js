@@ -597,13 +597,13 @@
       return object;
     }
 
-    var src$index$$subunit = {};
+    var src$index$$SubUnit = {};
 
     if ( typeof module === 'object' ) {
-      module.exports = src$index$$subunit;
+      module.exports = src$index$$SubUnit;
     }
 
-    src$index$$subunit.select = function (object) {
+    src$index$$SubUnit.select = function (object) {
       var node = typeof object === "function" ? object(): object;
       var root = $$core$extend_selection$$extend_selection([[new THREE.Object3D()]]);
       root.parentNode = node;
@@ -613,11 +613,11 @@
       return root;
     };
 
-    src$index$$subunit.object = function (object) {
+    src$index$$SubUnit.object = function (object) {
       return $$core$extend_selection$$extend_selection([[object]]);
     };
 
-    this.subunit = src$index$$subunit;
+    this.SubUnit = src$index$$SubUnit;
 }).call(this);
 
 //# sourceMappingURL=subunit.js.map

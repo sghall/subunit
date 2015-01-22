@@ -14,3 +14,9 @@ body, html {
   right: 0;
   margin: auto;
 }
+
+#link {
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+}
