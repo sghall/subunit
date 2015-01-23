@@ -14,7 +14,6 @@
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
-    <script src="controls/EditorControls.js"></script>
     <script src="../dist/subunit.js"></script>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
@@ -22,7 +21,8 @@
 
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
-      import { getCoords, color } from 'modules/globe/helpers';
+      import { getCoords, getColor } from 'modules/globe/helpers';
+      import { target, distance, update, initEvents } from 'modules/globe/events';
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
@@ -41,7 +41,7 @@
       var magScale = d3.scale.pow().exponent(3)
         .range([0, 150]).domain([0, 10]);
 
-      var highlight = color(10);
+      var highlight = getColor(10);
 
       d3.json('data/earthquakes.json', function (err, json) {
 
@@ -61,7 +61,7 @@
           .attr("class", "quake")
           .attr("geometry", quake)
           .attr("material", function (d) {
-            return color(d.mag);
+            return getColor(d.mag);
           })
           .each(function (d) {
             this.position.copy(getCoords(d.lat, d.lng));
@@ -75,33 +75,36 @@
             if (this.material !== highlight) {
               this.material = highlight;
             } else {
-              this.material = color(d.mag);
+              this.material = getColor(d.mag);
             }
           });
 
-        root.node().rotation.y = Math.PI;
-        root.node().rotation.x = Math.PI / 4;
+        root.node().rotation.y = Math.PI / 2;
         root.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, quakes[0], 'click');
-
-        var cntrl = new THREE.EditorControls(camera, canvas.node());
-        // cntrl.noPan = true;
-        // cntrl.staticMoving = true;
-        // cntrl.zoomSpeed = 0.5;
-        // cntrl.rotateSpeed = 0.5;
-        // cntrl.minDistance = 100;
-        // cntrl.maxDistance = 6000;
-        // cntrl.target = root.node().position
+        initEvents(canvas);
 
         function animate() {
           requestAnimationFrame(animate);
           render();
         }
 
+        var rotation = {x: 0, y: 0};
+
         function render() {
           stats.update();
-          // cntrl.update();
+
+          rotation.x += (target.x - rotation.x) * 0.1;
+          rotation.y += (target.y - rotation.y) * 0.1;
+
+          update((distance.t - distance.v) * 0.3);
+
+          camera.position.x = distance.v * Math.sin(rotation.x) * Math.cos(rotation.y);
+          camera.position.y = distance.v * Math.sin(rotation.y);
+          camera.position.z = distance.v * Math.cos(rotation.x) * Math.cos(rotation.y);
+          camera.lookAt(root.node().position);
+
           renderer.render(scene, camera);
         }
         animate();

@@ -13,7 +13,7 @@ var colorScale = d3.scale.quantile()
   .range(['#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
   .domain([0,10]);
 
-export var color = (function () {
+export var getColor = (function () {
   var cache = {};
 
   return function (value) {
