@@ -9,7 +9,6 @@ var targetOnDown = {x: 0, y: 0};
 
 export var distance = {v: 1000, t: 1000};
 
-var overRenderer;
 var PI_HALF = Math.PI / 2;
 
 export var initEvents = function (canvas) {
@@ -17,13 +16,7 @@ export var initEvents = function (canvas) {
   canvas
     .on('mousedown', onMouseDown)
     .on('mousewheel', onMouseWheel)
-    .on('mousedown', onMouseDown)
-    .on('mouseover', function() {
-      overRenderer = true;
-    })
-    .on('mouseout', function() {
-      overRenderer = false;
-    });
+    .on('mousedown', onMouseDown);
 
   function onMouseDown() {
     d3.event.preventDefault();
@@ -61,9 +54,7 @@ export var initEvents = function (canvas) {
 
   function onMouseWheel() {
     d3.event.preventDefault();
-    if (overRenderer) {
-      zoom(d3.event.wheelDeltaY * 0.3);
-    }
+    zoom(d3.event.wheelDeltaY * 0.3);
     return false;
   }
 
