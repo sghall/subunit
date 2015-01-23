@@ -1,6 +1,6 @@
 Subunit
 
-D3 Style Selections in THREE.js
+D3 Selections in THREE.js
 
 Still in very active development mode.  Lots of changes to come, so expect them.
 
