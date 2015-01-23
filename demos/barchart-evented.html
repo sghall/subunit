@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
-      Clickable Bar Chart - WebGL Demo
-    </h3>
+    <div id="info">
+      <h3>Clickable Bar Chart - WebGL Demo</h3>
+      <div id="msg">Click a bar...</div>
+    </div>
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
@@ -57,6 +58,8 @@
             this.position.set(x0, y0, 240);
           })
           .on('click', function (event, d) {
+            d3.select("#msg").html("Letter: " + d.letter);
+
             if (this.material === blue) {
               this.material = grey;
             } else {

@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <div style="position:absolute;left:9px;top:9px;z-index:1">
-      <h3>Selections in THREE.js (clickable bars) - WebGL Demo</h3>
-      <div id="msg">Click a bar...</div>
+    <div id="info">
+      <h3>Bar Charts Sphere - WebGL Demo</h3>
+      <div id="msg">Click the bars...</div>
     </div>
     <div id="loading">Loading...</div>
     <script src="bower_components/threejs/build/three.js"></script>
@@ -112,6 +112,8 @@
         cntrl.maxDistance = 6000;
 
         var theta = 0.003;
+
+        console.log("root: ", window.root = root)
 
         function animate() {
           stats.update();

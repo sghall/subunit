@@ -6,11 +6,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <div style="position:absolute;left:9px;top:9px;z-index:1">
-      <h3>Multiple Bar Charts - WebGL Demo</h3>
-      <div id="msg"></div>
+    <div id="info">
+      <h3>Stacked Bar Charts - WebGL Demo</h3>
+      <div id="msg">Click a bar...</div>
     </div>
-    <div id="loading">Loading...</div>
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
@@ -95,8 +94,7 @@
             this.position.set(x0, y0, 0);
           })
           .on('click', function (event, d) {
-            d3.select("#msg")
-              .html("Letter: " + d.letter);
+            d3.select("#msg").html("Letter: " + d.letter);
 
             if (this.material === color1) {
               this.material = color2;
@@ -116,6 +114,8 @@
         cntrl.rotateSpeed = 0.5;
         cntrl.minDistance = 100;
         cntrl.maxDistance = 6000;
+
+        console.log("root: ", window.root = root)
 
         function animate() {
           stats.update();

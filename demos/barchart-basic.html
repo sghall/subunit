@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <h3 style="position:absolute;left:9px;top:9px;z-index:1">
-      Basic Bar Chart - WebGL Demo
-    </h3>
+    <div id="info">
+      <h3>A Bar Chart - WebGL Demo</h3>
+      <div id="msg"></div>
+    </div>
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
@@ -60,6 +61,8 @@
           requestAnimationFrame(animate);
           renderer.render(scene, camera);
         }
+
+        console.log("root: ", window.root = root)
 
         animate();
       });
