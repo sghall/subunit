@@ -4,6 +4,8 @@ D3 Selections in THREE.js
 
 Still in very active development mode.  Lots of changes to come, so expect them.
 
+<a ref='http://www.delimited.io/blog/2015/1/21/selections-in-threejs'>Intro Blog Post</a>
+
 Check it out using bower...
 
 ```html
