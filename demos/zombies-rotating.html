@@ -6,8 +6,8 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <div style="position:absolute;left:9px;top:9px;z-index:1">
-      <h3>50 Rotating Zombie Movies - WebGL Demo</h3>
+    <div id="info">
+      <h3>Rotating Zombie Movies - WebGL Demo</h3>
     </div>
     <div id="loading">Loading...</div>
     <script src="bower_components/threejs/build/three.js"></script>
@@ -37,7 +37,7 @@
         var options = {map: sprite, side: THREE.DoubleSide};
         var material = new THREE.MeshLambertMaterial(options);
 
-        var root = subunit.select(scene);
+        var root = SubUnit.select(scene);
 
         var zombies = root.selectAll(".zombie")
           .data(data.images).enter()
@@ -53,11 +53,9 @@
               return geometry;
             })
             .each(function (d, i) {
-              var c = sphere(i, data.images.length, 750);
-
               this.scale.set(0.5, 0.5, 0.5);
-              this.position.set(c.pos.x, c.pos.y, c.pos.z);
-              this.rotation.set(c.rot.x, c.rot.y, c.rot.z);
+              this.position.copy(sphere(i, data.images.length, 750));
+              this.lookAt(root.node().position);
             });
 
         var theta = 0;
