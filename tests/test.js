@@ -178,3 +178,11 @@ describe('selection.node', function() {
   });
 
 });
+
+describe('selection.sort', function() {
+
+  it('selection.sort method should exist', function() {
+    chai.expect(root.sort).to.exist;
+  });
+
+});
