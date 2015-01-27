@@ -4,7 +4,7 @@ export function sort(comparator) {
   for (var j = -1, m = this.length; ++j < m;) {
     this[j].sort(comparator);
   }
-  return this.order();
+  return this;
 }
 
 function selection_sortComparator(comparator) {
