@@ -1,5 +1,5 @@
 var scene = new THREE.Scene();
-var root = subunit.select(scene);
+var root = SubUnit.select(scene);
 
 var points = [
   {x: 5, y: 10},
@@ -8,13 +8,13 @@ var points = [
 ];
 
 //********************************************************
-// SUBUNIT METHODS
+// SubUnit METHODS
 //********************************************************
 
-describe('subunit.select', function() {
+describe('SubUnit.select', function() {
 
-  it('subunit.select method should exist', function() {
-    chai.expect(subunit.select).to.exist;
+  it('SubUnit.select method should exist', function() {
+    chai.expect(SubUnit.select).to.exist;
   });
 
   it('should return an Array', function() {
@@ -31,11 +31,11 @@ describe('subunit.select', function() {
 
 });
 
-describe('subunit.object', function() {
-  var selection = subunit.object(root.node());
+describe('SubUnit.object', function() {
+  var selection = SubUnit.object(root.node());
 
-  it('subunit.object method should exist', function() {
-    chai.expect(subunit.object).to.exist;
+  it('SubUnit.object method should exist', function() {
+    chai.expect(SubUnit.object).to.exist;
   });
 
   it('should return an Array', function() {
