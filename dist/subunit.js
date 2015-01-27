@@ -455,6 +455,25 @@
         }
       }
       return value === null ? attrNull: (typeof value === "function" ? attrFunction: attrConstant);
+    }function $$$methods$sort$$sort(comparator) {
+      comparator = $$$methods$sort$$selection_sortComparator.apply(this, arguments);
+      for (var j = -1, m = this.length; ++j < m;) {
+        this[j].sort(comparator);
+      }
+      return this;
+    }
+
+    function $$$methods$sort$$selection_sortComparator(comparator) {
+      if (!arguments.length) {
+        comparator = $$$methods$sort$$ascending;
+      }
+      return function(a, b) {
+        return a && b ? comparator(a.__data__, b.__data__) : !a - !b;
+      };
+    }
+
+    function $$$methods$sort$$ascending(a, b) {
+      return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
     }function $$$methods$filter$$filter(fun) {
       var subgroups = [], subgroup, group, node;
 
@@ -582,6 +601,7 @@
     $$core$extend_selection$$selectionMethods.data    = $$$methods$data$$data;
     $$core$extend_selection$$selectionMethods.remove  = $$$methods$remove$$remove;
     $$core$extend_selection$$selectionMethods.attr    = $$$methods$attr$$attr;
+    $$core$extend_selection$$selectionMethods.sort    = $$$methods$sort$$sort;
     $$core$extend_selection$$selectionMethods.filter  = $$$methods$filter$$filter;
     $$core$extend_selection$$selectionMethods.datum   = $$$methods$datum$$datum;
     $$core$extend_selection$$selectionMethods.each    = $$$methods$each$$each;
