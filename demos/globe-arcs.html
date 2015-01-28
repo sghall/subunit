@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Earthquakes (1000 meshes) - WebGL Demo</h3>
+      <div id="msg">Click an earthquake...</div>
+    </div>
+    <div id="loading">Loading...</div>
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="../dist/subunit.js"></script>
+    <script src="traceur/traceur.js"></script>
+    <script src="traceur/bootstrap.js"></script>
+    <script type="module">
+
+      import { scene, canvas, renderer, camera, stats } from 'modules/scene';
+      import { raycast } from 'modules/events';
+      import { getCoords, getColor } from 'modules/globe/helpers';
+      import { target, distance, update, initEvents } from 'modules/globe/events';
+      import { arc } from 'modules/globe/arcs';
+
+      var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
+        canvas.transition().duration(2000)
+          .style("opacity", 1);
+
+        d3.select("#loading").transition().duration(2000)
+          .style("opacity", 0).remove();
+      });
+
+      var quake = new THREE.BoxGeometry(0.5, 0.5, 1);
+      quake.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
+
+      var earth = new THREE.MeshPhongMaterial({map: world, shininess: 0.5});
+      var sphere = new THREE.SphereGeometry(200, 40, 40);
+
+      var magScale = d3.scale.pow().exponent(3)
+        .range([0, 150]).domain([0, 10]);
+
+      var highlight = getColor(10);
+
+      d3.json('data/earthquakes.json', function (err, json) {
+
+        var data = d3.shuffle(json).slice(0, 1000);
+        var data = [];
+
+        var root = SubUnit.select(scene);
+
+        var globe = root.append("mesh")
+          .attr("material", earth)
+          .attr("geometry", sphere);
+
+        globe.node().rotation.y = Math.PI;
+
+        var quakes = root.selectAll(".quake")
+          .data(data).enter()
+          .append("mesh")
+          .attr("class", "quake")
+          .attr("geometry", quake)
+          .attr("material", function (d) {
+            return getColor(d.mag);
+          })
+          .each(function (d) {
+            this.position.copy(getCoords(d.lat, d.lng));
+            this.lookAt(root.node().position);
+            this.scale.z = Math.max(magScale(d.mag), 0.1);
+            this.updateMatrix();
+          })
+          .on("click", function (event, d) {
+            d3.select("#msg").html(d.dsc);
+
+            if (this.material !== highlight) {
+              this.material = highlight;
+            } else {
+              this.material = getColor(d.mag);
+            }
+          });
+
+        root.node().rotation.y = Math.PI / 2;
+        // root.node().scale.set(2.75, 2.75, 2.75);
+
+        var beg = new THREE.Vector3()
+        var end = new THREE.Vector3()
+
+        var sanFran = {lat: 37.7833, lng: -122.4167};
+        var newYork = {lat: 40.7127, lng: - 74.0059};
+
+        beg.copy(getCoords(sanFran.lat, sanFran.lng));
+        end.copy(getCoords(newYork.lat, newYork.lng));
+
+        console.log(arc(beg, end, 1));
+
+        var geometry = arc(beg, end, 1);
+
+        var material = new THREE.LineBasicMaterial({
+          color: 0x0000ff
+        });
+
+        var line = new THREE.Line(geometry, material);
+        scene.add(line);
+
+        raycast(camera, quakes[0], 'click');
+        initEvents(canvas);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          render();
+        }
+
+        var rotation = {x: 0, y: 0};
+
+        function render() {
+          stats.update();
+
+          rotation.x += (target.x - rotation.x) * 0.1;
+          rotation.y += (target.y - rotation.y) * 0.1;
+
+          update((distance.t - distance.v) * 0.3);
+
+          camera.position.x = distance.v * Math.sin(rotation.x) * Math.cos(rotation.y);
+          camera.position.y = distance.v * Math.sin(rotation.y);
+          camera.position.z = distance.v * Math.cos(rotation.x) * Math.cos(rotation.y);
+          camera.lookAt(root.node().position);
+
+          renderer.render(scene, camera);
+        }
+        animate();
+      });
+    </script>
+  </body>
+</html>
