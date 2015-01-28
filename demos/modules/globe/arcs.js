@@ -2,9 +2,9 @@
 
 var origin = new THREE.Vector3(0,0,0);
 
-export function lines( beg, end, value, type ){
+export function arc(beg, end){
 
-  var distanceBetweenCountryCenter = exporter.distanceTo(exporter);
+  var distanceBetweenCountryCenter = beg.distanceTo(end);
 
   var globeRadius = 1000;
   var anchorHeight = globeRadius + distanceBetweenCountryCenter * 0.7;
@@ -14,14 +14,14 @@ export function lines( beg, end, value, type ){
   mid.normalize();
   mid.multiplyScalar(midLength + distanceBetweenCountryCenter * 0.7 );
 
-  var normal = (new THREE.Vector3()).sub(beg,end);
+  var normal = (new THREE.Vector3()).subVectors(beg,end);
   normal.normalize();
 
   var distanceHalf = distanceBetweenCountryCenter * 0.5;
 
   var begAnchor    = beg;
-  var midbegAnchor = mid.clone().addSelf(normal.clone().multiplyScalar( distanceHalf));
-  var midEndAnchor = mid.clone().addSelf(normal.clone().multiplyScalar(-distanceHalf));
+  var midbegAnchor = mid.clone().add(normal.clone().multiplyScalar( distanceHalf));
+  var midEndAnchor = mid.clone().add(normal.clone().multiplyScalar(-distanceHalf));
   var endAnchor    = end;
 
   var splineCurveA = new THREE.CubicBezierCurve3(beg, begAnchor, midbegAnchor, mid);
@@ -33,24 +33,26 @@ export function lines( beg, end, value, type ){
   points = points.splice(0, points.length - 1);  // Avoid Duplicate
   points = points.concat(splineCurveB.getPoints(vertexCountDesired));
 
-  points.push(origin);
+  console.log("points", points)
 
-  var val = value * 0.0003;
+  // points.push(origin);
+
+  // var val = value * 0.0003;
   
-  var size = (10 + Math.sqrt(val));
-  size = constrain(size,0.1, 60);
+  // var size = (10 + Math.sqrt(val));
+  // size = constrain(size, 0.1, 60);
 
-  var curveGeometry = THREE.Curve.Utils.createLineGeometry(points);
-  curveGeometry.size = size;
+  var curveGeometry = new THREE.Geometry();
+  curveGeometry.vertices = points;
 
   return curveGeometry;
 }
 
-function constrain(v, min, max){
-  if( v < min )
-    v = min;
-  else
-  if( v > max )
-    v = max;
-  return v;
-}
+// function constrain(v, min, max){
+//   if( v < min )
+//     v = min;
+//   else
+//   if( v > max )
+//     v = max;
+//   return v;
+// }
