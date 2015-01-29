@@ -1,4 +1,4 @@
-export function append (name) {
+export function append(name) {
   name = _selection_creator(name);
 
   return this.select(function() {
@@ -7,36 +7,28 @@ export function append (name) {
 }
 
 function _selection_creator(name) {
+  var func;
+
   if (typeof name === "function") {
-    return name;
+    func = name; // SEND ANY CONSTRUCTOR
   } else if (name === "mesh") {
-    return function (data) { 
-      var node = new THREE.Mesh();
-      node.__data__ = data;
-      node.__class__ = [];
-      node.parentNode = this;
-      this.add(node);
-      return node;
-    };
+    func = THREE.Mesh;
   } else if (name === "line") {
-    return function (data) { 
-      var node = new THREE.Line();
-      node.__data__ = data;
-      node.__class__ = [];
-      node.parentNode = this;
-      this.add(node);
-      return node;
-    };
-  } else if (name === "g" || name === "object") {
-    return function (data) { 
-      var node = new THREE.Object3D();
-      node.__data__ = data;
-      node.__class__ = [];
-      node.parentNode = this;
-      this.add(node);
-      return node;
-    };
+    func = THREE.Line;
+  } else if (name === "object") {
+    func = THREE.Object3D;
+  } else if (name === "g") {
+    func = THREE.Object3D;
   } else {
     throw new Error("Cannot append: ", name);
   }
+
+  return function (data) {
+    var node = new func();
+    node.__data__   = data;
+    node.__class__  = [];
+    node.parentNode = this;
+    this.add(node);
+    return node;
+  };
 }
