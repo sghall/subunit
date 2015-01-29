@@ -18,7 +18,16 @@ function _selection_creator(name) {
       this.add(node);
       return node;
     };
-  } else if (name === "g") {
+  } else if (name === "line") {
+    return function (data) { 
+      var node = new THREE.Line();
+      node.__data__ = data;
+      node.__class__ = [];
+      node.parentNode = this;
+      this.add(node);
+      return node;
+    };
+  } else if (name === "g" || name === "object") {
     return function (data) { 
       var node = new THREE.Object3D();
       node.__data__ = data;
@@ -28,6 +37,6 @@ function _selection_creator(name) {
       return node;
     };
   } else {
-    throw new Error("The append method accepts 'mesh' or 'g' only");
+    throw new Error("Cannot append: ", name);
   }
 }
