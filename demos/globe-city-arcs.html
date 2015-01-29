@@ -61,7 +61,7 @@
           .attr("geometry", function (d) {
             var s = getCoords(d.source.lat, d.source.lng, true);
             var t = getCoords(d.target.lat, d.target.lng, true);
-            return arc(s, t);
+            return arc(s, t, 10);
           })
           .attr("material", lineMaterial)
           .on("click", function (event, d) {

@@ -34,7 +34,7 @@ export var getColor = (function () {
 
 var origin = new THREE.Vector3(0,0,0);
 
-export function arc(beg, end){
+export function arc(beg, end, detail){
 
   var distance = beg.distanceTo(end);
   
@@ -57,7 +57,7 @@ export function arc(beg, end){
   var splineCurveA = new THREE.CubicBezierCurve3(beg, begAnchor, midbegAnchor, mid);
   var splineCurveB = new THREE.CubicBezierCurve3(mid, midEndAnchor, endAnchor, end);
 
-  var vertexCount = Math.floor(distance * 0.02 + 6 ) * 10;
+  var vertexCount = Math.floor(distance * 0.02 + 6 ) * detail;
 
   var points = splineCurveA.getPoints(vertexCount);
   points = points.splice(0, points.length - 1); // Avoid Duplicate
