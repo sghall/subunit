@@ -45,7 +45,7 @@
 
       d3.json('data/random-city-pairs.json', function (err, json) {
 
-        var data = json.slice(0, 30);
+        var data = d3.shuffle(json).slice(0, 30);
 
         var root = SubUnit.select(scene);
 
@@ -58,6 +58,7 @@
         var arcs = root.selectAll(".line")
           .data(data).enter()
           .append("line")
+          .attr("class", "line")
           .attr("geometry", function (d) {
             var s = getCoords(d.source.lat, d.source.lng, true);
             var t = getCoords(d.target.lat, d.target.lng, true);
@@ -68,7 +69,7 @@
             d3.select("#msg").html(function () {
               var s = (d.source.city + ", " + d.source.country);
               var t = (d.target.city + ", " + d.target.country);
-              return ("Start: " + s + "<br/>End: " + t).toUpperCase();
+              return ("BEG: " + s + "<br/>END: " + t).toUpperCase();
             });
 
             arcs.attr("material", function (e) {
