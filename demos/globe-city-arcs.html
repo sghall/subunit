@@ -21,9 +21,8 @@
 
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
-      import { getCoords } from 'modules/globe/helpers';
+      import { getCoords, arc } from 'modules/globe/helpers';
       import { target, distance, update, initEvents } from 'modules/globe/events';
-      import { arc } from 'modules/globe/arcs';
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
