@@ -13,22 +13,34 @@ export function getCoords(lat, lng, flag) {
   return {x: x, y: y, z: z};
 }
 
-var colorScale = d3.scale.quantile()
-  .range(['#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
-  .domain([0,10]);
-
-export var getColor = (function () {
+export function materialsCache(colorScale, func) {
   var cache = {};
 
   return function (value) {
     var color = colorScale(value);
 
     if (!cache[color]) {
-      cache[color] = new THREE.MeshPhongMaterial({color: color});
+      cache[color] = new THREE.MeshPhongMaterial({color: color, shininess: 80});
     }
     return cache[color];
   };
-}())
+}
+
+
+export function lineCache(colorScale, func) {
+  var cache = {};
+
+  return function (value, size) {
+    var color = colorScale(value);
+
+    size = size || 1;
+
+    if (!cache[color]) {
+      cache[color] = new THREE.LineBasicMaterial({color: color, linewidth: size});
+    }
+    return cache[color];
+  };
+}
 
 // Reference: http://nisatapps.prio.org/armsglobe/
 
@@ -42,7 +54,7 @@ export function arc(beg, end, detail){
   var midLength = mid.length();
 
   mid.normalize();
-  mid.multiplyScalar(midLength + distance * 0.7);
+  mid.multiplyScalar(midLength + distance * 0.5);
 
   var normal = (new THREE.Vector3()).subVectors(beg, end);
   normal.normalize();
@@ -57,7 +69,7 @@ export function arc(beg, end, detail){
   var splineCurveA = new THREE.CubicBezierCurve3(beg, begAnchor, midbegAnchor, mid);
   var splineCurveB = new THREE.CubicBezierCurve3(mid, midEndAnchor, endAnchor, end);
 
-  var vertexCount = Math.floor(distance * 0.02 + 6 ) * detail;
+  var vertexCount = Math.floor(distance * 0.02 + 6) * detail;
 
   var points = splineCurveA.getPoints(vertexCount);
   points = points.splice(0, points.length - 1); // Avoid Duplicate
