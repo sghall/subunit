@@ -21,7 +21,7 @@
 
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
-      import { getCoords, getColor } from 'modules/globe/helpers';
+      import { getCoords, materialsCache } from 'modules/globe/helpers';
       import { target, distance, update, initEvents } from 'modules/globe/events';
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
@@ -35,11 +35,17 @@
       var quake = new THREE.BoxGeometry(0.5, 0.5, 1);
       quake.applyMatrix(new THREE.Matrix4().makeTranslation(0, 0, -0.5));
 
-      var earth = new THREE.MeshPhongMaterial({map: world, shininess: 0.5});
+      var earth = new THREE.MeshPhongMaterial({map: world, shininess: 50});
       var sphere = new THREE.SphereGeometry(200, 40, 40);
 
       var magScale = d3.scale.pow().exponent(3)
         .range([0, 150]).domain([0, 10]);
+
+      var colorScale = d3.scale.quantile()
+        .range(['#fff5eb','#fdd0a2','#fd8d3c','#d94801','#7f2704','#ff0000'])
+        .domain([0,10]);
+
+      var getColor = materialsCache(colorScale);
 
       var highlight = getColor(10);
 
