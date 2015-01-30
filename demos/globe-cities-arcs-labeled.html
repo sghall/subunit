@@ -24,14 +24,21 @@
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
       import { getCoords, arc, lineCache } from 'modules/globe/helpers';
-      import { target, distance, update, initEvents } from 'modules/globe/events';
+
+      canvas.style("background-color", "#333333");
+
+      var controls = new THREE.TrackballControls(camera, canvas.node());
+      controls.rotateSpeed = 0.2;
+      controls.zoomSpeed = 0.3;
+      controls.noPan = true;
+      controls.minDistance = 100;
+      controls.maxDistance = 6000;
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
-        canvas.transition().duration(2000)
-          .style("background-color", "#333333")
-          .style("opacity", 1);
+        canvas.transition().duration(3000)
+          .style("opacity", 1)
 
-        d3.select("#loading").transition().duration(2000)
+        d3.select("#loading").transition().duration(3000)
           .style("opacity", 0).remove();
       });
 
@@ -62,7 +69,7 @@
         color: '#EEEE00', linewidth: 3
       });
 
-      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 40});
+      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 30});
       var sphere = new THREE.SphereGeometry(200, 40, 40);
 
       d3.json('data/top-cities.json', function (err, cities) {
@@ -148,31 +155,20 @@
             this.position.set(max - min, 0, -5);
           });
 
-        root.node().rotation.y = Math.PI / 2;
-        root.node().scale.set(2, 2, 2);
+        root.node().rotation.y = Math.PI;
+        root.node().rotation.x = Math.PI / 6;
+        root.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, arcs[0], 'click');
-        initEvents(canvas);
 
         function animate() {
           requestAnimationFrame(animate);
           render();
         }
 
-        var rotation = {x: 0, y: 0};
-
         function render() {
           stats.update();
-
-          rotation.x += (target.x - rotation.x) * 0.1;
-          rotation.y += (target.y - rotation.y) * 0.1;
-
-          update((distance.t - distance.v) * 0.3);
-
-          camera.position.x = distance.v * Math.sin(rotation.x) * Math.cos(rotation.y);
-          camera.position.y = distance.v * Math.sin(rotation.y);
-          camera.position.z = distance.v * Math.cos(rotation.x) * Math.cos(rotation.y);
-          camera.lookAt(root.node().position);
+          controls.update();
 
           renderer.render(scene, camera);
         }

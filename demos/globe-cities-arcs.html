@@ -14,6 +14,7 @@
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="controls/TrackballControls.js"></script>
     <script src="../dist/subunit.js"></script>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
@@ -22,7 +23,13 @@
       import { scene, canvas, renderer, camera, stats } from 'modules/scene';
       import { raycast } from 'modules/events';
       import { getCoords, arc, lineCache } from 'modules/globe/helpers';
-      import { target, distance, update, initEvents } from 'modules/globe/events';
+
+      var controls = new THREE.TrackballControls(camera, canvas.node());
+      controls.rotateSpeed = 0.2;
+      controls.zoomSpeed = 0.3;
+      controls.noPan = true;
+      controls.minDistance = 100;
+      controls.maxDistance = 6000;
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
@@ -95,7 +102,6 @@
         root.node().scale.set(2, 2, 2);
 
         raycast(camera, arcs[0], 'click');
-        initEvents(canvas);
 
         function animate() {
           requestAnimationFrame(animate);
@@ -106,16 +112,7 @@
 
         function render() {
           stats.update();
-
-          rotation.x += (target.x - rotation.x) * 0.1;
-          rotation.y += (target.y - rotation.y) * 0.1;
-
-          update((distance.t - distance.v) * 0.3);
-
-          camera.position.x = distance.v * Math.sin(rotation.x) * Math.cos(rotation.y);
-          camera.position.y = distance.v * Math.sin(rotation.y);
-          camera.position.z = distance.v * Math.cos(rotation.x) * Math.cos(rotation.y);
-          camera.lookAt(root.node().position);
+          controls.update();
 
           renderer.render(scene, camera);
         }
