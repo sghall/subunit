@@ -34,7 +34,6 @@
       d3.json('data/zombies.json', function (err, data) {
 
         var controls = new THREE.TrackballControls(camera, renderer.domElement);
-
         controls.rotateSpeed = 0.5;
         controls.minDistance = 100;
         controls.maxDistance = 6000;
