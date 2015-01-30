@@ -97,7 +97,7 @@
           .each(function (d) {
             var min = this.geometry.boundingBox.min.x;
             var max = this.geometry.boundingBox.max.x;
-
+            this.scale.z = 0.25;
             this.position.set(-0.5 * (max - min), 0, 1);
           });
 
