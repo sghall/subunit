@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Selected World Cities Arcs - WebGL Demo</h3>
+      <div id="msg">Click a line...</div>
+    </div>
+    <div id="loading">Loading...</div>
+    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="../dist/subunit.js"></script>
+    <script src="traceur/traceur.js"></script>
+    <script src="traceur/bootstrap.js"></script>
+    <script type="module">
+
+      import { scene, canvas, renderer, camera, stats } from 'modules/scene';
+      import { raycast } from 'modules/events';
+      import { getCoords, arc, lineCache } from 'modules/globe/helpers';
+      import { target, distance, update, initEvents } from 'modules/globe/events';
+
+      var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
+        canvas.transition().duration(2000)
+          .style("opacity", 1);
+
+        d3.select("#loading").transition().duration(2000)
+          .style("opacity", 0).remove();
+      });
+
+      var colors = d3.scale.ordinal()
+        .range(['#542437', '#53777A', '#ECD078', '#D95B43', '#C02942', '#556270', '#4ECDC4']);
+
+      var getColor = lineCache(colors);
+
+      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 50});
+      var sphere = new THREE.SphereGeometry(200, 40, 40);
+
+      var highlight = new THREE.LineBasicMaterial({
+        color: '#EEEE00', linewidth: 3
+      });
+
+      d3.json('data/top-cities.json', function (err, cities) {
+
+        // GENERATE SOME MOCK DATA
+        var data = [];
+        for (var i = 0; i < cities.length; i+=2) {
+          for (var j = 1; j < cities.length; j+=2) {
+            if (i !== j) {
+              console.log(i, j)
+              data.push({
+                source: cities[i],
+                target: cities[j]
+              });
+            }
+          }
+        }
+
+        var root = SubUnit.select(scene);
+
+        var globe = root.append("mesh")
+          .attr("material", earth)
+          .attr("geometry", sphere);
+
+        globe.node().rotation.y = Math.PI;
+
+        var arcs = root.selectAll(".line")
+          .data(data).enter()
+          .append("line")
+          .attr("class", "line")
+          .attr("geometry", function (d) {
+            var s = getCoords(d.source.lat, d.source.lng, true);
+            var t = getCoords(d.target.lat, d.target.lng, true);
+            return arc(s, t, 10);
+          })
+          .attr("material", function (d) {
+            return getColor(d.source.name, 1.5);
+          })
+          .on("click", function (event, d) {
+            d3.select("#msg").html(function () {
+              return "BEG: " + d.source.name + "<br/>END: " + d.target.name;
+            });
+
+            arcs.attr("material", function (d) {
+              return getColor(d.source.name, 1.5);
+            });
+
+            this.material = highlight;
+          });
+
+        root.node().rotation.y = Math.PI / 2;
+        root.node().scale.set(2, 2, 2);
+
+        raycast(camera, arcs[0], 'click');
+        initEvents(canvas);
+
+        function animate() {
+          requestAnimationFrame(animate);
+          render();
+        }
+
+        var rotation = {x: 0, y: 0};
+
+        function render() {
+          stats.update();
+
+          rotation.x += (target.x - rotation.x) * 0.1;
+          rotation.y += (target.y - rotation.y) * 0.1;
+
+          update((distance.t - distance.v) * 0.3);
+
+          camera.position.x = distance.v * Math.sin(rotation.x) * Math.cos(rotation.y);
+          camera.position.y = distance.v * Math.sin(rotation.y);
+          camera.position.z = distance.v * Math.cos(rotation.x) * Math.cos(rotation.y);
+          camera.lookAt(root.node().position);
+
+          renderer.render(scene, camera);
+        }
+        animate();
+      });
+    </script>
+  </body>
+</html>
