@@ -98,8 +98,9 @@
             this.material = highlight;
           });
 
-        root.node().rotation.y = Math.PI / 2;
-        root.node().scale.set(2, 2, 2);
+        root.node().rotation.y = Math.PI;
+        root.node().rotation.x = Math.PI / 6;
+        root.node().scale.set(2.75, 2.75, 2.75);
 
         raycast(camera, arcs[0], 'click');
 

@@ -69,7 +69,7 @@
         color: '#EEEE00', linewidth: 3
       });
 
-      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 30});
+      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 5});
       var sphere = new THREE.SphereGeometry(200, 40, 40);
 
       d3.json('data/top-cities.json', function (err, cities) {
