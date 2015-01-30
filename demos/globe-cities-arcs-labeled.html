@@ -7,13 +7,15 @@
   </head>
   <body>
     <div id="info">
-      <h3>Selected World Cities Arcs - WebGL Demo</h3>
+      <h3>World Cities Arcs - WebGL Demo</h3>
       <div id="msg">Click a line...</div>
     </div>
     <div id="loading">Loading...</div>
-    <script src="bower_components/threejs/build/three.js"></script>
+    <script src="bower_components/threejs/build/three.min.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="controls/TrackballControls.js"></script>
+    <script src="fonts/kai.js"></script>
     <script src="../dist/subunit.js"></script>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
@@ -26,32 +28,51 @@
 
       var world = THREE.ImageUtils.loadTexture('images/world.jpg', null, function () {
         canvas.transition().duration(2000)
+          .style("background-color", "#333333")
           .style("opacity", 1);
 
         d3.select("#loading").transition().duration(2000)
           .style("opacity", 0).remove();
       });
 
+      var textMaterial = new THREE.MeshFaceMaterial([ 
+        new THREE.MeshPhongMaterial({color: '#ffffff', shading: THREE.FlatShading}),
+        new THREE.MeshPhongMaterial({color: '#555555', shading: THREE.SmoothShading})
+      ]);
+
+      var textOptions = {
+        size: 10,
+        height: 20,
+        curveSegments: 50,
+        font: 'kai',
+        weight: 'regular',
+        style: 'regular',
+        extrudeMaterial: 1
+      };
+
+      var circleGeometry = new THREE.CircleGeometry(3, 30); 
+      var circleMaterial = new THREE.MeshPhongMaterial({color: '#4ECDC4'});
+
       var colors = d3.scale.ordinal()
-        .range(['#542437', '#53777A', '#ECD078', '#D95B43', '#C02942', '#556270', '#4ECDC4']);
+        .range(['#594F4F','#547980','#45ADA8','#9DE0AD','#E5FCC2','#ECD078']);
 
       var getColor = lineCache(colors);
-
-      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 50});
-      var sphere = new THREE.SphereGeometry(200, 40, 40);
 
       var highlight = new THREE.LineBasicMaterial({
         color: '#EEEE00', linewidth: 3
       });
 
+      var earth  = new THREE.MeshPhongMaterial({map: world, shininess: 40});
+      var sphere = new THREE.SphereGeometry(200, 40, 40);
+
       d3.json('data/top-cities.json', function (err, cities) {
 
         // GENERATE SOME MOCK DATA
         var data = [];
+
         for (var i = 0; i < cities.length; i+=2) {
           for (var j = 1; j < cities.length; j+=2) {
             if (i !== j) {
-              console.log(i, j)
               data.push({
                 source: cities[i],
                 target: cities[j]
@@ -60,6 +81,7 @@
           }
         }
 
+        // SELECT INTO THE SCENE
         var root = SubUnit.select(scene);
 
         var globe = root.append("mesh")
@@ -68,6 +90,7 @@
 
         globe.node().rotation.y = Math.PI;
 
+        // ADD ARCS
         var arcs = root.selectAll(".line")
           .data(data).enter()
           .append("line")
@@ -82,7 +105,7 @@
           })
           .on("click", function (event, d) {
             d3.select("#msg").html(function () {
-              return "BEG: " + d.source.name + "<br/>END: " + d.target.name;
+              return d.source.name + " to " + d.target.name;
             });
 
             arcs.attr("material", function (d) {
@@ -90,6 +113,39 @@
             });
 
             this.material = highlight;
+          });
+
+        // ADD CITY CIRCLES AND LABELS
+        var cities = root.selectAll(".node")
+          .data(cities).enter()
+          .append("object")
+          .attr("class", "node")
+          .each(function (d) {
+            this.position.copy(getCoords(d.lat, d.lng));
+            this.lookAt(root.node().position);
+          });
+
+        var circles = cities.append("mesh")
+          .attr("material", circleMaterial)
+          .attr("geometry", circleGeometry)
+          .each(function (d) {
+            this.rotation.y = Math.PI;
+          });
+
+        var labels = cities.append("mesh")
+          .attr("material", textMaterial)
+          .attr("geometry", function (d) {
+            var text = new THREE.TextGeometry(d.name, textOptions);
+            text.computeBoundingBox();
+            text.computeVertexNormals();
+            return text;
+          })
+          .each(function (d) {
+            var min = this.geometry.boundingBox.min.x;
+            var max = this.geometry.boundingBox.max.x;
+            this.rotation.y = Math.PI
+            this.scale.z = 0.05;
+            this.position.set(max - min, 0, -5);
           });
 
         root.node().rotation.y = Math.PI / 2;

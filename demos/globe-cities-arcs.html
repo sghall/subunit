@@ -7,7 +7,7 @@
   </head>
   <body>
     <div id="info">
-      <h3>Selected World Cities Arcs - WebGL Demo</h3>
+      <h3>World Cities Arcs - WebGL Demo</h3>
       <div id="msg">Click a line...</div>
     </div>
     <div id="loading">Loading...</div>
@@ -51,7 +51,6 @@
         for (var i = 0; i < cities.length; i+=2) {
           for (var j = 1; j < cities.length; j+=2) {
             if (i !== j) {
-              console.log(i, j)
               data.push({
                 source: cities[i],
                 target: cities[j]
@@ -82,7 +81,7 @@
           })
           .on("click", function (event, d) {
             d3.select("#msg").html(function () {
-              return "BEG: " + d.source.name + "<br/>END: " + d.target.name;
+              return d.source.name + " to " + d.target.name;
             });
 
             arcs.attr("material", function (d) {
