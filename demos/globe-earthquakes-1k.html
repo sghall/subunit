@@ -68,7 +68,7 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var quakes = root.selectAll(".quake")
+        var quakes = root.selectAll("quake")
           .data(data).enter()
           .append("mesh")
           .attr("tags", "quake")
