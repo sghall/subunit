@@ -1,6 +1,9 @@
 (function() {
     "use strict";
     function $$$methods$classed$$classed(name, value) {
+
+      console.warn('selection.classed has been deprecated. Use selection.tagged.');
+
       if (arguments.length < 2) {
 
         if (typeof name === "string") {
@@ -8,7 +11,7 @@
           var n = (name = $$$methods$classed$$selection_classes(name)).length;
           var i = -1;
 
-          if (value = node.__class__.length) {
+          if (value = node.__tags__.length) {
             while (++i < n) {
               if (value.indexOf(name[i]) === -1) {
                  return false;
@@ -28,16 +31,6 @@
 
       return this.each($$$methods$classed$$selection_classed(name, value));
     }
-
-    // var requote_regEx = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
-
-    // function requote(s) {
-    //   return s.replace(requote_regEx, "\\$&");
-    // }
-
-    // function selection_classedRegEx(name) {
-    //   return new RegExp("(?:^|\\s+)" + requote(name) + "(?:\\s+|$)", "g");
-    // }
 
     function $$$methods$classed$$selection_classes(name) {
       return (name + "").trim().split(/^|\s+/);
@@ -72,12 +65,86 @@
       return function(node, value) {
         var index;
 
-        if (node.__class__) {
-          index = node.__class__.indexOf(name);
+        if (node.__tags__) {
+          index = node.__tags__.indexOf(name);
           if (value && index === -1) {
-            return node.__class__.push(name);
+            return node.__tags__.push(name);
           } else if (index !== -1){
-            return delete node.__class__[index];
+            return delete node.__tags__[index];
+          }
+        }
+
+        return;
+      };
+    }function $$$methods$tagged$$tagged(name, value) {
+      if (arguments.length < 2) {
+
+        if (typeof name === "string") {
+          var node = this.node();
+          var n = (name = $$$methods$tagged$$selection_tags(name)).length;
+          var i = -1;
+
+          if (value = node.__tags__.length) {
+            while (++i < n) {
+              if (value.indexOf(name[i]) === -1) {
+                 return false;
+              }
+            }
+          }
+
+          return true;
+        }
+
+        for (value in name) {
+          this.each($$$methods$tagged$$selection_tagged(value, name[value]));
+        }
+
+        return this;
+      }
+
+      return this.each($$$methods$tagged$$selection_tagged(name, value));
+    }
+
+
+    function $$$methods$tagged$$selection_tags(name) {
+      return (name + "").trim().split(/^|\s+/);
+    }
+
+    function $$$methods$tagged$$selection_tagged(name, value) {
+      name = $$$methods$tagged$$selection_tags(name)
+        .map($$$methods$tagged$$selection_taggedName);
+
+      var n = name.length;
+
+      function taggedConstant() {
+        var i = -1;
+        while (++i < n) {
+          name[i](this, value);
+        }
+      }
+
+      function taggedFunction() {
+        var i = -1, x = value.apply(this, arguments);
+        while (++i < n) {
+          name[i](this, x);
+        }
+      }
+
+      return typeof value === "function" ?
+        taggedFunction: 
+        taggedConstant;
+    }
+
+    function $$$methods$tagged$$selection_taggedName(name) {
+      return function(node, value) {
+        var index;
+
+        if (node.__tags__) {
+          index = node.__tags__.indexOf(name);
+          if (value && index === -1) {
+            return node.__tags__.push(name);
+          } else if (index !== -1){
+            return delete node.__tags__[index];
           }
         }
 
@@ -110,8 +177,8 @@
 
       return function (data) {
         var node = new func();
-        node.__data__   = data;
-        node.__class__  = [];
+        node.__data__  = data;
+        node.__tags__  = [];
         node.parentNode = this;
         this.add(node);
         return node;
@@ -144,7 +211,7 @@
           }
 
           for (var i = 0; i < classArray.length; i++) {
-            if (node.__class__.indexOf(classArray[i]) < 0) {
+            if (node.__tags__.indexOf(classArray[i]) < 0) {
               return;
             }
           }
@@ -408,8 +475,8 @@
 
     function $$$methods$data$$_selection_dataNode(data) {
       var store = {};
-      store.__data__  = data;
-      store.__class__ = [];
+      store.__data__ = data;
+      store.__tags__ = [];
       return store;
     }function $$$methods$remove$$remove() {
       return this.each(function() {
@@ -437,10 +504,10 @@
       }
 
       function attrConstant() {
-        if (name === "class") {
+        if (name === "tags" || name === "class") {
           var arr = value.split(" ");
           for (var i = 0; i < arr.length; i++) {
-            this.__class__.push(arr[i]);
+            this.__tags__.push(arr[i]);
           }
         } else {
           this[name] = value;
@@ -595,6 +662,7 @@
     var $$core$extend_selection$$selectionMethods = {};
 
     $$core$extend_selection$$selectionMethods.classed = $$$methods$classed$$classed;
+    $$core$extend_selection$$selectionMethods.tagged  = $$$methods$tagged$$tagged;
     $$core$extend_selection$$selectionMethods.append  = $$$methods$append$$append;
     $$core$extend_selection$$selectionMethods.empty   = $$$methods$empty$$empty;
     $$core$extend_selection$$selectionMethods.node    = $$$methods$node$$node;
@@ -628,8 +696,8 @@
       var node = typeof object === "function" ? object(): object;
       var root = $$core$extend_selection$$extend_selection([[new THREE.Object3D()]]);
       root.parentNode = node;
-      root[0][0].__data__  = {};
-      root[0][0].__class__ = [];
+      root[0][0].__data__ = {};
+      root[0][0].__tags__ = [];
       node.add(root[0][0]);
       return root;
     };
