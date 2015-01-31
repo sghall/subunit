@@ -26,7 +26,7 @@
 
         canvas.style("opacity", 1);
 
-        var size = [2000, 600] // Width, Height
+        var size = [1000, 600] // Width, Height
 
         var x = d3.scale.ordinal()
           .rangeRoundBands([0, size[0]], 0.1, 1);
@@ -41,7 +41,7 @@
         y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
         var textOptions = {
-          size: 100,
+          size: 50,
           height: 20,
           curveSegments: 50,
           font: 'kai',
