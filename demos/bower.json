@@ -12,6 +12,6 @@
     "d3": "~3.5.3",
     "stats.js": "*",
     "tweenjs": "*",
-    "threejs": "r69"
+    "threejs": "r70"
   }
 }
