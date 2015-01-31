@@ -196,10 +196,10 @@
       }
       return null;
     }function $$$core$utils$$search(node, selector) {
-      var result = [], classArray;
+      var result = [], tagsArray;
 
       if (typeof selector === "string") {
-        classArray = selector.replace(/\./g, " ").trim().split(" ");
+        tagsArray = selector.replace(/\./g, " ").trim().split(" ");
       }
 
       var searchIterator = function (node) {
@@ -210,8 +210,8 @@
             return;
           }
 
-          for (var i = 0; i < classArray.length; i++) {
-            if (node.__tags__.indexOf(classArray[i]) < 0) {
+          for (var i = 0; i < tagsArray.length; i++) {
+            if (node.__tags__.indexOf(tagsArray[i]) < 0) {
               return;
             }
           }
