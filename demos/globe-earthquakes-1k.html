@@ -71,7 +71,7 @@
         var quakes = root.selectAll(".quake")
           .data(data).enter()
           .append("mesh")
-          .attr("class", "quake")
+          .attr("tags", "quake")
           .attr("geometry", quake)
           .attr("material", function (d) {
             return getColor(d.mag);

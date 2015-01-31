@@ -101,7 +101,7 @@
         var arcs = root.selectAll(".line")
           .data(data).enter()
           .append("line")
-          .attr("class", "line")
+          .attr("tags", "line")
           .attr("geometry", function (d) {
             var s = getCoords(d.source.lat, d.source.lng, true);
             var t = getCoords(d.target.lat, d.target.lng, true);
@@ -126,7 +126,7 @@
         var cities = root.selectAll(".node")
           .data(cities).enter()
           .append("object")
-          .attr("class", "node")
+          .attr("tags", "node")
           .each(function (d) {
             this.position.copy(getCoords(d.lat, d.lng));
             this.lookAt(root.node().position);

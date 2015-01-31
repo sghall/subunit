@@ -74,10 +74,10 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var arcs = root.selectAll(".line")
+        var arcs = root.selectAll("line")
           .data(data).enter()
           .append("line")
-          .attr("class", "line")
+          .attr("tags", "line")
           .attr("geometry", function (d) {
             var s = getCoords(d.source.lat, d.source.lng, true);
             var t = getCoords(d.target.lat, d.target.lng, true);

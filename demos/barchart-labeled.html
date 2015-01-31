@@ -60,10 +60,10 @@
         var root = SubUnit.select(scene)
         root.node().position.set(-size[0] / 2, 0, 0);
 
-        var bars = root.selectAll(".bar")
+        var bars = root.selectAll("bar")
           .data(data).enter()
           .append("mesh")
-          .attr("class", "bar")
+          .attr("tags", "bar")
           .attr("material", blue)
           .attr("geometry", function (d) {
             var w = x.rangeBand();
@@ -86,7 +86,7 @@
           });
 
         var labels = bars.append("mesh")
-          .attr("class", "label")
+          .tagged("label", true)
           .attr("material", material)
           .attr("geometry", function (d) {
             var text = new THREE.TextGeometry(d.letter, textOptions);

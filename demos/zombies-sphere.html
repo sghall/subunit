@@ -48,7 +48,7 @@
         var zombies = root.selectAll(".zombie")
           .data(data.images).enter()
           .append("mesh")
-            .attr("class", "zombie")
+            .attr("tags", "zombie")
             .attr("material", material)
             .attr("geometry", function (d) {
               var geometry = new THREE.PlaneBufferGeometry(300, 430);

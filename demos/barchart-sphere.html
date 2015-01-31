@@ -52,10 +52,10 @@
 
         data = data.sort(function (a, b) { return b.frequency - a.frequency; });
 
-        var charts = container.selectAll(".chart")
+        var charts = container.selectAll("chart")
           .data(data).enter()
           .append("g")
-          .classed("chart", true)
+          .tagged("chart", true)
           .each(function (d, i) {
             var pos = sphere(i, data.length, 1800);
             this.position.copy(pos);
@@ -63,17 +63,17 @@
           });
 
         charts.append("mesh")
-          .attr("class", "backing")
+          .attr("tags", "backing")
           .attr("material", new THREE.MeshPhongMaterial({map: metal}))
           .attr("geometry", backing)
           .each(function (d, i) {
             this.position.x = size[0] / 2;
           });
 
-        var bars = charts.selectAll(".bar")
+        var bars = charts.selectAll("bar")
           .data(function (d) { return data; }).enter()
           .append("mesh")
-          .attr("class", "bar")
+          .attr("tags", "bar")
           .attr("material", black)
           .attr("geometry", function (d) {
             var w = x.rangeBand();
