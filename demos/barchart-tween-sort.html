@@ -57,18 +57,18 @@
         ];
 
         var root = SubUnit.select(scene);
-        var container = root.append("g");
+        var container = root.append("object");
 
-        var charts = container.selectAll(".chart")
+        var charts = container.selectAll("chart")
           .data(data).enter()
-          .append("g")
-          .classed("chart", true)
+          .append("object")
+          .tagged("chart", true)
           .each(function (d, i) {
             this.position.y = i * size[1];
           });
 
         charts.append("mesh")
-          .attr("class", "backing")
+          .attr("tags", "backing")
           .attr("material", function (d) {
             var opts = {color: d.color, map: carpet};
             return new THREE.MeshPhongMaterial(opts);
@@ -79,10 +79,10 @@
             this.position.x = size[0] / 2;
           });
 
-        var bars = charts.selectAll(".bar")
+        var bars = charts.selectAll("bar")
           .data(function (d) {return d.data;}).enter()
           .append("mesh")
-          .attr("class", "bar")
+          .attr("tags", "bar")
           .attr("material", color1)
           .attr("geometry", function (d) {
             var w = x.rangeBand();

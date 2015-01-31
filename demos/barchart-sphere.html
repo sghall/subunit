@@ -54,7 +54,7 @@
 
         var charts = container.selectAll("chart")
           .data(data).enter()
-          .append("g")
+          .append("object")
           .tagged("chart", true)
           .each(function (d, i) {
             var pos = sphere(i, data.length, 1800);

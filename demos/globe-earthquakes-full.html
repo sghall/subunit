@@ -14,7 +14,7 @@
     <script src="bower_components/threejs/build/three.js"></script>
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
-    <script src="controls/TrackballControl.js"></script>
+    <script src="controls/TrackballControls.js"></script>
     <script src="../dist/subunit.js"></script>
     <script src="traceur/traceur.js"></script>
     <script src="traceur/bootstrap.js"></script>
@@ -66,7 +66,7 @@
 
         globe.node().rotation.y = Math.PI;
 
-        var quakes = root.selectAll(".quake")
+        var quakes = root.selectAll("quake")
           .data(data).enter()
           .append("mesh")
           .attr("tags", "quake")
