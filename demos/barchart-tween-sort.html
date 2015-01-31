@@ -70,7 +70,7 @@
         charts.append("mesh")
           .attr("tags", "backing")
           .attr("material", function (d) {
-            var opts = {color: d.color, map: carpet};
+            var opts = {color: d.color, map: carpet, shininess: 100};
             return new THREE.MeshPhongMaterial(opts);
           })
           .attr("geometry", backing)
