@@ -1,4 +1,5 @@
 import { classed } from "../methods/classed";
+import { tagged } from "../methods/tagged";
 import { append } from "../methods/append";
 import {  empty } from "../methods/empty";
 import {  node  } from "../methods/node";
@@ -18,6 +19,7 @@ import { selectAll } from "../methods/selectAll";
 var selectionMethods = {};
 
 selectionMethods.classed = classed;
+selectionMethods.tagged  = tagged;
 selectionMethods.append  = append;
 selectionMethods.empty   = empty;
 selectionMethods.node    = node;

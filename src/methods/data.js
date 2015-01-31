@@ -189,7 +189,7 @@ subunit_class(Subunit_Map, {
 
 function _selection_dataNode(data) {
   var store = {};
-  store.__data__  = data;
-  store.__class__ = [];
+  store.__data__ = data;
+  store.__tags__ = [];
   return store;
 }

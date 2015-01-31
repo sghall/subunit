@@ -25,8 +25,8 @@ function _selection_creator(name) {
 
   return function (data) {
     var node = new func();
-    node.__data__   = data;
-    node.__class__  = [];
+    node.__data__  = data;
+    node.__tags__  = [];
     node.parentNode = this;
     this.add(node);
     return node;

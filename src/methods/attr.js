@@ -17,10 +17,10 @@ function _selection_attr(name, value) {
   }
 
   function attrConstant() {
-    if (name === "class") {
+    if (name === "tags" || name === "class") {
       var arr = value.split(" ");
       for (var i = 0; i < arr.length; i++) {
-        this.__class__.push(arr[i]);
+        this.__tags__.push(arr[i]);
       }
     } else {
       this[name] = value;

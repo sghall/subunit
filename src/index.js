@@ -10,8 +10,8 @@ SubUnit.select = function (object) {
   var node = typeof object === "function" ? object(): object;
   var root = extend_selection([[new THREE.Object3D()]]);
   root.parentNode = node;
-  root[0][0].__data__  = {};
-  root[0][0].__class__ = [];
+  root[0][0].__data__ = {};
+  root[0][0].__tags__ = [];
   node.add(root[0][0]);
   return root;
 };

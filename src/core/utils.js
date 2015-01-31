@@ -14,7 +14,7 @@ export function search(node, selector) {
       }
 
       for (var i = 0; i < classArray.length; i++) {
-        if (node.__class__.indexOf(classArray[i]) < 0) {
+        if (node.__tags__.indexOf(classArray[i]) < 0) {
           return;
         }
       }
