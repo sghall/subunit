@@ -7,10 +7,8 @@ Take a look at the [demos](http://www.delimited.io/demos)
 
 SubUnit is a super small library (~600 lines) that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and allows you to select into in the scene graph.
 
-<img src="img/arcs.png" height="200px"/>
-<img src="img/earthquakes.png" height="200px"/>
-<img src="img/zombies.jpg" height="200px"/>
-<img src="img/charts.png" height="200px"/>
+<img src="img/arcs.png" height="300px"/>
+<img src="img/earthquakes.png" height="300px"/>
 
 Check it out using bower...
 
