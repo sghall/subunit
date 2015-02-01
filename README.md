@@ -8,7 +8,7 @@ SubUnit is a super small library (~600 lines) that allows you to rapidly prototy
 
 <img src="img/arcs.png" height="200px"/>
 <img src="img/earthquakes.png" height="200px"/>
-<img src="img/zombies.png" height="200px"/>
+<img src="img/zombies.jpg" height="200px"/>
 <img src="img/charts.png" height="200px"/>
 
 Check it out using bower...
