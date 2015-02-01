@@ -9,7 +9,6 @@ SubUnit is a super small library (~600 lines) that allows you to rapidly prototy
 
 <img src="img/arcs.png" height="250px"/>
 <img src="img/earthquakes.png" height="250px"/>
-<img src="img/zombies.png" height="250px"/>
 
 Check it out using bower...
 
