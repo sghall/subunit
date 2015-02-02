@@ -40,12 +40,12 @@
           .append(THREE.Sprite)
           .attr("tags", "city")
           .attr("material", function (d) {
-            var text = makeSprite(d.name, "#ff0000");
+            var sprite = makeSprite(d.name, "#ff0004", 100);
 
-            d.width = text.width;
-            d.height = text.height;
+            d.width  = sprite.width;
+            d.height = sprite.height;
 
-            var material = new THREE.SpriteMaterial({map: text.map});
+            var material = new THREE.SpriteMaterial({map: sprite.map});
             material.transparent = true;
 
             return material;
