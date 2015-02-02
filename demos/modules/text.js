@@ -1,31 +1,28 @@
-export function makeSprite(text, color, textHeight) {
+var canvas = d3.select("body").append("canvas")
+  .style("display", "none");
 
-  var canvas = d3.select("body").append("canvas")
-    .style("display", "none");
+export function makeSprite(text, color) {
+  var textHeight = 200;
 
   var context = canvas.node().getContext("2d");
-  context.font = "normal " + textHeight + "px Arial";
+  context.font = "bold " + textHeight + "pt Arial";
 
   var textWidth = context.measureText(text).width;
 
-  canvas.attr({width: textWidth, height: textHeight});
+  var pad = textHeight * 0.25; // aovids cut-off g, j, y, etc.
+  canvas.attr({width: textWidth + pad, height: textHeight + pad});
 
-  context.font = "normal " + textHeight + "px Arial";
+  context.font = "bold " + textHeight + "pt Arial";
   context.textAlign    = "center";
   context.textBaseline = "middle";
   context.fillStyle    = color;
   context.fillText(text, textWidth / 2, textHeight / 2);
 
-  var texture = new THREE.Texture(canvas.node());
-  texture.needsUpdate = true;
-
-  var material = new THREE.SpriteMaterial({map: texture, useScreenCoordinates: false});
-  material.transparent = true;
-
-  canvas.remove();
+  var url = canvas.node().toDataURL();
+  var texture = THREE.ImageUtils.loadTexture(url);
 
   return {
-    material: material,
+    map: texture,
     width: textWidth,
     height: textHeight
   };
