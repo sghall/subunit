@@ -1,29 +1,35 @@
 var canvas = d3.select("body").append("canvas")
   .style("display", "none");
 
-export function makeSprite(text, color) {
-  var textHeight = 200;
+var cache = {};
 
-  var context = canvas.node().getContext("2d");
-  context.font = "bold " + textHeight + "pt Arial";
+export function makeSprite(text, color, points) {
+  var texture, context, textWidth;
 
-  var textWidth = context.measureText(text).width;
+  var pad = points * 0.5;
+  var key = text + color + points;
 
-  var pad = textHeight * 0.25; // aovids cut-off g, j, y, etc.
-  canvas.attr({width: textWidth + pad, height: textHeight + pad});
+  if (!cache[key]) {
+    context = canvas.node().getContext("2d");
+    context.font = "normal " + points + "pt Arial";
 
-  context.font = "bold " + textHeight + "pt Arial";
-  context.textAlign    = "center";
-  context.textBaseline = "middle";
-  context.fillStyle    = color;
-  context.fillText(text, textWidth / 2, textHeight / 2);
+    textWidth = context.measureText(text).width + pad;
+    canvas.attr({width: textWidth, height: points + pad});
 
-  var url = canvas.node().toDataURL();
-  var texture = THREE.ImageUtils.loadTexture(url);
+    context.font = "normal " + points + "pt Arial";
+    context.textAlign    = "center";
+    context.textBaseline = "middle";
+    context.fillStyle    = color;
+    context.fillText(text, textWidth / 2, (points + pad) / 2);
 
-  return {
-    map: texture,
-    width: textWidth,
-    height: textHeight
+    cache[key] = canvas.node().toDataURL();
+  }
+
+  texture = THREE.ImageUtils.loadTexture(cache[key]);
+
+  return { 
+    map: texture, 
+    width: textWidth, 
+    height: points + pad
   };
 }
