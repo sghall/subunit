@@ -1,15 +1,19 @@
-var canvas = d3.select("body").append("canvas")
-  .style("display", "none");
+import { memoize } from 'modules/utils';
 
 var cache = {};
 
 export function makeSprite(text, color, points) {
-  var texture, context, textWidth;
+  var canvas, texture, context, textWidth;
 
   var pad = points * 0.5;
   var key = text + color + points;
 
-  if (!cache[key]) {
+  if (cache[key]) {
+    return cache[key];
+  } else {
+    canvas = d3.select("body").append("canvas")
+      .style("display", "none");
+
     context = canvas.node().getContext("2d");
     context.font = "normal " + points + "pt Arial";
 
@@ -21,13 +25,14 @@ export function makeSprite(text, color, points) {
     context.textBaseline = "middle";
     context.fillStyle    = color;
     context.fillText(text, textWidth / 2, (points + pad) / 2);
-
-    cache[key] = canvas.node().toDataURL();
   }
 
-  texture = THREE.ImageUtils.loadTexture(cache[key]);
+  texture = new THREE.Texture(canvas.node());
+  texture.needsUpdate = true;
 
-  return { 
+  canvas.remove();
+
+  return cache[key] = { 
     map: texture, 
     width: textWidth, 
     height: points + pad
@@ -73,13 +78,10 @@ export function wrapText(text, color, points, maxWidth) {
       line = testLine;
     }
   }
-  console.log(line, pad, total)
   context.fillText(line, pad, total);
 
-  // var url = canvas.node().toDataURL();
-
   texture = new THREE.Texture(canvas.node());
-  // texture = THREE.ImageUtils.loadTexture(url);
+  texture.needsUpdate = true;
 
   canvas.remove();
 
@@ -89,6 +91,7 @@ export function wrapText(text, color, points, maxWidth) {
     height: total + (pad * 2)
   };
 }
+
 
 
 

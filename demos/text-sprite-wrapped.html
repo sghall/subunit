@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Canvas Text - WebGL Demo</h3>
+    </div>
+    <script src="bower_components/threejs/build/three.min.js"></script>
+    <script src="bower_components/stats.js/build/stats.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="controls/TrackballControls.js"></script>
+    <script src="../dist/subunit.js"></script>
+    <script src="traceur/traceur.js"></script>
+    <script src="traceur/bootstrap.js"></script>
+    <script type="module">
+
+      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
+      import { makeSprite, wrapText } from 'modules/text';
+
+      var controls = new THREE.TrackballControls(camera, canvas.node());
+      controls.rotateSpeed = 0.2;
+      controls.zoomSpeed = 0.3;
+
+      camera.position.set(0, 0, 500)
+
+      canvas.style("opacity", 1);
+
+      d3.csv('data/quotes.csv', function (err, data) {
+
+        var root = SubUnit.select(scene);
+
+        var quotes = root.selectAll("quote.node")
+          .data(data).enter()
+          .append("object")
+          .attr("tags", "quote node")
+          .each(function (d, i) {
+            this.position.set(0, i * 55 - 300, 0);
+          });
+
+        var texts = quotes.append(THREE.Sprite)
+          .attr("tags", "quote text")
+          .attr("material", function (d) {
+            var sprite = wrapText(d.quote, "#ff0004", 20, 300);
+
+            this.scale.set(sprite.width / sprite.height * 50, 50, 1);
+
+            var material = new THREE.SpriteMaterial({map: sprite.map});
+            material.transparent = true;
+
+            return material;
+          });
+
+        var names = quotes.append(THREE.Sprite)
+          .attr("tags", "quote name")
+          .attr("material", function (d) {
+            var sprite = makeSprite("-" + d.name, "#333333", 10);
+
+            this.scale.set(sprite.width / sprite.height * 10, 10, 1);
+
+            var material = new THREE.SpriteMaterial({map: sprite.map});
+            material.transparent = true;
+
+            return material;
+          });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          render();
+        }
+
+        function render() {
+          stats.update();
+          controls.update();
+
+          renderer.render(scene, camera);
+        }
+        animate();
+      });
+    </script>
+  </body>
+</html>
