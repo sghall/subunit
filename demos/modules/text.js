@@ -25,6 +25,8 @@ export function makeSprite(text, color, points) {
   texture = new THREE.Texture(canvas.node());
   texture.needsUpdate = true;
 
+  var url = canvas.node().toDataURL();
+
   canvas.remove();
 
   return { 

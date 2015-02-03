@@ -20,29 +20,32 @@
 
       import { camera, scene, canvas, renderer, stats } from 'modules/scene';
       import { labelCache, textCache } from 'modules/text';
+      import { sphere } from 'modules/layouts';
 
       var controls = new THREE.TrackballControls(camera, canvas.node());
       controls.rotateSpeed = 0.2;
       controls.zoomSpeed = 0.3;
 
-      camera.position.set(0, 0, 500)
-
-      canvas.style("opacity", 1);
-
       d3.csv('data/quotes.csv', function (err, data) {
+
+        data = data.slice(0, 20);
+
+        canvas.transition().duration(2000).style("opacity", 1);
 
         var root = SubUnit.select(scene);
 
-        var nodes = root.selectAll("quote.node")
+        var nodes = root.selectAll("node")
           .data(data).enter()
           .append("object")
-          .attr("tags", "quote node")
+          .attr("tags", "node")
           .each(function (d, i) {
-            this.position.set(0, i * 55 - 300, 0);
+            this.position.copy(sphere(i, data.length, 750));
+            this.lookAt(root.node().position);
+            this.rotation.y += Math.PI;
           });
 
         var quotes = nodes.append(THREE.Sprite)
-          .attr("tags", "quote text")
+          .attr("tags", "quote")
           .each(function (d) {
             var text = textCache(d.quote, "#ff0004", 20, 300);
 
@@ -54,7 +57,7 @@
           });
 
         var names = nodes.append(THREE.Sprite)
-          .attr("tags", "quote name")
+          .attr("tags", "name")
           .each(function (d) {
             var text = labelCache("-" + d.name, "#333333", 20);
 
@@ -64,6 +67,8 @@
             this.scale.set(text.width / text.height * 10, 10, 1);
             this.position.set(-text.width / 2, -text.height / 2, 0);
           });
+
+          console.log(nodes, quotes, names)
 
         function animate() {
           requestAnimationFrame(animate);
