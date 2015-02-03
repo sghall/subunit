@@ -19,7 +19,7 @@
     <script type="module">
 
       import { camera, scene, canvas, renderer, stats } from 'modules/scene';
-      import { makeSprite } from 'modules/text';
+      import { makeSprite, wrapText } from 'modules/text';
 
       var controls = new THREE.TrackballControls(camera, canvas.node());
       controls.rotateSpeed = 0.2;
@@ -29,7 +29,7 @@
 
       canvas.style("opacity", 1);
 
-      d3.json('data/top-cities.json', function (err, data) {
+      d3.csv('data/quotes.csv', function (err, data) {
 
         console.log(data);
 
@@ -40,7 +40,8 @@
           .append(THREE.Sprite)
           .attr("tags", "city")
           .attr("material", function (d) {
-            var sprite = makeSprite(d.name, "#ff0004", 100);
+            var text = d.quote + " -" + d.name;
+            var sprite = wrapText(text, "#ff0004", 20, 300);
 
             d.width  = sprite.width;
             d.height = sprite.height;
@@ -54,6 +55,7 @@
             var size = 50;
             this.scale.set(d.width / d.height * size, size, 1);
             this.position.set(0, i * 55 - 300, 0);
+            this.lookAt(root.node().position);
           });
 
         function animate() {
