@@ -19,7 +19,7 @@
     <script type="module">
 
       import { camera, scene, canvas, renderer, stats } from 'modules/scene';
-      import { makeSprite, wrapText } from 'modules/text';
+      import { labelCache, textCache } from 'modules/text';
 
       var controls = new THREE.TrackballControls(camera, canvas.node());
       controls.rotateSpeed = 0.2;
@@ -33,7 +33,7 @@
 
         var root = SubUnit.select(scene);
 
-        var quotes = root.selectAll("quote.node")
+        var nodes = root.selectAll("quote.node")
           .data(data).enter()
           .append("object")
           .attr("tags", "quote node")
@@ -41,30 +41,28 @@
             this.position.set(0, i * 55 - 300, 0);
           });
 
-        var texts = quotes.append(THREE.Sprite)
+        var quotes = nodes.append(THREE.Sprite)
           .attr("tags", "quote text")
-          .attr("material", function (d) {
-            var sprite = wrapText(d.quote, "#ff0004", 20, 300);
+          .each(function (d) {
+            var text = textCache(d.quote, "#ff0004", 20, 300);
 
-            this.scale.set(sprite.width / sprite.height * 50, 50, 1);
+            this.material = new THREE.SpriteMaterial({map: text.map});
+            this.material.transparent = true;
 
-            var material = new THREE.SpriteMaterial({map: sprite.map});
-            material.transparent = true;
-
-            return material;
+            this.scale.set(text.width / text.height * 50, 50, 1);
+            this.position.set(-text.width / 2, -text.height / 2, 0);
           });
 
-        var names = quotes.append(THREE.Sprite)
+        var names = nodes.append(THREE.Sprite)
           .attr("tags", "quote name")
-          .attr("material", function (d) {
-            var sprite = makeSprite("-" + d.name, "#333333", 10);
+          .each(function (d) {
+            var text = labelCache("-" + d.name, "#333333", 20);
 
-            this.scale.set(sprite.width / sprite.height * 10, 10, 1);
+            this.material = new THREE.SpriteMaterial({map: text.map});
+            this.material.transparent = true;
 
-            var material = new THREE.SpriteMaterial({map: sprite.map});
-            material.transparent = true;
-
-            return material;
+            this.scale.set(text.width / text.height * 10, 10, 1);
+            this.position.set(-text.width / 2, -text.height / 2, 0);
           });
 
         function animate() {

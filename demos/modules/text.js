@@ -1,43 +1,40 @@
 import { memoize } from 'modules/utils';
 
-var cache = {};
+export var labelCache = memoize(makeSprite);
 
 export function makeSprite(text, color, points) {
   var canvas, texture, context, textWidth;
 
   var pad = points * 0.5;
-  var key = text + color + points;
 
-  if (cache[key]) {
-    return cache[key];
-  } else {
-    canvas = d3.select("body").append("canvas")
-      .style("display", "none");
+  canvas = d3.select("body").append("canvas")
+    .style("display", "none");
 
-    context = canvas.node().getContext("2d");
-    context.font = "normal " + points + "pt Arial";
+  context = canvas.node().getContext("2d");
+  context.font = "normal " + points + "pt Arial";
 
-    textWidth = context.measureText(text).width + pad;
-    canvas.attr({width: textWidth, height: points + pad});
+  textWidth = context.measureText(text).width + pad;
+  canvas.attr({width: textWidth, height: points + pad});
 
-    context.font = "normal " + points + "pt Arial";
-    context.textAlign    = "center";
-    context.textBaseline = "middle";
-    context.fillStyle    = color;
-    context.fillText(text, textWidth / 2, (points + pad) / 2);
-  }
-
+  context.font = "normal " + points + "pt Arial";
+  context.textAlign    = "center";
+  context.textBaseline = "middle";
+  context.fillStyle    = color;
+  context.fillText(text, textWidth / 2, (points + pad) / 2);
+  
   texture = new THREE.Texture(canvas.node());
   texture.needsUpdate = true;
 
   canvas.remove();
 
-  return cache[key] = { 
+  return { 
     map: texture, 
     width: textWidth, 
     height: points + pad
   };
 }
+
+export var textCache = memoize(wrapText);
 
 export function wrapText(text, color, points, maxWidth) {
 
