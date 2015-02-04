@@ -571,7 +571,7 @@
       return arguments.length ? this.prop("__data__", value) : this.prop("__data__");
     }
     function $$$methods$each$$each(callback) {
-      return $$$methods$each$$_selection_each(this, function(node, i, j) {
+      return $$$methods$each$$_selection_each(this, function (node, i, j) {
         callback.call(node, node.__data__, i, j);
       });
     }
@@ -592,18 +592,20 @@
 
     function $$$methods$on$$selection_on(type, listener) {
 
-      var wrapped = function () {
-        return function (event) {
-          return listener.call(this, event, this.__data__);
-        };
-      };
-
-      function onRemove() {
-        this.removeEventListener(type, wrapped());
+      function onRemove(d, i, j) {
+        this.removeEventListener(type, (function () {
+          return function (event) {
+            return listener.call(this, event, this.__data__, i, j);
+          };
+        }()));
       }
 
-      function onAdd() {
-        this.addEventListener(type, wrapped());
+      function onAdd(d, i, j) {
+        this.addEventListener(type, (function () {
+          return function (event) {
+            return listener.call(this, event, this.__data__, i, j);
+          };
+        }()));
       }
 
       return listener === null ? onRemove: onAdd;
