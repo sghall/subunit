@@ -34,12 +34,12 @@ function onWindowResize() {
   renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-d3.select("#loading")
-  .append("svg").attr({width: 100, height: 100})
-  .style("margin-top", "-60px")
-  .style("margin-left", "-20px")
-  .append("circle").attr({cx: 50, cy: 50, r: 50}).style("opacity", 0)
-  .transition().duration(6000).attr("r", 0).style("opacity", 1).remove();
+// d3.select("#loading")
+//   .append("svg").attr({width: 100, height: 100})
+//   .style("margin-top", "-60px")
+//   .style("margin-left", "-20px")
+//   .append("circle").attr({cx: 50, cy: 50, r: 50}).style("opacity", 0)
+//   .transition().duration(6000).attr("r", 0).style("opacity", 1).remove();
 
 d3.select("body")
   .append("div")

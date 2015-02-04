@@ -8,8 +8,9 @@
   <body>
     <div id="info">
       <h3>Canvas Text - WebGL Demo</h3>
-      <div id="msg">Click a quote...</div>
+      <div id="msg">Click quote text or name.</div>
     </div>
+    <div id="loading">Loading...</div>
     <script src="bower_components/threejs/build/three.min.js"></script>
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
@@ -39,12 +40,14 @@
           .style("opacity", 1)
           .style("background-color", "#333");
 
+        d3.select("#loading").remove();
+
         var root = SubUnit.select(scene)
           .each(function (event, d) {
             this.scale.set(0.01, 0.01, 0.01);
 
             new TWEEN.Tween(this.scale)
-              .delay(1000)
+              .delay(500)
               .to({x: 0.275, y: 0.275, z: 0.275}, 1000)
               .start();
           });
@@ -88,14 +91,7 @@
             new TWEEN.Tween(camera.position)
               .to(temp.position, 1000)
               .start();
-          })
-          // .on("dblclick", function (event, d, i) {
-          //   var parent = this.parentNode;
-
-          //   new TWEEN.Tween(parent.rotation)
-          //     .to({z: parent.rotation.z + Math.PI / 2}, 200)
-          //     .start();
-          // });
+          });
 
         var names = nodes.append("mesh")
           .attr("tags", "name")
@@ -133,7 +129,6 @@
           });
 
         raycast(camera, quotes[0], 'click');
-        raycast(camera, quotes[0], 'dblclick');
         raycast(camera, names[0], 'click');
 
         function animate() {
