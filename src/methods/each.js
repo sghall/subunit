@@ -1,5 +1,5 @@
 export function each(callback) {
-  return _selection_each(this, function(node, i, j) {
+  return _selection_each(this, function (node, i, j) {
     callback.call(node, node.__data__, i, j);
   });
 }
