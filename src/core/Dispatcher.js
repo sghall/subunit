@@ -14,13 +14,13 @@ export function Dispatcher() {
   this._Dispatcher_pendingPayload = null;
 }
 
-Dispatcher.prototype.register=function(callback) {
+Dispatcher.prototype.register = function(callback) {
   var id = _prefix + _lastID++;
   this._Dispatcher_callbacks[id] = callback;
   return id;
 };
 
-Dispatcher.prototype.unregister=function(id) {
+Dispatcher.prototype.unregister = function(id) {
   invariant(
     this._Dispatcher_callbacks[id],
     'Dispatcher.unregister(...): `%s` does not map to a registered callback.',
@@ -29,7 +29,7 @@ Dispatcher.prototype.unregister=function(id) {
   delete this._Dispatcher_callbacks[id];
 };
 
-Dispatcher.prototype.waitFor=function(ids) {
+Dispatcher.prototype.waitFor = function(ids) {
   invariant(
     this._Dispatcher_isDispatching,
     'Dispatcher.waitFor(...): Must be invoked while dispatching.'
@@ -54,7 +54,7 @@ Dispatcher.prototype.waitFor=function(ids) {
   }
 };
 
-Dispatcher.prototype.dispatch=function(payload) {
+Dispatcher.prototype.dispatch = function (payload) {
   invariant(
     !this._Dispatcher_isDispatching,
     'Dispatch.dispatch(...): Cannot dispatch in the middle of a dispatch.'
@@ -72,17 +72,17 @@ Dispatcher.prototype.dispatch=function(payload) {
   }
 };
 
-Dispatcher.prototype.isDispatching=function() {
+Dispatcher.prototype.isDispatching = function() {
   return this._Dispatcher_isDispatching;
 };
 
-Dispatcher.prototype._Dispatcher_invokeCallback=function(id) {
+Dispatcher.prototype._Dispatcher_invokeCallback = function(id) {
   this._Dispatcher_isPending[id] = true;
   this._Dispatcher_callbacks[id](this._Dispatcher_pendingPayload);
   this._Dispatcher_isHandled[id] = true;
 };
 
-Dispatcher.prototype._Dispatcher_startDispatching=function(payload) {
+Dispatcher.prototype._Dispatcher_startDispatching = function(payload) {
   for (var id in this._Dispatcher_callbacks) {
     this._Dispatcher_isPending[id] = false;
     this._Dispatcher_isHandled[id] = false;
@@ -91,7 +91,7 @@ Dispatcher.prototype._Dispatcher_startDispatching=function(payload) {
   this._Dispatcher_isDispatching = true;
 };
 
-Dispatcher.prototype._Dispatcher_stopDispatching=function() {
+Dispatcher.prototype._Dispatcher_stopDispatching = function() {
   this._Dispatcher_pendingPayload = null;
   this._Dispatcher_isDispatching = false;
 };
