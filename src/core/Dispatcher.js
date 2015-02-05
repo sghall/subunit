@@ -1,4 +1,7 @@
 // Adapted from http://facebook.github.io/flux/
+// BSD License
+// For Flux software
+// Copyright (c) 2014, Facebook, Inc. All rights reserved.
 
 var _lastID = 1;
 var _prefix = 'ID_';
