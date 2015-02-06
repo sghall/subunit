@@ -53,7 +53,7 @@ SubUnit.createStore = function (methods) {
     this.emit('change');
   };
 
-  store.addChangeListener = function(callback) {
+  store.addChangeListener = function (callback) {
     this.on('change', callback);
   };
 
@@ -63,5 +63,44 @@ SubUnit.createStore = function (methods) {
 
   return store;
 };
+
+
+SubUnit.createView = function (parentNode, methods) {
+
+  var view = assign(new SubUnitView(), methods);
+
+  function SubUnitView () {
+    this.state = {};
+    this.root  = new THREE.Object3D();
+
+    parentNode.add(this.root);
+
+    this.render = function () {};
+
+    this.setState = function (data) {
+      this.state = data;
+      this.render();
+    };
+  };
+
+  if (!view.getInitialState) {
+    console.warn('SubUnit view must have getIntialState method');
+  } else {
+    view.setState(view.getInitialState());
+  }
+
+  if (view.viewDidMount) {
+    view.viewDidMount.call(view);
+  }
+
+  if (!view.render || typeof view.render !== 'function') {
+    console.warn('SubUnit view must have render method');
+  } else {
+    view.render();
+  }
+
+  return view;
+};
+
 
 this.SubUnit = SubUnit;
