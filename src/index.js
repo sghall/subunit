@@ -64,34 +64,33 @@ SubUnit.createStore = function (methods) {
   return store;
 };
 
+function SubUnitView (parent) {
+  this.state = {};
+
+  var node = new THREE.Object3D();
+  this.parentNode = parent;
+  this.parentNode.add(node);
+
+  this.root = SubUnit.object(node);
+}
+
+SubUnitView.prototype.render = function () {};
+
+SubUnitView.prototype.setState = function (data) {
+  this.state = data;
+  this.render();
+};
+
+SubUnitView.prototype.remove = function () {
+  if (this.viewWillUnmount && typeof this.viewWillUnmount === 'function') {
+    this.viewWillUnmount();
+  }
+  this.parentNode.remove(this.root.node());
+};
 
 SubUnit.createView = function (parent, methods) {
 
-  var view = assign(new SubUnitView(), methods);
-
-  function SubUnitView () {
-    this.state = {};
-
-    var node = new THREE.Object3D();
-    this.parentNode = parent;
-    this.parentNode.add(node);
-
-    this.root = SubUnit.object(node);
-  }
-
-  SubUnitView.prototype.render = function () {};
-
-  SubUnitView.prototype.setState = function (data) {
-    this.state = data;
-    this.render();
-  };
-
-  SubUnitView.prototype.remove = function () {
-    if (view.viewWillUnmount && typeof view.viewWillUnmount === 'function') {
-      view.viewWillUnmount();
-    }
-    this.parentNode.remove(this.root.node());
-  };
+  var view = assign(new SubUnitView(parent), methods);
 
   if (!view.getInitialState || typeof view.getInitialState !== 'function') {
     console.warn('SubUnit view must have a getInitialState method');
