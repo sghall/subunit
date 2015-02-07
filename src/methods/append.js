@@ -1,7 +1,7 @@
 export function append(name) {
   name = _selection_creator(name);
 
-  return this.select(function() {
+  return this.select(function () {
     return name.apply(this, arguments);
   });
 }

@@ -112,5 +112,4 @@ SubUnit.createView = function (parent, methods) {
   return view;
 };
 
-
 this.SubUnit = SubUnit;
