@@ -65,36 +65,46 @@ SubUnit.createStore = function (methods) {
 };
 
 
-SubUnit.createView = function (parentNode, methods) {
+SubUnit.createView = function (parent, methods) {
 
   var view = assign(new SubUnitView(), methods);
 
   function SubUnitView () {
     this.state = {};
-    this.root  = new THREE.Object3D();
 
-    parentNode.add(this.root);
+    var node = new THREE.Object3D();
+    this.parentNode = parent;
+    this.parentNode.add(node);
 
-    this.render = function () {};
+    this.root = SubUnit.object(node);
+  }
 
-    this.setState = function (data) {
-      this.state = data;
-      this.render();
-    };
+  SubUnitView.prototype.render = function () {};
+
+  SubUnitView.prototype.setState = function (data) {
+    this.state = data;
+    this.render();
   };
 
-  if (!view.getInitialState) {
-    console.warn('SubUnit view must have getIntialState method');
+  SubUnitView.prototype.remove = function () {
+    if (view.viewWillUnmount && typeof view.viewWillUnmount === 'function') {
+      view.viewWillUnmount();
+    }
+    this.parentNode.remove(this.root.node());
+  };
+
+  if (!view.getInitialState || typeof view.getInitialState !== 'function') {
+    console.warn('SubUnit view must have a getInitialState method');
   } else {
     view.setState(view.getInitialState());
   }
 
-  if (view.viewDidMount) {
-    view.viewDidMount.call(view);
+  if (view.viewDidMount && typeof view.viewDidMount === 'function') {
+    view.viewDidMount();
   }
 
   if (!view.render || typeof view.render !== 'function') {
-    console.warn('SubUnit view must have render method');
+    console.warn('SubUnit view must have a render method');
   } else {
     view.render();
   }
