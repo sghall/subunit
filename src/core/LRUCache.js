@@ -158,7 +158,7 @@ LRUCache.prototype.reset = function () {
     }
   }
 
-  this._cache = Object.create(null);    //items by key
+  this._cache = Object.create(null);   //items by key
   this._lruList = Object.create(null); // items in order (use recency)
   this._mru = 0;    // most recently used
   this._lru = 0;    // least recently used
