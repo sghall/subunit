@@ -112,6 +112,10 @@ SubUnit.createView = function (parent, methods) {
 
 // adapted from memoize.js by @philogb and @addyosmani
 SubUnit.cache = function (max, fn) {
+  if (!fn) {
+    throw new Error("SubUnit.cache: max and function are required (max, fn)");
+  }
+
   return function () {
     var args = Array.prototype.slice.call(arguments);
 
