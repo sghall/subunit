@@ -75,7 +75,9 @@ SubUnitView.prototype.render = function () {};
 
 SubUnitView.prototype.setState = function (data) {
   this.state = data;
-  this.render();
+
+  var render = this.render.bind(this);
+  setTimeout(render, 0);
 };
 
 SubUnitView.prototype.remove = function () {
@@ -119,17 +121,17 @@ SubUnit.cache = function (max, fn) {
       cur = args[len];
       key += (cur === Object(cur))? JSON.stringify(cur): cur;
 
-      if (!fn.memoize) {
-        fn.memoize = new LRUCache({max: max});
+      if (!fn.lrucache) {
+        fn.lrucache = new LRUCache({max: max});
       }
     }
 
-    if (entry = fn.memoize.get(key)) {
+    if (entry = fn.lrucache.get(key)) {
       return entry;
     }
 
     entry = fn.apply(this, args);
-    fn.memoize.set(key, entry);
+    fn.lrucache.set(key, entry);
 
     return entry;
   };
