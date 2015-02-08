@@ -2,12 +2,9 @@ import { extend_selection } from "./core/extend_selection";
 import { Dispatcher } from './core/Dispatcher';
 import { EventEmitter } from './core/EventEmitter';
 import { assign } from './core/utils';
+import { LRUCache } from './core/LRUCache';
 
 var SubUnit = {};
-
-if ( typeof module === 'object' ) {
-  module.exports = SubUnit;
-}
 
 SubUnit.select = function (object) {
   var node = typeof object === "function" ? object(): object;
@@ -111,4 +108,66 @@ SubUnit.createView = function (parent, methods) {
   return view;
 };
 
-this.SubUnit = SubUnit;
+// adapted from memoize.js by @philogb and @addyosmani
+SubUnit.cache = function (max, fn) {
+  return function () {
+    var args = Array.prototype.slice.call(arguments);
+
+    var key = "", len = args.length, cur = null, entry;
+
+    while (len--) {
+      cur = args[len];
+      key += (cur === Object(cur))? JSON.stringify(cur): cur;
+
+      if (!fn.memoize) {
+        fn.memoize = new LRUCache({max: max});
+      }
+    }
+
+    if (entry = fn.memoize.get(key)) {
+      return entry;
+    }
+
+    entry = fn.apply(this, args);
+    fn.memoize.set(key, entry);
+
+    return entry;
+  };
+};
+
+SubUnit.lru = function (max) {
+  max = max || 0;
+
+  return new LRUCache({max: max});
+};
+
+// adapted from memoize.js by @philogb and @addyosmani
+SubUnit.memoize = function (fn) {
+  return function () {
+    var args = Array.prototype.slice.call(arguments);
+
+    var key = "", len = args.length, cur = null;
+
+    while (len--) {
+      cur = args[len];
+      key += (cur === Object(cur))? JSON.stringify(cur): cur;
+
+      if (!fn.memoize) {
+        fn.memoize = {};
+      }
+    }
+
+    return (key in fn.memoize)? fn.memoize[key]:
+    fn.memoize[key] = fn.apply(this, args);
+  };
+};
+
+if (typeof define === "function" && define.amd) {
+  define(this.SubUnit = SubUnit); 
+}
+else if (typeof module === "object" && module.exports) {
+  module.exports = SubUnit; 
+}
+else {
+ this.SubUnit = SubUnit;
+}
