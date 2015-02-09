@@ -91,9 +91,7 @@ SubUnit.createView = function (parent, methods) {
 
   var view = assign(new SubUnitView(parent), methods);
 
-  if (!view.getInitialState || typeof view.getInitialState !== 'function') {
-    console.warn('SubUnit view must have a getInitialState method');
-  } else {
+  if (view.getInitialState || typeof view.getInitialState === 'function') {
     view.setState(view.getInitialState());
   }
 
