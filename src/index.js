@@ -69,6 +69,7 @@ function SubUnitView (parent) {
   this.parentNode.add(node);
 
   this.root = SubUnit.object(node);
+  this.events = {};
 }
 
 SubUnitView.prototype.render = function () {};
