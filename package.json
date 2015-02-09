@@ -1,6 +1,6 @@
 {
   "name": "subunit",
-  "version": "v0.1.3",
+  "version": "v0.2.4",
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
