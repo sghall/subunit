@@ -53,12 +53,12 @@ var width = 960,
 
 var square = d3.selectAll("g")
   .append("g")
-  //   .attr("transform", function(d, i) { return i ? "rotate(180)" : null; })
-  // .selectAll("rect")
-  //   .data(d3.range(squareCount))
-  // .enter().append("rect")
-  //   .datum(function(i) { return i / squareCount; })
-  //   .attr({width: squareSize, height: squareSize, x: -squareSize / 2, y: -squareSize / 2});
+    .attr("transform", function(d, i) { return i ? "rotate(180)" : null; })
+  .selectAll("rect")
+    .data(d3.range(squareCount))
+  .enter().append("rect")
+    .datum(function(i) { return i / squareCount; })
+    .attr({width: squareSize, height: squareSize, x: -squareSize / 2, y: -squareSize / 2});
 
 console.log("square", square)
 // d3.timer(function(elapsed) {
@@ -85,10 +85,10 @@ console.log("square", square)
         .tagged("frame", true)
         .each(function (d, i) {
           this.rotation.z = i ? Math.PI: 0;
-        });
-      //   .selectAll("rect")
-      //     .data(d3.range(squareCount))
-      //   .enter().append("mesh")
+        })
+        .selectAll("rect")
+          .data(d3.range(squareCount))
+        .enter().append("mesh")
       //   .datum(function(i) { return i / squareCount; })
       //   .attr({
       //     width: squareSize, 
