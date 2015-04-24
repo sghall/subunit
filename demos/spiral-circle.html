@@ -89,7 +89,7 @@ console.log("square", square)
         .selectAll("rect")
           .data(d3.range(squareCount))
         .enter().append("mesh")
-      //   .datum(function(i) { return i / squareCount; })
+        .datum(function(i) { return i / squareCount; })
       //   .attr({
       //     width: squareSize, 
       //     height: squareSize, 

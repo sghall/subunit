@@ -4,7 +4,7 @@ var shell  = require('gulp-shell');
 
 gulp.task('convert', function () {
   return gulp.src('src/index.js')
-    .pipe(shell('compile-modules convert src/index.js -o dist/subunit.js'))
+    .pipe(shell('babel src/index.js -o dist/subunit.js'))
 });
 
 gulp.task('lint', function() {
