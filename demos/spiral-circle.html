@@ -37,6 +37,16 @@
     <script src="bower_components/stats.js/build/stats.min.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="controls/TrackballControls.js"></script>
+    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
+    <script src="../node_modules/babel-core/browser.js"></script>
     <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+      System.config({
+        baseURL: '/',
+        transpiler: 'babel'
+      });
+      System.import('../../src/index')
+    </script>
+
   </body>
 </html>
