@@ -56,7 +56,7 @@ import { SubUnit } from '../../src/index';
       var speed        = 0.08;
 
       var options = {color: 'tomato', side: THREE.DoubleSide};
-      var material = new THREE.MeshLambertMaterial(options);
+      var material = new THREE.MeshPhongMaterial(options);
       var geometry = new THREE.PlaneBufferGeometry(squareSize, squareSize);
 
       var root = SubUnit.select(scene);
@@ -80,8 +80,12 @@ import { SubUnit } from '../../src/index';
         });
 
         d3.timer(function(elapsed) {
-          square
-              .attr("transform", function(t) { return "rotate(" + (t * 360) + ")translate(0," + circleRadius + ")rotate(" + (t * 360 + elapsed * speed) + ")"; });
+          squares.each(function(d) { 
+            // console.log(elapsed)
+            this.rotation.z += d * (2 * Math.PI);
+            // return "rotate(" + (t * 360) + ")translate(0," + 
+            // circleRadius + ")rotate(" + (t * 360 + elapsed * speed) + ")"; 
+          });
         });
 
 
