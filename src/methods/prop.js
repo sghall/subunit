@@ -1,5 +1,5 @@
 export function prop(name, value) {
-  console.log(name, value, "dfsdfsdfsdf");
+
   if (arguments.length < 2) {
 
     if (typeof name === "string") {

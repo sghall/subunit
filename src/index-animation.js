@@ -3,18 +3,21 @@ import { Dispatcher } from './core/Dispatcher';
 import { EventEmitter } from './core/EventEmitter';
 import { assign } from './core/utils';
 import { LRUCache } from './core/LRUCache';
+import { SubUnitArray } from './SubUnitArray';
 
 export var SubUnit = {};
 
 SubUnit.select = function (object) {
   var node = typeof object === "function" ? object(): object;
-  var root = extend_selection([[new THREE.Object3D()]]);
+  var root = extend_selection([[{children:[]}]]);
   root.parentNode = node;
   root[0][0].__data__ = {};
   root[0][0].__tags__ = [];
-  node.add(root[0][0]);
+  node.children.push(root[0][0]);
   return root;
 };
+
+SubUnit.Array = SubUnitArray;
 
 SubUnit.object = function (object) {
   return extend_selection([[object]]);
@@ -167,6 +170,7 @@ SubUnit.memoize = function (fn) {
   };
 };
 
+window.SubUnit = SubUnit;
 // if (typeof define === "function" && define.amd) {
 //   define(this.SubUnit = SubUnit); 
 // }

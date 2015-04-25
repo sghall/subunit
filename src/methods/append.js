@@ -28,7 +28,7 @@ function _selection_creator(name) {
     node.__data__  = data;
     node.__tags__  = [];
     node.parentNode = this;
-    this.add(node);
+    this.children.push(node);
     return node;
   };
 }
