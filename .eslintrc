@@ -8,6 +8,7 @@
     	"no-multi-spaces": false,
     	"quotes": "single",
 		  "no-cond-assign": false,
-      "no-underscore-dangle": false
+      "no-underscore-dangle": false,
+      "no-use-before-define": false
     }
 }

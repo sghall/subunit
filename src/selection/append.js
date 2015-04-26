@@ -1,14 +1,14 @@
 import THREE from 'THREE';
 
 export function append(name) {
-  name = _selection_creator(name);
+  name = selectionCreator(name);
 
   return this.select(function () {
     return name.apply(this, arguments);
   });
 }
 
-function _selection_creator(name) {
+function selectionCreator(name) {
   var func;
 
   if (typeof name === "function") {
