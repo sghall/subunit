@@ -24,10 +24,11 @@
     "gulp-jshint": "^1.9.0",
     "gulp-shell": "^0.2.11",
     "mocha": "^2.1.0",
-    "systemjs": "^0.16.8"
+    "systemjs": "^0.16.8",
+    "tween.js": "^0.14.0",
+    "d3": "^3.5.5"
   },
   "dependencies": {
-    "d3": "^3.5.5",
     "three": "^0.71.0"
   }
 }

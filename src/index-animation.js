@@ -169,14 +169,3 @@ SubUnit.memoize = function (fn) {
     fn.memoize[key] = fn.apply(this, args);
   };
 };
-
-window.SubUnit = SubUnit;
-// if (typeof define === "function" && define.amd) {
-//   define(this.SubUnit = SubUnit); 
-// }
-// else if (typeof module === "object" && module.exports) {
-//   module.exports = SubUnit; 
-// }
-// else {
-//  this.SubUnit = SubUnit;
-// }
