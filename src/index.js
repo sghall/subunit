@@ -3,6 +3,7 @@ import { Dispatcher } from './core/Dispatcher';
 import { EventEmitter } from './core/EventEmitter';
 import { assign } from './core/utils';
 import { LRUCache } from './core/LRUCache';
+import THREE from 'THREE';
 
 export var SubUnit = {};
 

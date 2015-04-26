@@ -1,3 +1,5 @@
+import THREE from 'THREE';
+
 export function append(name) {
   name = _selection_creator(name);
 
