@@ -4,7 +4,7 @@ export function tagged(name, value) {
 
     if (typeof name === "string") {
       var node = this.node();
-      var n = (name = selection_tags(name)).length;
+      var n = (name = selectionTags(name)).length;
       var i = -1;
 
       if (value = node.__tags__.length) {
@@ -19,23 +19,23 @@ export function tagged(name, value) {
     }
 
     for (value in name) {
-      this.each(selection_tagged(value, name[value]));
+      this.each(selectionTagged(value, name[value]));
     }
 
     return this;
   }
 
-  return this.each(selection_tagged(name, value));
+  return this.each(selectionTagged(name, value));
 }
 
 
-function selection_tags(name) {
+function selectionTags(name) {
   return (name + "").trim().split(/^|\s+/);
 }
 
-function selection_tagged(name, value) {
-  name = selection_tags(name)
-    .map(selection_taggedName);
+function selectionTagged(name, value) {
+  name = selectionTags(name)
+    .map(selectionTaggedName);
 
   var n = name.length;
 
@@ -54,11 +54,11 @@ function selection_tagged(name, value) {
   }
 
   return typeof value === "function" ?
-    taggedFunction: 
+    taggedFunction:
     taggedConstant;
 }
 
-function selection_taggedName(name) {
+function selectionTaggedName(name) {
   return function(node, value) {
     var index;
 
@@ -71,6 +71,6 @@ function selection_taggedName(name) {
       }
     }
 
-    return;
+    return null;
   };
 }

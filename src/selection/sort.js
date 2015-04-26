@@ -1,13 +1,13 @@
 
 export function sort(comparator) {
-  comparator = selection_sortComparator.apply(this, arguments);
-  for (var j = -1, m = this.length; ++j < m;) {
+  comparator = selectionSortComparator.apply(this, arguments);
+  for (var j = -1, m = this.length; ++j < m; ) {
     this[j].sort(comparator);
   }
   return this;
 }
 
-function selection_sortComparator(comparator) {
+function selectionSortComparator(comparator) {
   if (!arguments.length) {
     comparator = ascending;
   }
