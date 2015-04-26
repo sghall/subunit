@@ -7,6 +7,7 @@
     	"strict": 0,
     	"no-multi-spaces": false,
     	"quotes": "single",
-		  "no-cond-assign": false
+		  "no-cond-assign": false,
+      "no-underscore-dangle": false
     }
 }

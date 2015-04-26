@@ -7,8 +7,8 @@ import "../selection/selection";
 import "../selection/transition";
 import "../selection/interrupt";
 
-function d3_transition(groups, ns, id) {
-  d3_subclass(groups, d3_transitionPrototype);
+export function subUnitTransition(groups, ns, id) {
+  d3_subclass(groups, subUnitTransitionPrototype);
 
   // Note: read-only!
   groups.namespace = ns;
@@ -17,23 +17,23 @@ function d3_transition(groups, ns, id) {
   return groups;
 }
 
-var d3_transitionPrototype = [],
-    d3_transitionId = 0,
-    d3_transitionInheritId,
-    d3_transitionInherit;
+var subUnitTransitionPrototype = [],
+    subUnitTransitionId = 0,
+    subUnitTransitionInheritId,
+    subUnitTransitionInherit;
 
-d3_transitionPrototype.call = d3_selectionPrototype.call;
-d3_transitionPrototype.empty = d3_selectionPrototype.empty;
-d3_transitionPrototype.node = d3_selectionPrototype.node;
-d3_transitionPrototype.size = d3_selectionPrototype.size;
+subUnitTransitionPrototype.call = d3_selectionPrototype.call;
+subUnitTransitionPrototype.empty = d3_selectionPrototype.empty;
+subUnitTransitionPrototype.node = d3_selectionPrototype.node;
+subUnitTransitionPrototype.size = d3_selectionPrototype.size;
 
 d3.transition = function(selection, name) {
   return selection && selection.transition
-      ? (d3_transitionInheritId ? selection.transition(name) : selection)
+      ? (subUnitTransitionInheritId ? selection.transition(name) : selection)
       : d3.selection().transition(selection);
 };
 
-d3.transition.prototype = d3_transitionPrototype;
+d3.transition.prototype = subUnitTransitionPrototype;
 
 import "select";
 import "selectAll";
@@ -49,11 +49,11 @@ import "each";
 import "subtransition";
 import "tween";
 
-function d3_transitionNamespace(name) {
+function subUnitTransitionNamespace(name) {
   return name == null ? "__transition__" : "__transition_" + name + "__";
 }
 
-function d3_transitionNode(node, i, ns, id, inherit) {
+function subUnitTransitionNode(node, i, ns, id, inherit) {
   var lock = node[ns] || (node[ns] = {active: 0, count: 0}),
       transition = lock[id];
 
