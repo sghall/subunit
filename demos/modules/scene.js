@@ -1,3 +1,6 @@
+import d3 from 'd3';
+import THREE from 'THREE';
+
 export var canvas = d3.select("#canvas").append("canvas")
   .attr("width", window.innerWidth)
   .attr("height", window.innerHeight)
@@ -18,11 +21,6 @@ export var scene = new THREE.Scene();
 export var light = new THREE.HemisphereLight('#ffffff', '#666666', 1.5);
 light.position.set(0, 3000, 0);
 scene.add(light);
-
-export var stats = new Stats();
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.bottom = '45px';
-document.body.appendChild(stats.domElement);
 
 window.addEventListener('resize', onWindowResize, false);
 

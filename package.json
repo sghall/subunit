@@ -25,5 +25,9 @@
     "gulp-shell": "^0.2.11",
     "mocha": "^2.1.0",
     "systemjs": "^0.16.8"
+  },
+  "dependencies": {
+    "d3": "^3.5.5",
+    "three": "^0.71.0"
   }
 }

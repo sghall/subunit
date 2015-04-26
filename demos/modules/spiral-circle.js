@@ -1,5 +1,7 @@
 import { camera, scene, canvas, renderer, stats } from './scene';
 import { SubUnit } from '../../src/index';
+import d3 from 'd3';
+import THREE from 'THREE';
 
   // var width        = 960;
   // var height       = 500;
@@ -10,7 +12,7 @@ import { SubUnit } from '../../src/index';
 
   var options  = {color: 'tomato', side: THREE.DoubleSide};
   var material = new THREE.MeshPhongMaterial(options);
-  var geometry = new THREE.SphereGeometry(100, 10, 10);
+  var geometry = new THREE.SphereGeometry(150, 10, 10);
 
   var root = SubUnit.select(scene);
   var container = root.append("object");
@@ -45,7 +47,6 @@ import { SubUnit } from '../../src/index';
       });
     });
 
-
     // var controls = new THREE.TrackballControls(camera, renderer.domElement);
     // controls.rotateSpeed = 0.5;
     // controls.minDistance = 100;
@@ -55,7 +56,7 @@ import { SubUnit } from '../../src/index';
 
     function animate() {
       renderer.render(scene, camera);
-      stats.update();
+      // stats.update();
       // controls.update();
       requestAnimationFrame(animate);
     }
