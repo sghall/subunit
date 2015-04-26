@@ -2,10 +2,11 @@
   "parser": "babel-eslint",
    "env": {
       "browser": true
-    }  
+    }, 
     "rules": {
     	"strict": 0,
     	"no-multi-spaces": false,
-    	"quotes": "single"
-  }
+    	"quotes": "single",
+		  "no-cond-assign": false
+    }
 }
