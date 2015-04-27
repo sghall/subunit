@@ -3,14 +3,14 @@ export function attr(name, value) {
   if (arguments.length < 2) {
 
     for (value in name) {
-      this.each(_selection_attr(value, name[value]));
+      this.each(selectionAttr(value, name[value]));
     }
     return this;
   }
-  return this.each(_selection_attr(name, value));
+  return this.each(selectionAttr(name, value));
 }
 
-function _selection_attr(name, value) {
+function selectionAttr(name, value) {
 
   function attrNull() {
     delete this[name];
