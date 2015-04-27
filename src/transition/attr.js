@@ -13,6 +13,7 @@ export function attr(nameNS, value) {
   function attrNull() {
     this.removeAttribute(name);
   }
+
   function attrNullNS() {
     this.removeAttributeNS(name.space, name.local);
   }
