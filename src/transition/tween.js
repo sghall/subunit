@@ -1,17 +1,30 @@
-import "../selection/each";
-import "transition";
+import { each } from "../selection/each";
 
-d3_transitionPrototype.tween = function(name, tween) {
-  var id = this.id, ns = this.namespace;
-  if (arguments.length < 2) return this.node()[ns][id].tween.get(name);
-  return d3_selection_each(this, tween == null
-        ? function(node) { node[ns][id].tween.remove(name); }
-        : function(node) { node[ns][id].tween.set(name, tween); });
-};
+export function tween(name, tweener) {
+  var id = this.id;
+  var ns = this.namespace;
+  var callback;
 
-function d3_transition_tween(groups, name, value, tween) {
-  var id = groups.id, ns = groups.namespace;
-  return d3_selection_each(groups, typeof value === "function"
-      ? function(node, i, j) { node[ns][id].tween.set(name, tween(value.call(node, node.__data__, i, j))); }
-      : (value = tween(value), function(node) { node[ns][id].tween.set(name, value); }));
+  if (arguments.length < 2) {
+    return this.node()[ns][id].tweener.get(name);
+  }
+
+  if (tweener === null) {
+    callback = function(node) {
+      node[ns][id].tweener.remove(name);
+    };
+  } else {
+    callback = function(node) {
+      node[ns][id].tweener.set(name, tweener);
+    };
+  }
+
+  return each(this, callback);
 }
+
+// export function transitionTween(groups, name, value, tweener) {
+//   var id = groups.id, ns = groups.namespace;
+//   return each(groups, typeof value === "function"
+//       ? function(node, i, j) { node[ns][id].tweener.set(name, tweener(value.call(node, node.__data__, i, j))); }
+//       : (value = tweener(value), function(node) { node[ns][id].tweener.set(name, value); }));
+// }
