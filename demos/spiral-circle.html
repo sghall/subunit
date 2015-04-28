@@ -19,13 +19,14 @@
       System.config({
         baseURL: '../',
         map: {
+          react: 'node_modules/react/dist/react',
           d3: 'node_modules/d3/d3',
           THREE: 'node_modules/three/three'
         },
         transpiler: 'babel'
       });
 
-      System.import('src/core/Selection')
+      System.import('demos/modules/test');
     </script>
   </body>
 </html>
