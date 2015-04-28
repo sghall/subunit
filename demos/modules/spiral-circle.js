@@ -19,7 +19,7 @@ import THREE from 'THREE';
   root.node().rotateY(80);
 
   var frames = container.selectAll(".frame")
-    .data([0,1]).enter()
+    .data([0, 1]).enter()
     .append("object")
     .tagged("frame", true);
 
@@ -30,11 +30,11 @@ import THREE from 'THREE';
     .attr("material", material)
     .attr("geometry", geometry)
     .each(function (d, i) {
-      this.position.z = -i * 5
+      this.position.z = -i * 5;
     });
 
     d3.timer(function(/* elapsed */) {
-      squares.each(function(d) { 
+      squares.each(function(d) {
         // console.log(elapsed)
         // var axis = new THREE.Vector3();
 
