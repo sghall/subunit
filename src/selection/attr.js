@@ -1,7 +1,6 @@
 export function attr(name, value) {
 
   if (arguments.length < 2) {
-
     for (value in name) {
       this.each(selectionAttr(value, name[value]));
     }

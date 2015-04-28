@@ -1,6 +1,13 @@
 import React from 'react';
+import { Selection } from 'src/core/Selection';
+import { Transition } from 'src/core/Transition';
+import { EnterSelection } from 'src/core/EnterSelection';
+import { SubUnitArray } from 'src/core/SubUnitArray';
 
-console.log(window.React = React);
+console.log("Selection", window.Selection = Selection);
+console.log("Transition", window.Transition = Transition);
+console.log("EnterSelection", window.EnterSelection = EnterSelection);
+console.log("SubUnitArray", window.SubUnitArray = SubUnitArray);
 
 var SetIntervalMixin = {
   componentWillMount: function() {

@@ -5,8 +5,8 @@ import { pass } from '../common/pass';
 import { use } from '../common/use';
 
 export class SubUnitArray extends Array {
-  constructor() {
-    super();
+  constructor(input) {
+    super(input);
   }
 }
 

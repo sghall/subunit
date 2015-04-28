@@ -3,14 +3,11 @@ import { tagged } from '../selection/tagged';
 import { remove } from '../selection/remove';
 
 export class Selection extends SubUnitArray {
-  constructor() {
-    super();
+  constructor(input) {
+    super(input);
   }
 }
 
 Selection.prototype.tagged = tagged;
 Selection.prototype.remove = remove;
 
-var arr = new Selection();
-
-console.log(window.arr = arr);

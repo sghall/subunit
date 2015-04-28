@@ -11,6 +11,3 @@ export class EnterSelection extends SubUnitArray {
 EnterSelection.prototype.tagged = tagged;
 EnterSelection.prototype.remove = remove;
 
-var arr = new EnterSelection();
-
-console.log(window.arr = arr);

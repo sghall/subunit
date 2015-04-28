@@ -10,7 +10,3 @@ export class Transition extends SubUnitArray {
 
 Transition.prototype.tagged = tagged;
 Transition.prototype.remove = remove;
-
-var arr = new Transition();
-
-console.log(window.arr = arr);
