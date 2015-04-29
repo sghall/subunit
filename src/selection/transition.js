@@ -45,5 +45,5 @@ function transitionFactory(groups, ns, id) {
   groups.namespace = ns;
   groups.id = id;
 
-  return new Transition(groups);
+  return Transition.from(groups);
 }

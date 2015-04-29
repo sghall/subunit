@@ -1,12 +1,12 @@
-import { extend_selection } from "../core/extend_selection";
-import { search } from "../core/utils";
+import { Selection } from "../core/Selection";
+import { search } from "../utils/utils";
 
 export function filter(fun) {
   var subgroups = [], subgroup, group, node;
 
   if (typeof fun !== "function") {
-    fun = _selection_filter(fun);
-  } 
+    fun = selectionFilter(fun);
+  }
 
   for (var j = 0, m = this.length; j < m; j++) {
     subgroups.push(subgroup = []);
@@ -17,10 +17,10 @@ export function filter(fun) {
       }
     }
   }
-  return extend_selection(subgroups);
+  return Selection.from(subgroups);
 }
 
-function _selection_filter(selector) {
+function selectionFilter(selector) {
   return function() {
     return search(this, selector, true);
   };

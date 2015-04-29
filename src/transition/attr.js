@@ -24,6 +24,7 @@ export function attr(nameNS, value) {
       return a !== b && (i = interpolate(a, b), function(t) { this.setAttribute(name, i(t)); });
     });
   }
+
   function attrTweenNS(b) {
     return b == null ? attrNullNS : (b += "", function() {
       var a = this.getAttributeNS(name.space, name.local), i;

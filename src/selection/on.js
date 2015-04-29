@@ -1,8 +1,9 @@
+
 export function on(type, listener) {
-  return this.each(selection_on(type, listener));
+  return this.each(selectionOn(type, listener));
 }
 
-function selection_on(type, listener) {
+function selectionOn(type, listener) {
 
   function onRemove(d, i, j) { // NEEDS WORK
     this.removeEventListener(type, (function () {
