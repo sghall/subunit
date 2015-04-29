@@ -1,8 +1,14 @@
 import { SubUnitArray } from './SubUnitArray';
-import { data } from '../selection/data';
-import { attr } from '../selection/attr';
-import { tagged } from '../selection/tagged';
-import { remove } from '../selection/remove';
+import { tagged } from "../selection/tagged";
+import { remove } from "../selection/remove";
+import { filter } from "../selection/filter";
+import { datum } from "../selection/datum";
+import { data } from "../selection/data";
+import { attr } from "../selection/attr";
+import { prop } from "../selection/prop";
+import { sort } from "../selection/sort";
+import { each } from "../selection/each";
+import { on } from "../selection/on";
 
 export class Selection extends SubUnitArray {
   constructor(input) {
@@ -10,8 +16,14 @@ export class Selection extends SubUnitArray {
   }
 }
 
-Selection.prototype.data = data;
-Selection.prototype.attr = attr;
 Selection.prototype.tagged = tagged;
 Selection.prototype.remove = remove;
+Selection.prototype.filter = filter;
+Selection.prototype.datum = datum;
+Selection.prototype.data = data;
+Selection.prototype.attr = attr;
+Selection.prototype.prop = prop;
+Selection.prototype.sort = sort;
+Selection.prototype.each = each;
+Selection.prototype.on = on;
 
