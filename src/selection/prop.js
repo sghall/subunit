@@ -34,7 +34,7 @@ function getProperty(name, value) {
     }
   }
 
-  return value == null ? 
-    propertyNull : (typeof value === "function" ? 
+  return value == null ?
+    propertyNull : (typeof value === "function" ?
     propertyFunction : propertyConstant);
 }

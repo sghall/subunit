@@ -22,7 +22,6 @@ export function transition(name) {
       subgroup.push(node);
     }
   }
-
   return transitionFactory(subgroups, ns, id);
 }
 

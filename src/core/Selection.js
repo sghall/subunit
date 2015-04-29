@@ -10,6 +10,9 @@ import { sort } from "../selection/sort";
 import { each } from "../selection/each";
 import { on } from "../selection/on";
 
+import { select } from '../selection/select';
+import { selectAll } from '../selection/selectAll';
+
 export class Selection extends SubUnitArray {
   constructor(input) {
     super(input);
@@ -27,3 +30,5 @@ Selection.prototype.sort = sort;
 Selection.prototype.each = each;
 Selection.prototype.on = on;
 
+Selection.prototype.select = select;
+Selection.prototype.selectAll = selectAll;

@@ -3,8 +3,8 @@ import { tagged } from '../selection/tagged';
 import { remove } from '../selection/remove';
 
 export class Transition extends SubUnitArray {
-  constructor() {
-    super();
+  constructor(input) {
+    super(input);
   }
 }
 
