@@ -34,11 +34,11 @@ export function search(node, selector) {
   return result;
 }
 
-export function array(list) { 
-  return Array.prototype.slice.call(list); 
+export function array(list) {
+  return Array.prototype.slice.call(list);
 }
 
-function ToObject(val) {
+function toObject(val) {
   if (val == null) {
     throw new TypeError('Object.assign cannot be called with null or undefined');
   }
@@ -50,7 +50,7 @@ export function assign(target, source) {
   var pendingException;
   var from;
   var keys;
-  var to = ToObject(target);
+  var to = toObject(target);
 
   if (!source) {
     throw new Error("No source(s) provided to assign.");
