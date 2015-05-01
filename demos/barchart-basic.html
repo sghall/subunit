@@ -6,73 +6,25 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
+    <div id="canvas"></div>
     <div id="info">
-      <h3>A Bar Chart - WebGL Demo</h3>
-      <div id="msg"></div>
+      <h3>Basic Bar Chart - WebGL Demo</h3>
     </div>
-    <script src="bower_components/threejs/build/three.js"></script>
-    <script src="bower_components/stats.js/build/stats.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="../dist/subunit.js"></script>
-    <script src="traceur/traceur.js"></script>
-    <script src="traceur/bootstrap.js"></script>
-    <script type="module">
-
-      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
-
-      d3.json('data/letters.json', function (err, data) {
-
-        canvas.style("opacity", 1);
-
-        var size = [1000, 600] // Width, Height
-
-        var x = d3.scale.ordinal()
-          .rangeRoundBands([0, size[0]], 0.1, 1);
-
-        var y = d3.scale.linear()
-          .range([size[1], 0]);
-
-        var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
-        var material2 = new THREE.MeshPhongMaterial({color: '#888888'});
-
-        x.domain(data.map(function (d) { return d.letter; }));
-        y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
-
-        var root = SubUnit.select(scene)
-        root.node().position.set(-size[0] / 2, 0, 0);
-
-        var bars = root.selectAll("bar")
-          .data(data).enter()
-          .append("mesh")
-          .attr("tags", "bar")
-          .tagged("big", function (d) {
-            return d.frequency > 0.07;
-          })
-          .attr("material", material1)
-          .attr("geometry", function (d) {
-            var w = x.rangeBand();
-            var h = size[1] - y(d.frequency);
-            return new THREE.BoxGeometry(w, h, 5);
-          })
-          .each(function (d) {
-            var x0 = x(d.letter);
-            var y0 = - y(d.frequency) / 2;
-            this.position.set(x0, y0, 240);
-          });
-
-        var bigBars = root.selectAll("bar.big")
-          .attr("material", material2);
-
-        function animate() {
-          stats.update();
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-        }
-
-        console.log("root: ", window.root = root)
-
-        animate();
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
+    <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+      System.config({
+        baseURL: '../',
+        map: {
+          d3: 'node_modules/d3/d3',
+          THREE: 'node_modules/three/three_70'
+        },
+        transpiler: 'babel'
       });
-    </script>
+
+      System.import('demos/modules/barchart');
+  </script>
   </body>
 </html>

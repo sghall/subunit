@@ -3,11 +3,14 @@ import { Selection } from 'src/core/Selection';
 import { Transition } from 'src/core/Transition';
 import { EnterSelection } from 'src/core/EnterSelection';
 import { SubUnitArray } from 'src/core/SubUnitArray';
+import { SubUnit } from 'src/subunit';
 
 console.log("Selection", window.Selection = Selection);
 console.log("Transition", window.Transition = Transition);
 console.log("EnterSelection", window.EnterSelection = EnterSelection);
 console.log("SubUnitArray", window.SubUnitArray = SubUnitArray);
+console.log("SubUnit", window.SubUnit = SubUnit);
+
 
 var SetIntervalMixin = {
   componentWillMount: function() {
