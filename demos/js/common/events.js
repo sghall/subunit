@@ -7,12 +7,10 @@ export function raycast(camera, items, type) {
   var listener = function(event) {
     var vector = new THREE.Vector3();
 
-    var mouse = {
-      x: ((event.clientX - 1) / window.innerWidth ) * 2 - 1,
-      y: -((event.clientY - 1) / window.innerHeight) * 2 + 1
-    };
+    let x = ((event.clientX - 1) / window.innerWidth ) * 2 - 1;
+    let y = -((event.clientY - 1) / window.innerHeight) * 2 + 1;
 
-    vector.set(mouse.x, mouse.y, 0.5);
+    vector.set(x, y, 0.5);
     vector.unproject(camera);
 
     raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
