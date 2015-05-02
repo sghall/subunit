@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <div id="canvas"></div>
     <div id="info">
-      <h3>Basic Bar Chart - WebGL Demo</h3>
+      <h3>Bar Charts Sphere - WebGL Demo</h3>
+      <div id="msg">Click the bars...</div>
     </div>
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
     <script src="../node_modules/babel-core/browser-polyfill.js"></script>
@@ -24,7 +24,7 @@
         transpiler: 'babel'
       });
 
-      System.import('demos/js/barchart-basic');
+      System.import('demos/js/barchart-evented');
   </script>
   </body>
 </html>
