@@ -30,7 +30,7 @@ function selectionCreator(name) {
     node.__data__  = data;
     node.__tags__  = [];
     node.parentNode = this;
-    this.children.push(node);
+    this.add(node);
     return node;
   };
 }
