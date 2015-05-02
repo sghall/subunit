@@ -1,4 +1,4 @@
-import { selectionFilter } from '../selection/filter';
+import { filter as selectionFilter } from '../selection/filter';
 import { Transition } from '../core/Transition';
 
 export function filter(value) {
