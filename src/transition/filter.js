@@ -1,22 +1,23 @@
-import "../selection/filter";
-import "transition";
+import { selectionFilter } from '../selection/filter';
+import { Transition } from '../core/Transition';
 
-d3_transitionPrototype.filter = function(filter) {
-  var subgroups = [],
-      subgroup,
-      group,
-      node;
+export function filter(value) {
+  var subgroups = [], subgroup, group, node;
 
-  if (typeof filter !== "function") filter = d3_selection_filter(filter);
+  if (typeof value !== "function") {
+    value = selectionFilter(value);
+  }
 
-  for (var j = 0, m = this.length; j < m; j++) {
+  let j, m;
+  for (j = 0, m = this.length; j < m; j++) {
     subgroups.push(subgroup = []);
-    for (var group = this[j], i = 0, n = group.length; i < n; i++) {
-      if ((node = group[i]) && filter.call(node, node.__data__, i, j)) {
+    let i, n;
+    for (group = this[j], i = 0, n = group.length; i < n; i++) {
+      if ((node = group[i]) && value.call(node, node.__data__, i, j)) {
         subgroup.push(node);
       }
     }
   }
 
-  return d3_transition(subgroups, this.namespace, this.id);
-};
+  return Transition.from(subgroups, this.namespace, this.id);
+}
