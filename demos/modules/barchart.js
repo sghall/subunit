@@ -1,5 +1,5 @@
 import d3 from 'd3';
-import THREE from 'THREE';
+// import THREE from 'THREE';
 import { Selection } from 'src/core/Selection';
 import { Transition } from 'src/core/Transition';
 import { EnterSelection } from 'src/core/EnterSelection';
@@ -7,11 +7,11 @@ import { SubUnitArray } from 'src/core/SubUnitArray';
 import { SubUnit } from 'src/subunit';
 import { camera, scene, renderer } from 'demos/modules/scene';
 
-console.log("Selection", window.Selection = Selection);
-console.log("Transition", window.Transition = Transition);
-console.log("EnterSelection", window.EnterSelection = EnterSelection);
-console.log("SubUnitArray", window.SubUnitArray = SubUnitArray);
-console.log("SubUnit", window.SubUnit = SubUnit);
+// console.log("Selection", window.Selection = Selection);
+// console.log("Transition", window.Transition = Transition);
+// console.log("EnterSelection", window.EnterSelection = EnterSelection);
+// console.log("SubUnitArray", window.SubUnitArray = SubUnitArray);
+// console.log("SubUnit", window.SubUnit = SubUnit);
 
 
 d3.json('data/letters.json', function (err, data) {
@@ -32,10 +32,9 @@ d3.json('data/letters.json', function (err, data) {
 
   var root = SubUnit.select(scene);
 
-  var container = root.append('object');
-  container.node().translateX(-size[0]);
+  // var container = root.append('object');
 
-  container.selectAll("bar")
+  var bars = root.selectAll("bar")
     .data(data).enter()
     .append("mesh")
     .attr("tags", "bar")
@@ -54,13 +53,26 @@ d3.json('data/letters.json', function (err, data) {
       this.position.set(x0, y0, 240);
     });
 
-  container.selectAll("bar.big")
+  root.selectAll("bar.big")
     .attr("material", material2);
+
+  var cntrl = new THREE.TrackballControls(camera, renderer.domElement);
+  cntrl.rotateSpeed = 0.5;
+  cntrl.minDistance = 100;
+  cntrl.maxDistance = 6000;
+
 
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    bars.each(function (d) {
+      this.matrixWorldNeedsUpdate = true;
+    })
+    cntrl.update();
   }
+
+    // root.node().translateX(-size[0]);
+
 
   console.log("root: ", window.root = root);
 
