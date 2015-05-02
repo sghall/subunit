@@ -9,7 +9,7 @@ d3.json('data/letters.json', function (err, data) {
   var size = [1000, 600]; // Width, Height
 
   var x = d3.scale.ordinal()
-    .rangeRoundBands([0, size[0]], 0.1, 1);
+    .rangeRoundBands([0, size[0]], 0.2);
 
   var y = d3.scale.linear()
     .range([size[1], 0]);
@@ -35,7 +35,7 @@ d3.json('data/letters.json', function (err, data) {
     })
     .each(function (d) {
       var x0 = x(d.letter);
-      var y0 = - y(d.frequency) / 2;
+      var y0 = -y(d.frequency) / 2;
       this.position.set(x0, y0, 240);
     })
     .on('click', function (event, d) {
