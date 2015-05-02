@@ -1,25 +1,14 @@
 import d3 from 'd3';
-// import THREE from 'THREE';
-import { Selection } from 'src/core/Selection';
-import { Transition } from 'src/core/Transition';
-import { EnterSelection } from 'src/core/EnterSelection';
-import { SubUnitArray } from 'src/core/SubUnitArray';
+import THREE from 'THREE';
 import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/modules/scene';
-
-// console.log("Selection", window.Selection = Selection);
-// console.log("Transition", window.Transition = Transition);
-// console.log("EnterSelection", window.EnterSelection = EnterSelection);
-// console.log("SubUnitArray", window.SubUnitArray = SubUnitArray);
-// console.log("SubUnit", window.SubUnit = SubUnit);
-
+import { camera, scene, renderer } from 'demos/js/common/scene';
 
 d3.json('data/letters.json', function (err, data) {
 
   var size = [1000, 600]; // Width, Height
 
   var x = d3.scale.ordinal()
-    .rangeRoundBands([0, size[0]], 0.1, 1);
+    .rangeRoundBands([0, size[0]], 0.2);
 
   var y = d3.scale.linear()
     .range([size[1], 0]);
@@ -31,10 +20,9 @@ d3.json('data/letters.json', function (err, data) {
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
   var root = SubUnit.select(scene);
+  root.node().position.x = -size[0] / 2;
 
-  // var container = root.append('object');
-
-  var bars = root.selectAll("bar")
+  root.selectAll("bar")
     .data(data).enter()
     .append("mesh")
     .attr("tags", "bar")
@@ -56,23 +44,10 @@ d3.json('data/letters.json', function (err, data) {
   root.selectAll("bar.big")
     .attr("material", material2);
 
-  var cntrl = new THREE.TrackballControls(camera, renderer.domElement);
-  cntrl.rotateSpeed = 0.5;
-  cntrl.minDistance = 100;
-  cntrl.maxDistance = 6000;
-
-
   function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    bars.each(function (d) {
-      this.matrixWorldNeedsUpdate = true;
-    })
-    cntrl.update();
   }
-
-    // root.node().translateX(-size[0]);
-
 
   console.log("root: ", window.root = root);
 

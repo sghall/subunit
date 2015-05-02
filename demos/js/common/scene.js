@@ -1,8 +1,7 @@
-// import d3 from 'd3';
-// import THREE from 'THREE';
+import THREE from 'THREE';
 
 export var scene = new THREE.Scene();
-export var camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
+export var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 5000);
 camera.position.z = 1000;
 
 export var renderer = new THREE.WebGLRenderer();
