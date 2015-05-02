@@ -1,3 +1,5 @@
+import THREE from 'THREE';
+
 var temp = new THREE.Object3D();
 
 export function sphere(i, count, size) {

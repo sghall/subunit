@@ -2,6 +2,12 @@ body, html {
   margin: 0px;
   font-family: helvetica, arial;
   color: #333;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #info {
