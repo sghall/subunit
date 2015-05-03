@@ -1,9 +1,9 @@
 import d3 from 'd3';
 import THREE from 'THREE';
 import TWEEN from 'TWEEN';
-import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/js/common/scene';
-import { raycast } from 'demos/js/common/events';
+import { SubUnit } from '../../src/subunit';
+import { camera, scene, renderer } from './common/scene';
+import { raycast } from './common/events';
 
 var carpet = THREE.ImageUtils.loadTexture('images/carpet.jpg', null);
 

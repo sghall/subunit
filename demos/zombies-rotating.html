@@ -7,78 +7,23 @@
   </head>
   <body>
     <div id="info">
-      <h3>Rotating Zombie Movies - WebGL Demo</h3>
+      <h3>50 Zombie Movies - WebGL Demo</h3>
     </div>
-    <div id="loading">Loading...</div>
-    <script src="bower_components/threejs/build/three.js"></script>
-    <script src="bower_components/d3/d3.min.js"></script>
-    <script src="bower_components/stats.js/build/stats.min.js"></script>
-    <script src="../dist/subunit.js"></script>
-    <script src="traceur/traceur.js"></script>
-    <script src="traceur/bootstrap.js"></script>
-    <script type="module">
-
-      import { camera, scene, canvas, renderer, stats } from 'modules/scene';
-      import { uvMapper } from 'modules/sprite-uvs';
-      import { sphere } from 'modules/layouts';
-
-      var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg', null, function () {
-        canvas.transition().duration(2000)
-          .style("opacity", 1);
-
-        d3.select("#loading").transition().duration(2000)
-          .style("opacity", 0).remove();
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
+    <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+      System.config({
+        baseURL: '../',
+        map: {
+          d3: 'node_modules/d3/d3',
+          THREE: 'node_modules/three/three_70'
+        },
+        transpiler: 'babel'
       });
 
-      d3.json('data/zombies.json', function (err, data) {
-
-        var uvsMap = uvMapper(data.images);
-
-        var options = {map: sprite, side: THREE.DoubleSide};
-        var material = new THREE.MeshLambertMaterial(options);
-
-        var root = SubUnit.select(scene);
-
-        var zombies = root.selectAll(".zombie")
-          .data(data.images).enter()
-          .append("mesh")
-            .attr("tags", "zombie")
-            .attr("material", material)
-            .attr("geometry", function (d) {
-              var geometry = new THREE.PlaneBufferGeometry(300, 430);
-              var buffer = new THREE.BufferAttribute(uvsMap(d), 2);
-
-              geometry.addAttribute('uv', buffer);
-
-              return geometry;
-            })
-            .each(function (d, i) {
-              this.scale.set(0.5, 0.5, 0.5);
-              this.position.copy(sphere(i, data.images.length, 750));
-              this.lookAt(root.node().position);
-            });
-
-        var theta = 0;
-        var gamma = 0;
-
-        function animate() {
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-
-          stats.update();
-
-          theta += 0.01;
-          gamma += 0.04;
-
-          root.node().rotation.y = theta;
-
-          zombies.each(function () {
-            this.rotation.set(gamma, theta, 0);
-          })
-
-        }
-        animate();
-      });
-    </script>
+      System.import('demos/js/zombies-rotating');
+  </script>
   </body>
 </html>

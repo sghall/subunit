@@ -1,7 +1,7 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/js/common/scene';
+import { SubUnit } from '../../src/subunit';
+import { camera, scene, renderer } from './common/scene';
 
 d3.json('data/letters.json', function (err, data) {
 

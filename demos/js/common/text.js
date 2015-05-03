@@ -1,4 +1,6 @@
-import { memoize } from 'modules/utils';
+import THREE from 'THREE';
+import d3 from 'd3';
+import { memoize } from './utils';
 
 export var getLabel = memoize(makeSprite);
 
@@ -21,15 +23,15 @@ export function makeSprite(text, color, points) {
   context.textBaseline = "middle";
   context.fillStyle    = color;
   context.fillText(text, textWidth / 2, (points + pad) / 2);
-  
+
   texture = new THREE.Texture(canvas.node());
   texture.needsUpdate = true;
 
   canvas.remove();
 
-  return { 
-    map: texture, 
-    width: textWidth, 
+  return {
+    map: texture,
+    width: textWidth,
     height: points + pad
   };
 }
@@ -58,7 +60,7 @@ export function wrapText(text, color, points, maxWidth) {
   context.textBaseline = "bottom";
   context.fillStyle = color;
 
-  var line  = "", lines = [], words = text.split(" ")
+  var line  = "", lines = [], words = text.split(" ");
 
   for(var n = 0; n < words.length; n++) {
 
@@ -94,9 +96,9 @@ export function wrapText(text, color, points, maxWidth) {
 
   canvas.remove();
 
-  return { 
-    map: texture, 
-    width: maxWidth + (pad * 2), 
+  return {
+    map: texture,
+    width: maxWidth + (pad * 2),
     height: total + (pad * 2)
   };
 }

@@ -1,10 +1,10 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/js/common/scene';
-import { raycast } from 'demos/js/common/events';
-import { getCoords, arc, lineCache } from 'demos/js/globe/helpers';
-import 'demos/fonts/kai';
+import { SubUnit } from '../../src/subunit';
+import { camera, scene, renderer } from './common/scene';
+import { raycast } from './common/events';
+import { getCoords, arc, lineCache } from './common/geo';
+import '../fonts/kai';
 
 var world = THREE.ImageUtils.loadTexture('images/world.jpg', null);
 

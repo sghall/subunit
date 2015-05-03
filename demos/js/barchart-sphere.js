@@ -1,9 +1,9 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/js/common/scene';
-import { raycast } from 'demos/js/common/events';
-import { sphere } from 'demos/js/common/layouts';
+import { SubUnit } from '../../src/subunit';
+import { camera, scene, renderer } from './common/scene';
+import { raycast } from './common/events';
+import { sphere } from './common/layouts';
 
 var metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
 

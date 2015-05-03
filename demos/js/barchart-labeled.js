@@ -1,9 +1,9 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from 'src/subunit';
-import { camera, scene, renderer } from 'demos/js/common/scene';
-import { raycast } from 'demos/js/common/events';
-import 'demos/fonts/kai';
+import { SubUnit } from '../../src/subunit';
+import { camera, scene, renderer } from './common/scene';
+import { raycast } from './common/events';
+import '../fonts/kai';
 
 d3.json('data/letters.json', function (err, data) {
 
