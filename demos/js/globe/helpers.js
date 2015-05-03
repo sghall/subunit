@@ -1,3 +1,5 @@
+import THREE from 'THREE';
+
 export function getCoords(lat, lng, flag) {
   var gamma = (90  - lat) * Math.PI / 180;
   var theta = (180 - lng) * Math.PI / 180;
@@ -44,12 +46,10 @@ export function lineCache(colorScale, func) {
 
 // Reference: http://nisatapps.prio.org/armsglobe/
 
-var origin = new THREE.Vector3(0,0,0);
-
 export function arc(beg, end, detail){
 
   var distance = beg.distanceTo(end);
-  
+
   var mid = beg.clone().lerp(end, 0.5);
   var midLength = mid.length();
 
