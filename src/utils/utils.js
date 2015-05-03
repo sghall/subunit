@@ -39,7 +39,7 @@ export function array(list) {
 }
 
 function toObject(val) {
-  if (val == null) {
+  if (val === null) {
     throw new TypeError('Object.assign cannot be called with null or undefined');
   }
 
