@@ -1,7 +1,7 @@
 import d3 from 'd3';
 import THREE from 'THREE';
 import TWEEN from 'TWEEN';
-import { SubUnit } from '../../src/subunit';
+import { SubUnit } from '../../src/index';
 import { camera, scene, renderer } from './common/scene';
 import { raycast } from './common/events';
 

@@ -1,5 +1,5 @@
 import { camera, scene, renderer} from './common/scene';
-import { SubUnit } from 'src/subunit';
+import { SubUnit } from '../../src/index';
 import d3 from 'd3';
 import THREE from 'THREE';
 

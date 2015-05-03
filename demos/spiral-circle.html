@@ -8,18 +8,17 @@
   <body>
     <div id="canvas"></div>
     <div id="info">
-      <h3>Stacked Bar Charts - WebGL Demo</h3>
-      <div id="msg">Click a bar...</div>
+      <h3>Spiral Circle - WebGL Demo</h3>
     </div>
     <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
     <script src="../node_modules/babel-core/browser-polyfill.js"></script>
     <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
     <script src="../node_modules/systemjs/dist/system.js"></script>
     <script>
       System.config({
         baseURL: '../',
         map: {
-          react: 'node_modules/react/dist/react',
           d3: 'node_modules/d3/d3',
           THREE: 'node_modules/three/three'
         },

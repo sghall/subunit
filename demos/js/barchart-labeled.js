@@ -1,6 +1,6 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/subunit';
+import { SubUnit } from '../../src/index';
 import { camera, scene, renderer } from './common/scene';
 import { raycast } from './common/events';
 import '../fonts/kai';
