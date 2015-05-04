@@ -7,25 +7,17 @@ module.exports = function(config){
 
     systemjs: {
       files: [
-        'app/bower_components/jquery/dist/jquery.js',
-        'app/bower_components/angular/angular.js',
-        'app/bower_components/angular-route/angular-route.js',
-        'app/bower_components/angular-resource/angular-resource.js',
-        'app/bower_components/angular-animate/angular-animate.js',
-        'app/bower_components/angular-mocks/angular-mocks.js',
-        'app/lib/*.js',
-        'app/js/**/*.js',
-        'app/partials/**/*.html',
+        'src/**/*.js',
         'test/unit/**/*.js'
       ],
 
-      configFile: 'app/system.config.js',
+      configFile: 'test/system.config.js',
 
-      config: {
-        paths: {
-          'angular-mocks': 'app/bower_components/angular-mocks/angular-mocks.js'
-        }
-      },
+      // config: {
+      //   paths: {
+      //     'THREE': 'node_'
+      //   }
+      // },
 
       testFileSuffix: 'Spec.js'
     },
