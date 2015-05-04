@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Google Phone Gallery</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/animations.css">
+
+  <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
+  <script src="../node_modules/systemjs/dist/system.js"></script>
+  <script src="system.config.js"></script>
+  <script>
+    System.import('app/js/app').then(function() {
+      angular.bootstrap(document, ['phonecatApp']);
+    });
+  </script>
+</head>
+<body>
+
+  <div class="view-container">
+    <div ng-view class="view-frame"></div>
+  </div>
+
+</body>
+</html>
