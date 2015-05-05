@@ -3,7 +3,12 @@ module.exports = function(config){
 
     basePath : '../',
 
-    files : [],
+    files : [
+      'node_modules/babel-core/browser-polyfill.js',
+      'node_modules/babel-core/browser.js',
+      'node_modules/three/three.js',
+      'node_modules/d3/d3.js'
+    ],
 
     systemjs: {
       files: [
@@ -13,13 +18,16 @@ module.exports = function(config){
 
       configFile: 'test/system.config.js',
 
-      // config: {
-      //   paths: {
-      //     'THREE': 'node_'
-      //   }
-      // },
+      config: {
+        map: {
+          d3: 'node_modules/d3/d3',
+          THREE: 'node_modules/three/three',
+          babel: 'node_modules/babel-core/browser',
+          SubUnit: 'src/index'
+        }
+      },
 
-      testFileSuffix: 'Spec.js'
+      testFileSuffix: '.spec.js'
     },
 
     autoWatch : true,
