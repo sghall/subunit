@@ -3,11 +3,6 @@
    "env": {
       "browser": true
     },
-    "globals" {
-      "expect": true,
-      "it": true,
-      "describe": true
-    }
     "rules": {
     	"strict": 0,
     	"no-multi-spaces": false,

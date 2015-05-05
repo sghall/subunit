@@ -1,3 +1,6 @@
+/*global describe, it, expect*/
+/*eslint no-unused-expressions: 0*/
+
 import THREE from 'THREE';
 import { SubUnit } from 'SubUnit';
 
