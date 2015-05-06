@@ -21,10 +21,3 @@ export function tween(name, tweener) {
 
   return each(this, callback);
 }
-
-// export function transitionTween(groups, name, value, tweener) {
-//   var id = groups.id, ns = groups.namespace;
-//   return each(groups, typeof value === "function"
-//       ? function(node, i, j) { node[ns][id].tweener.set(name, tweener(value.call(node, node.__data__, i, j))); }
-//       : (value = tweener(value), function(node) { node[ns][id].tweener.set(name, value); }));
-// }
