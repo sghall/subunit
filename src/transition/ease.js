@@ -1,10 +1,13 @@
-import "../interpolate/ease";
-import "../selection/each";
-import "transition";
+import d3 from 'd3';
+import { each } from '../selection/each';
 
-d3_transitionPrototype.ease = function(value) {
+export function ease(value) {
   var id = this.id, ns = this.namespace;
-  if (arguments.length < 1) return this.node()[ns][id].ease;
-  if (typeof value !== "function") value = d3.ease.apply(d3, arguments);
-  return d3_selection_each(this, function(node) { node[ns][id].ease = value; });
-};
+  if (arguments.length < 1) {
+    return this.node()[ns][id].ease;
+  }
+  if (typeof value !== "function") {
+    value = d3.ease.apply(d3, arguments);
+  }
+  return each(this, function(node) { node[ns][id].ease = value; });
+}

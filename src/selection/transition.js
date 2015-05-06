@@ -1,17 +1,16 @@
-import { transitionNode } from '../transition/transition';
+import { transitionNode } from '../transition/transitionNode';
 import { Transition } from '../core/Transition';
 
-var transitionID = 0;
-var transitionInherit = null;
-var transitionInheritID = null;
+export var transitionID = 0;
+export var transitionInherit = null;
+export var transitionInheritID = null;
 
 export function transition(name) {
-  var id = transitionInheritID || ++transitionID,
-      ns = transitionNamespace(name),
-      subgroups = [],
-      subgroup,
-      node,
-      props = transitionInherit || {time: Date.now(), ease: easeCubicInOut, delay: 0, duration: 250};
+  var id = transitionInheritID || ++transitionID;
+  var ns = transitionNamespace(name);
+  var subgroups = [], subgroup, node;
+
+  var props = transitionInherit || {time: Date.now(), ease: easeCubicInOut, delay: 0, duration: 250};
 
   for (var j = -1, m = this.length; ++j < m; ) {
     subgroups.push(subgroup = []);

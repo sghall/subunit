@@ -12,6 +12,7 @@ import { on } from "../selection/on";
 
 import { select } from '../selection/select';
 import { selectAll } from '../selection/selectAll';
+import { transition } from '../selection/transition';
 
 export class Selection extends SubUnitArray {
   constructor(input) {
@@ -32,3 +33,4 @@ Selection.prototype.on = on;
 
 Selection.prototype.select = select;
 Selection.prototype.selectAll = selectAll;
+Selection.prototype.transition = transition;

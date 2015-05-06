@@ -17,7 +17,7 @@ export function selectAll(selector) {
   return Selection.from(subgroups);
 }
 
-function selectionSelectorAll(selector) {
+export function selectionSelectorAll(selector) {
   return typeof selector === "function" ? selector : function() {
     return search(this, selector);
   };
