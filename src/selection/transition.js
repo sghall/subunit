@@ -11,7 +11,7 @@ export function transition(name) {
   var subgroups = [], subgroup, node;
 
   var props = transitionInherit || {time: Date.now(), ease: easeCubicInOut, delay: 0, duration: 250};
-
+  console.log("transition", this);
   for (var j = -1, m = this.length; ++j < m; ) {
     subgroups.push(subgroup = []);
     for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
@@ -21,6 +21,7 @@ export function transition(name) {
       subgroup.push(node);
     }
   }
+  console.log(subgroups);
   return transitionFactory(subgroups, ns, id);
 }
 
