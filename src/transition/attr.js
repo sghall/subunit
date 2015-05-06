@@ -34,18 +34,3 @@ export function attr(nameNS, value) {
 
   return tween(this, "attr." + nameNS, value, name.local ? attrTweenNS : attrTween);
 }
-
-// export var attrTween = function(nameNS, tween) {
-//   var name = d3.ns.qualify(nameNS);
-
-//   function attrTween(d, i) {
-//     var f = tween.call(this, d, i, this.getAttribute(name));
-//     return f && function(t) { this.setAttribute(name, f(t)); };
-//   }
-//   function attrTweenNS(d, i) {
-//     var f = tween.call(this, d, i, this.getAttributeNS(name.space, name.local));
-//     return f && function(t) { this.setAttributeNS(name.space, name.local, f(t)); };
-//   }
-
-//   return this.tween("attr." + nameNS, name.local ? attrTweenNS : attrTween);
-// };
