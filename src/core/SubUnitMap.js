@@ -12,56 +12,56 @@ function defineProperties(ctor, properties) {
   }
 }
 
-var subunitMapPrefix = "\0";
-var subunitMapPrefixCode = subunitMapPrefix.charCodeAt(0);
+var mapPrefix = "\0";
+var mapPrefixCode = mapPrefix.charCodeAt(0);
 
-function subunitMapHas(key) {
-  return subunitMapPrefix + key in this;
+function mapHas(key) {
+  return mapPrefix + key in this;
 }
 
-function subunitMapRemove(key) {
-  key = subunitMapPrefix + key;
+function mapRemove(key) {
+  key = mapPrefix + key;
   return key in this && delete this[key];
 }
 
-function subunitMapKeys() {
+function mapKeys() {
   var keys = [];
   this.forEach(function (key) { keys.push(key); });
   return keys;
 }
 
-function subunitMapSize() {
+function mapSize() {
   var size = 0;
   for (var key in this) {
-     if (key.charCodeAt(0) === subunitMapPrefixCode) {
+     if (key.charCodeAt(0) === mapPrefixCode) {
        ++size;
      }
   }
   return size;
 }
 
-function subunitMapEmpty() {
+function mapEmpty() {
   for (var key in this) {
-    if (key.charCodeAt(0) === subunitMapPrefixCode) {
+    if (key.charCodeAt(0) === mapPrefixCode) {
       return false;
     }
   }
   return true;
 }
 
-export function SubunitMap() {}
+export function SubUnitMap() {}
 
-defineProperties(SubunitMap, {
-  has: subunitMapHas,
+defineProperties(SubUnitMap, {
+  has: mapHas,
   get: function(key) {
-    return this[subunitMapPrefix + key];
+    return this[mapPrefix + key];
   },
   set: function(key, value) {
-    this[subunitMapPrefix + key] = value;
+    this[mapPrefix + key] = value;
     return value;
   },
-  remove: subunitMapRemove,
-  keys: subunitMapKeys,
+  remove: mapRemove,
+  keys: mapKeys,
   values: function() {
     var values = [];
     this.forEach(function (key, value) { values.push(value); });
@@ -72,11 +72,11 @@ defineProperties(SubunitMap, {
     this.forEach(function (key, value) { entries.push({key: key, value: value}); });
     return entries;
   },
-  size: subunitMapSize,
-  empty: subunitMapEmpty,
+  size: mapSize,
+  empty: mapEmpty,
   forEach: function(f) {
     for (var key in this) {
-      if (key.charCodeAt(0) === subunitMapPrefixCode) {
+      if (key.charCodeAt(0) === mapPrefixCode) {
         f.call(this, key.substring(1), this[key]);
       }
     }
