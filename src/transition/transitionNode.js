@@ -1,11 +1,5 @@
-import d3 from 'd3';
 import { SubUnitMap } from '../core/SubUnitMap';
-import { activetimer } from '../core/Timer';
-
-// export function transitionNode(node, i, ns, id, inherit) {
-//   console.log("transition node:", node, "i ns id", i, ns, id);
-//   return node;
-// }
+import { activeTimer, createTimer } from '../core/Timer';
 
 export function transitionNode(node, i, ns, id, inherit) {
   var lock = node[ns] || (node[ns] = {active: 0, count: 0});
@@ -15,7 +9,7 @@ export function transitionNode(node, i, ns, id, inherit) {
     var time = inherit.time;
 
     transition = lock[id] = {
-      tween: new SubUnitMap,
+      tween: new SubUnitMap(),
       time: time,
       delay: inherit.delay,
       duration: inherit.duration,
@@ -27,10 +21,10 @@ export function transitionNode(node, i, ns, id, inherit) {
 
     ++lock.count;
 
-    d3.timer(function(elapsed) {
+    createTimer(function(elapsed) {
       let delay = transition.delay;
       let duration, ease;
-      let timer = activetimer;
+      let timer = activeTimer;
       let tweened = [];
 
       timer.t = delay + time;
@@ -41,7 +35,7 @@ export function transitionNode(node, i, ns, id, inherit) {
 
       timer.c = start;
 
-      function start(elapsed) {
+      function start(elapsedMinusDelay) {
 
         if (lock.active > id) {
           return stop();
@@ -74,18 +68,18 @@ export function transitionNode(node, i, ns, id, inherit) {
         ease = transition.ease;
         duration = transition.duration;
 
-        d3.timer(function() { // defer to end of current frame
-          timer.c = tick(elapsed || 1) ? d3_true : tick;
+        createTimer(function() { // defer to end of current frame
+          timer.c = tick(elapsedMinusDelay || 1) ? () => true : tick;
           return 1;
         }, 0, time);
       }
 
-      function tick(elapsed) {
+      function tick(haveElapsed) {
         if (lock.active !== id) {
           return 1;
         }
 
-        let t = elapsed / duration;
+        let t = haveElapsed / duration;
         let e = ease(t);
         let n = tweened.length;
 

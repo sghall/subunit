@@ -3,7 +3,7 @@ let timerqueueHead, timerqueueTail;
 let timerinterval; // is an interval (or frame) active?
 let timertimeout;  // is a timeout active?
 
-export var timeractive;   // active timer object
+export var activeTimer;   // active timer object
 
 let timerframe = window.requestAnimationFrame || function(callback) { setTimeout(callback, 17); };
 
@@ -58,12 +58,12 @@ export var flush = function() {
 
 function timermark() {
   let now = Date.now();
-  timeractive = timerqueueHead;
-  while (timeractive) {
-    if (now >= timeractive.t) {
-      timeractive.f = timeractive.c(now - timeractive.t);
+  activeTimer = timerqueueHead;
+  while (activeTimer) {
+    if (now >= activeTimer.t) {
+      activeTimer.f = activeTimer.c(now - activeTimer.t);
     }
-    timeractive = timeractive.n;
+    activeTimer = activeTimer.n;
   }
   return now;
 }
