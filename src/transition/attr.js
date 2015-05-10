@@ -1,36 +1,52 @@
 import d3 from 'd3';
-import { tween } from './tween';
+import { selectionEach } from "../selection/each";
 
-export function attr(nameNS, value) {
+export function attr(name, value) {
+
   if (arguments.length < 2) {
-    for (value in nameNS) this.attr(value, nameNS[value]);
+    for (value in name) {
+      this.attr(value, name[value]);
+    }
     return this;
   }
 
-  var interpolate = nameNS === "transform" ? d3.interpolateTransform : d3.interpolate;
-  var name = d3.ns.qualify(nameNS);
+  var interpolate = d3.interpolateObject;
 
-  function attrNull() {
-    this.removeAttribute(name);
-  }
-
-  function attrNullNS() {
-    this.removeAttributeNS(name.space, name.local);
-  }
+  function attrNull() {}
 
   function attrTween(b) {
-    return b == null ? attrNull : (b += "", function() {
-      var a = this.getAttribute(name), i;
-      return a !== b && (i = interpolate(a, b), function(t) { this.setAttribute(name, i(t)); });
-    });
+    if (b == null) {
+      return attrNull;
+    } else {
+      return function () {
+        let a = this[name];
+        let i = interpolate(a, b);
+
+        return function (t) {
+          this[name].copy(i(t));
+        };
+      };
+    }
   }
 
-  function attrTweenNS(b) {
-    return b == null ? attrNullNS : (b += "", function() {
-      var a = this.getAttributeNS(name.space, name.local), i;
-      return a !== b && (i = interpolate(a, b), function(t) { this.setAttributeNS(name.space, name.local, i(t)); });
-    });
+  return transitionTween(this, "attr." + name, value, attrTween);
+}
+
+function transitionTween(groups, name, value, tween) {
+  var id = groups.id, ns = groups.namespace;
+  var callback;
+
+  if (typeof value === "function") {
+    callback = function(node, i, j) {
+      let d = value.call(node, node.__data__, i, j);
+      node[ns][id].tween.set(name, tween(d));
+    };
+  } else {
+    value = tween(value);
+    callback = function(node) {
+      node[ns][id].tween.set(name, value);
+    };
   }
 
-  return tween(this, "attr." + nameNS, value, name.local ? attrTweenNS : attrTween);
+  return selectionEach(groups, callback);
 }
