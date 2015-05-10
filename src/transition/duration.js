@@ -1,4 +1,4 @@
-import { each } from "../selection/each";
+import { selectionEach } from "../selection/each";
 
 export function duration(value) {
   var id = this.id;
@@ -20,6 +20,6 @@ export function duration(value) {
     };
   }
 
-  return each(this, callback);
+  return selectionEach(this, callback);
 }
 

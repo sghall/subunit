@@ -1,4 +1,4 @@
-import { each } from "../selection/each";
+import { selectionEach } from "../selection/each";
 
 export function delay(value) {
   var id = this.id;
@@ -21,6 +21,6 @@ export function delay(value) {
     };
   }
 
-  return each(this, callback);
+  return selectionEach(this, callback);
 }
 

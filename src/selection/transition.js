@@ -11,17 +11,17 @@ export function transition(name) {
   var subgroups = [], subgroup, node;
 
   var props = transitionInherit || {time: Date.now(), ease: easeCubicInOut, delay: 0, duration: 250};
-  console.log("transition", this);
+
   for (var j = -1, m = this.length; ++j < m; ) {
     subgroups.push(subgroup = []);
     for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
       if (node = group[i]) {
-         transitionNode(node, i, ns, id, props);
+        transitionNode(node, i, ns, id, props);
       }
       subgroup.push(node);
     }
   }
-  console.log(subgroups);
+
   return transitionFactory(subgroups, ns, id);
 }
 
@@ -41,8 +41,9 @@ function transitionNamespace(name) {
 }
 
 function transitionFactory(groups, ns, id) {
-  groups.namespace = ns;
-  groups.id = id;
+  var trans = Transition.from(groups);
+  trans.namespace = ns;
+  trans.id = id;
 
-  return Transition.from(groups);
+  return trans;
 }

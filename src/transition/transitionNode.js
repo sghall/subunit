@@ -55,7 +55,7 @@ export function transitionNode(node, i, ns, id, inherit) {
         lock.active = id;
 
         if (transition.event) {
-           transition.event.start.call(node, node.__data__, i);
+          transition.event.start.call(node, node.__data__, i);
         }
 
         transition.tween.forEach(function(key, value) {
