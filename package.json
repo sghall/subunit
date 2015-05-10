@@ -19,6 +19,7 @@
   "devDependencies": {
     "babel": "^5.1.11",
     "babel-core": "^5.1.11",
+    "bungalow": "0.0.2",
     "d3": "^3.5.5",
     "es6-module-loader": "^0.16.6",
     "karma": "^0.12.31",
