@@ -1,13 +1,15 @@
 import d3 from 'd3';
-import { each } from '../selection/each';
+import { selectionEach } from '../selection/each';
 
 export function ease(value) {
-  var id = this.id, ns = this.namespace;
+  var id = this.id;
+  var ns = this.namespace;
+
   if (arguments.length < 1) {
     return this.node()[ns][id].ease;
   }
   if (typeof value !== "function") {
     value = d3.ease.apply(d3, arguments);
   }
-  return each(this, function(node) { node[ns][id].ease = value; });
+  return selectionEach(this, node => node[ns][id].ease = value);
 }
