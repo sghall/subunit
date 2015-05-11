@@ -1,12 +1,16 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import './common/OrbitControls';
 import { raycast } from './common/events';
 import { getCoords, arc, lineCache } from './common/geo';
 import '../fonts/kai';
 
 var world = THREE.ImageUtils.loadTexture('images/world.jpg', null);
+
+d3.select("#loading").transition().duration(500)
+  .style("opacity", 0).remove();
 
 var textMaterial = new THREE.MeshFaceMaterial([
   new THREE.MeshPhongMaterial({color: '#ffffff', shading: THREE.FlatShading}),
@@ -127,7 +131,11 @@ d3.json('data/top-cities.json', function (err, json) {
 
   raycast(camera, arcs[0], 'click');
 
+  var control = new THREE.OrbitControls(camera, renderer.domElement);
+  control.zoomSpeed = 0.1;
+
   function animate() {
+    control.update();
     requestAnimationFrame(animate);
     render();
   }

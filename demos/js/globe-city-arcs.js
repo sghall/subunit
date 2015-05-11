@@ -1,7 +1,8 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import './common/OrbitControls';
 import { raycast } from './common/events';
 import { getCoords, arc, lineCache } from './common/geo';
 
@@ -20,6 +21,9 @@ var highlight = new THREE.LineBasicMaterial({
 });
 
 d3.json('data/top-cities.json', function (err, cities) {
+
+  d3.select("#loading").transition().duration(500)
+    .style("opacity", 0).remove();
 
   // GENERATE SOME MOCK DATA
   var data = [];
@@ -72,7 +76,11 @@ d3.json('data/top-cities.json', function (err, cities) {
 
   raycast(camera, arcs[0], 'click');
 
+  var control = new THREE.OrbitControls(camera, renderer.domElement);
+  control.zoomSpeed = 0.1;
+
   function animate() {
+    control.update();
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }

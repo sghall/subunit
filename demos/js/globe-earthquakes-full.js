@@ -1,7 +1,8 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import './common/OrbitControls';
 import { raycast } from './common/events';
 import { getCoords, materialsCache } from './common/geo';
 
@@ -25,6 +26,9 @@ var getColor = materialsCache(colorScale);
 var highlight = getColor(10);
 
 d3.json('data/earthquakes.json', function (err, data) {
+
+  d3.select("#loading").transition().duration(500)
+    .style("opacity", 0).remove();
 
   var root = SubUnit.select(scene);
 
@@ -64,7 +68,11 @@ d3.json('data/earthquakes.json', function (err, data) {
 
   raycast(camera, quakes[0], 'click');
 
+  var control = new THREE.OrbitControls(camera, renderer.domElement);
+  control.zoomSpeed = 0.1;
+
   function animate() {
+    control.update();
     requestAnimationFrame(animate);
     render();
   }
