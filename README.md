@@ -3,27 +3,23 @@
 
 ### SubUnit has been updated to work with SystemJS. Support for transitions using D3 easing functions has also been added.
 
-Read the [intro blog post](http://www.delimited.io/blog/2015/1/21/selections-in-threejs)
-
-Take a look at the [demos](http://www.delimited.io/demos)
-
-SubUnit is a super small library that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and allows you to select into in the scene graph.
-
-<img src="img/arcs.png" height="250px"/>
-<img src="img/earthquakes.png" height="250px"/>
-
-Check it out using bower...
+```html
+npm install subunit
+```
 
 ```html
 bower install subunit
 ```
 
-To run the demos...do another bower install in the demos folder to load the dependencies.
+Read the [intro blog post](http://www.delimited.io/blog/2015/1/21/selections-in-threejs)
 
-```html
-cd subunit/demos
-bower install
-```
+SubUnit is a super small library that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and d3.js and allows you to select into in the scene graph.
+
+<img src="img/arcs.png" height="250px"/>
+<img src="img/earthquakes.png" height="250px"/>
+
+To run the demos...do npm install to get the dependencies for the demo.
+
 Run a local server from the root folder...
 
 ```html

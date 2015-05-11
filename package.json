@@ -1,6 +1,6 @@
 {
   "name": "subunit",
-  "version": "v0.2.6",
+  "version": "v0.2.7",
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,6 @@
     "babel": "^5.1.11",
     "babel-core": "^5.1.11",
     "bungalow": "0.0.2",
-    "d3": "^3.5.5",
     "es6-module-loader": "^0.16.6",
     "karma": "^0.12.31",
     "karma-chrome-launcher": "^0.1.8",
@@ -32,6 +31,7 @@
     "tween.js": "^0.14.0"
   },
   "dependencies": {
-    "three": "^0.71.0"
+    "three": "^0.71.0",
+    "d3": "^3.5.5"
   }
 }
