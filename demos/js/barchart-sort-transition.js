@@ -2,7 +2,7 @@ import d3 from 'd3';
 import THREE from 'THREE';
 import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
-import { Control } from 'bungalow';
+import './common/OrbitControls';
 import { raycast } from './common/events';
 
 var carpet = THREE.ImageUtils.loadTexture('images/carpet.jpg', null);
@@ -99,7 +99,7 @@ d3.json('data/letters.json', function (err, data) {
 
   console.log("root: ", window.root = root);
 
-  var control = new Control(camera, renderer.domElement);
+  var control = new THREE.OrbitControls(camera, renderer.domElement);
 
   function animate() {
     control.update();
