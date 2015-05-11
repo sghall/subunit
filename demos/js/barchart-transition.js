@@ -1,10 +1,13 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
-import { Control } from '../../node_modules/bungalow/src/Control';
+import { Control } from 'bungalow';
 
 d3.json('data/letters.json', function (err, data) {
+
+  d3.select("#loading").transition().duration(800)
+    .style("opacity", 0).remove();
 
   var size = [1000, 600]; // Width, Height
 
@@ -53,7 +56,7 @@ d3.json('data/letters.json', function (err, data) {
       position: function (d) {
         var x0 =  xScale(d.letter);
         var y0 = -yScale(d.frequency) / 2;
-        return {x: x0, y: y0, z: 240};
+        return {x: x0, y: y0, z: 250};
       },
       rotation: function () {
         return {_z: Math.PI * 2, _y: Math.PI * 2};

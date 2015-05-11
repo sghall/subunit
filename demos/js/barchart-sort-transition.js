@@ -1,13 +1,16 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import TWEEN from 'TWEEN';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import { Control } from 'bungalow';
 import { raycast } from './common/events';
 
 var carpet = THREE.ImageUtils.loadTexture('images/carpet.jpg', null);
 
 d3.json('data/letters.json', function (err, data) {
+
+  d3.select("#loading").transition().duration(800)
+    .style("opacity", 0).remove();
 
   var size = [3000, 700]; // Width, Height
 
@@ -82,19 +85,10 @@ d3.json('data/letters.json', function (err, data) {
 
   bars.sort(function (a, b) { return b.frequency - a.frequency; });
 
-  bars.each(function (d, i) {
-    var x0 = x(i) + x.rangeBand() / 2;
-
-    new TWEEN.Tween(this.position)
-      .delay(3000)
-      .to({x: x0}, 1000)
-      .start();
-
-    new TWEEN.Tween(this.rotation)
-      .delay(3000)
-      .to({z: 2 * Math.PI}, 1000)
-      .start();
-  });
+  bars.transition().delay(2000).duration(2000)
+    .attr("position", function (d, i) {
+      return {x: x(i) + x.rangeBand() / 2};
+    });
 
   container.node().position.x = -size[0] / 2;
   container.node().position.y = (-size[1] * 2) + size[1] / 2;
@@ -105,9 +99,10 @@ d3.json('data/letters.json', function (err, data) {
 
   console.log("root: ", window.root = root);
 
-  function animate() {
-    TWEEN.update();
+  var control = new Control(camera, renderer.domElement);
 
+  function animate() {
+    control.update();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }

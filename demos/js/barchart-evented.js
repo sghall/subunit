@@ -1,10 +1,14 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import { Control } from 'bungalow';
 import { raycast } from './common/events';
 
 d3.json('data/letters.json', function (err, data) {
+
+  d3.select("#loading").transition().duration(800)
+    .style("opacity", 0).remove();
 
   var size = [1000, 600]; // Width, Height
 
@@ -52,7 +56,10 @@ d3.json('data/letters.json', function (err, data) {
 
   console.log("root: ", window.root = root);
 
+  var control = new Control(camera, renderer.domElement);
+
   function animate() {
+    control.update();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }

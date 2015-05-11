@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Labeled Bar Chart - WebGL Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
     <div id="info">
-      <h3>Bar Charts Labeled - WebGL Demo</h3>
+      <h3>Labeled Bar Chart - WebGL Demo</h3>
       <div id="msg">Click the bars...</div>
     </div>
-    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <div id="loading">Loading...</div>
     <script src="../node_modules/babel-core/browser-polyfill.js"></script>
     <script src="../node_modules/babel-core/browser.js"></script>
     <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
@@ -20,7 +21,9 @@
         baseURL: '../',
         map: {
           d3: 'node_modules/d3/d3',
-          THREE: 'node_modules/three/three'
+          THREE: 'node_modules/three/three',
+          SubUnit: 'src/index',
+          bungalow: 'node_modules/bungalow/src/Control'
         },
         transpiler: 'babel'
       });
