@@ -15,15 +15,22 @@ d3.json('data/letters.json', function (err, data) {
     .range([size[1], 0]);
 
   var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
-  var material2 = new THREE.MeshPhongMaterial({color: '#888888'});
 
   xScale.domain(data.map(function (d) { return d.letter; }));
   yScale.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
   var root = SubUnit.select(scene);
-  root.node().position.x = -size[0] / 2;
+  root.node().position.set(size[0], 0, -3000);
 
-  var bars = root.selectAll("bar")
+  root.transition().ease("elastic").duration(3000)
+    .attr({
+      position: {x: -size[0] / 2, z: -500},
+      rotation: {_x: Math.PI * 4}
+    })
+    .transition().duration(2000)
+    .attr("position", {z: 200});
+
+  root.selectAll("bar")
     .data(data).enter()
     .append("mesh")
     .attr("tags", "bar")
@@ -36,28 +43,22 @@ d3.json('data/letters.json', function (err, data) {
       var h = size[1] - yScale(d.frequency);
       return new THREE.BoxGeometry(w, h, 5);
     })
-    .each(function (d) {
-      var x0 = xScale(d.letter);
-      var y0 = -yScale(d.frequency) / 2;
-      this.position.set(x0, y0, 240);
-    });
-
-  bars.transition()
-    .delay(50).duration(3000).ease("bounce")
+    .transition()
+    .duration(3000).ease("quad")
     .attr("position", function (d, i) {
       return {x: i * 100};
     })
-    .transition()
-    .attr("position", function (d) {
-      var x0 = xScale(d.letter);
-      var y0 = -yScale(d.frequency) / 2;
-      return {x: x0, y: y0, z: 240};
+    .transition().ease("bounce").duration(3000)
+    .attr({
+      position: function (d) {
+        var x0 =  xScale(d.letter);
+        var y0 = -yScale(d.frequency) / 2;
+        return {x: x0, y: y0, z: 240};
+      },
+      rotation: function () {
+        return {_z: Math.PI * 2, _y: Math.PI * 2};
+      }
     });
-
-  console.log("root: ", window.root = root);
-
-  root.selectAll("bar.big")
-    .attr("material", material2);
 
   var control = new Control(camera, renderer.domElement);
 

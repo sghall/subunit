@@ -1,11 +1,13 @@
 <h2>SubUnit</h2>
 <h4>D3 Selections in THREE.js</h4>
 
+### SubUnit has been updated to work with SystemJS. Support for transitions using D3 easing functions has also been added.
+
 Read the [intro blog post](http://www.delimited.io/blog/2015/1/21/selections-in-threejs)
 
 Take a look at the [demos](http://www.delimited.io/demos)
 
-SubUnit is a super small library (~600 lines) that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and allows you to select into in the scene graph.
+SubUnit is a super small library that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and allows you to select into in the scene graph.
 
 <img src="img/arcs.png" height="250px"/>
 <img src="img/earthquakes.png" height="250px"/>
