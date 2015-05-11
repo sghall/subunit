@@ -22,6 +22,8 @@ function selectionAttr(name, value) {
       for (var i = 0; i < arr.length; i++) {
         this.__tags__.push(arr[i]);
       }
+    } else if (name === "position" || name === "rotation" || name === "scale") {
+      this[name].copy(value);
     } else {
       this[name] = value;
     }
@@ -31,6 +33,8 @@ function selectionAttr(name, value) {
     var x = value.apply(this, arguments);
     if (x === null) {
       return this[name] && delete this[name];
+    } else if (name === "position" || name === "rotation" || name === "scale") {
+      this[name].copy(x);
     } else {
       this[name] = x;
     }
