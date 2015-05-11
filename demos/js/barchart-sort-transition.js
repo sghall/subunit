@@ -53,13 +53,13 @@ d3.json('data/letters.json', function (err, data) {
       return new THREE.MeshPhongMaterial(opts);
     })
     .attr("geometry", backing)
-    .each(function (d, i) {
+    .each(function () {
       this.position.z = -50;
       this.position.x = size[0] / 2;
     });
 
   var bars = charts.selectAll("bar")
-    .data(function (d) {return d.data;}).enter()
+    .data(function (d) {return d.data; }).enter()
     .append("mesh")
     .attr("tags", "bar")
     .attr("material", color1)
