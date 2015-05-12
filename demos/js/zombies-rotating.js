@@ -1,13 +1,17 @@
 import d3 from 'd3';
 import THREE from 'THREE';
-import { SubUnit } from '../../src/index';
+import { SubUnit } from 'SubUnit';
 import { camera, scene, renderer } from './common/scene';
+import './common/OrbitControls';
 import { uvMapper } from './common/sprite-uvs';
 import { sphere } from './common/layouts';
 
 var sprite = THREE.ImageUtils.loadTexture('images/zombies.jpg', null);
 
 d3.json('data/zombies.json', function (err, data) {
+
+  d3.select("#loading").transition().duration(500)
+    .style("opacity", 0).remove();
 
   var uvsMap = uvMapper(data.images);
 
@@ -38,7 +42,11 @@ d3.json('data/zombies.json', function (err, data) {
   var theta = 0;
   var gamma = 0;
 
+  var control = new THREE.OrbitControls(camera, renderer.domElement);
+  control.zoomSpeed = 0.1;
+
   function animate() {
+    control.update();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 

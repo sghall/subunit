@@ -94,6 +94,7 @@ d3.json('data/letters.json', function (err, data) {
   console.log("root: ", window.root = root);
 
   var control = new THREE.OrbitControls(camera, renderer.domElement);
+  control.zoomSpeed = 0.1;
 
   function animate() {
     control.update();
