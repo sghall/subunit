@@ -22,21 +22,33 @@ function selectionAttr(name, value) {
       for (var i = 0; i < arr.length; i++) {
         this.__tags__.push(arr[i]);
       }
-    } else if (name === "position" || name === "rotation" || name === "scale") {
+    } else if (name === "position" || name === "scale") {
       this[name].copy(value);
+    } else if (name === "rotation" ) {
+      this.rotation.x = value.x || this.rotation.x;
+      this.rotation.y = value.y || this.rotation.y;
+      this.rotation.z = value.z || this.rotation.z;
+    } else if (name === "lookAt") {
+      this.lookAt(value);
     } else {
       this[name] = value;
     }
   }
 
   function attrFunction() {
-    var x = value.apply(this, arguments);
-    if (x === null) {
+    var res = value.apply(this, arguments);
+    if (res === null) {
       return this[name] && delete this[name];
-    } else if (name === "position" || name === "rotation" || name === "scale") {
-      this[name].copy(x);
+    } else if (name === "position" || name === "scale") {
+      this[name].copy(res);
+    } else if (name === "rotation" ) {
+      this.rotation.x = res.x || this.rotation.x;
+      this.rotation.y = res.y || this.rotation.y;
+      this.rotation.z = res.z || this.rotation.z;
+    } else if (name === "lookAt") {
+      this.lookAt(res);
     } else {
-      this[name] = x;
+      this[name] = res;
     }
   }
   return value === null ? attrNull: (typeof value === "function" ? attrFunction: attrConstant);

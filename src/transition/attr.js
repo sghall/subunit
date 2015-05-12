@@ -19,11 +19,25 @@ export function attr(name, value) {
       return attrNull;
     } else {
       return function () {
-        let a = this[name];
+        let a = {
+          x: this[name].x,
+          y: this[name].y,
+          z: this[name].z
+        };
+
+        for (let key in a) {
+          if (!b[key]) {
+             delete a[key];
+          }
+        }
+
         let i = interpolate(a, b);
 
         return function (t) {
-          this[name].copy(i(t));
+          let update = i(t);
+          for (let key in update) {
+            this[name][key] = update[key];
+          }
         };
       };
     }
