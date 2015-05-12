@@ -19,6 +19,7 @@ export function attr(name, value) {
       return attrNull;
     } else {
       return function () {
+
         let a = {
           x: this[name].x,
           y: this[name].y,

@@ -25,9 +25,9 @@ function selectionAttr(name, value) {
     } else if (name === "position" || name === "scale") {
       this[name].copy(value);
     } else if (name === "rotation" ) {
-      this.rotation.x = value.x || this.rotation.x;
-      this.rotation.y = value.y || this.rotation.y;
-      this.rotation.z = value.z || this.rotation.z;
+      this.rotateX(value.x || 0);
+      this.rotateY(value.y || 0);
+      this.rotateZ(value.z || 0);
     } else if (name === "lookAt") {
       this.lookAt(value);
     } else {
@@ -42,9 +42,9 @@ function selectionAttr(name, value) {
     } else if (name === "position" || name === "scale") {
       this[name].copy(res);
     } else if (name === "rotation" ) {
-      this.rotation.x = res.x || this.rotation.x;
-      this.rotation.y = res.y || this.rotation.y;
-      this.rotation.z = res.z || this.rotation.z;
+      this.rotateX(res.x || 0);
+      this.rotateY(res.y || 0);
+      this.rotateZ(res.z || 0);
     } else if (name === "lookAt") {
       this.lookAt(res);
     } else {
