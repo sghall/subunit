@@ -28,6 +28,10 @@ function selectionAttr(name, value) {
       this.rotateX(value.x || 0);
       this.rotateY(value.y || 0);
       this.rotateZ(value.z || 0);
+    } else if (name === "translation" ) {
+      this.translateX(value.x || 0);
+      this.translateY(value.y || 0);
+      this.translateZ(value.z || 0);
     } else if (name === "lookAt") {
       this.lookAt(value);
     } else {
@@ -45,6 +49,10 @@ function selectionAttr(name, value) {
       this.rotateX(res.x || 0);
       this.rotateY(res.y || 0);
       this.rotateZ(res.z || 0);
+    } else if (name === "translation" ) {
+      this.translateX(res.x || 0);
+      this.translateY(res.y || 0);
+      this.translateZ(res.z || 0);
     } else if (name === "lookAt") {
       this.lookAt(res);
     } else {
