@@ -1,48 +1,61 @@
-import { camera, scene, renderer} from './common/scene';
-import { SubUnit } from '../../src/index';
 import d3 from 'd3';
 import THREE from 'THREE';
+import { SubUnit } from 'SubUnit';
+import { camera, scene, renderer } from './common/scene';
+import './common/OrbitControls';
 
-var circleRadius = 200;
-var squareCount  = 1000;
+var circleRadius = 180;
+var squareCount  = 100;
+var squareSize = 78;
 
-var options  = {color: 'tomato', side: THREE.DoubleSide};
+var speed = 0.002;
+
+var metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
+
+
+var options  = {map: metal};
 var material = new THREE.MeshPhongMaterial(options);
-var geometry = new THREE.SphereGeometry(120, 10, 10);
+var geometry = new THREE.PlaneBufferGeometry(squareSize, squareSize);
 
-camera.position.z = 3000;
+d3.select("#loading").transition().duration(500)
+  .style("opacity", 0).remove();
 
 var root = SubUnit.select(scene);
-var container = root.append("object");
-root.node().rotateY(80);
 
-var frames = container.selectAll(".frame")
-  .data([0, 1]).enter()
-  .append("object")
-  .tagged("frame", true);
+var containers = root.selectAll("rect")
+  .data(d3.range(squareCount))
+  .enter().append("object")
+  .datum(function(i) { return i / squareCount; })
+  .attr("rotation", function (d) {
+    return {z: d * Math.PI * 2};
+  })
+  .attr("translation", function () {
+    return {x: circleRadius};
+  });
 
-var squares = frames.selectAll("rect")
-    .data(d3.range(squareCount))
-  .enter().append("mesh")
+containers.append("mesh")
   .datum(function(i) { return i / squareCount; })
   .attr("material", material)
   .attr("geometry", geometry)
-  .each(function (d, i) {
-    this.position.z = -i * 5;
+  .attr("translation", function () {
+    return {z: Math.PI / 5};
   });
 
-  d3.timer(function(/* elapsed */) {
-    squares.each(function(d) {
-      this.rotation.z += d * (2 * Math.PI);
-      this.translateX(circleRadius);
-    });
+
+d3.timer(function(elapsed) {
+  containers.each(function (t) {
+    this.rotation.z = -(t * Math.PI * 2 + (elapsed * speed));
   });
+});
 
 console.log("root: ", window.root = root, root);
 
+var control = new THREE.OrbitControls(camera, renderer.domElement);
+control.noRotate = true;
+
 function animate() {
+  control.update();
   renderer.render(scene, camera);
-  root.node().rotation.y += 0.003;
   requestAnimationFrame(animate);
 }
 
