@@ -1,7 +1,8 @@
 <h2>SubUnit</h2>
-<h4>D3 Selections in THREE.js</h4>
+<h4>Selections in THREE.js</h4>
 
-### SubUnit has been updated to work with SystemJS. Support for transitions using D3 easing functions has also been added.
+SubUnit gives you an ES6 version of D3 selections that work against a THREE.js scene graph.  It allows you to select into the scene and use D3 style syntax.
+
 
 ```html
 npm install subunit
@@ -11,14 +12,11 @@ npm install subunit
 bower install subunit
 ```
 
-Read the [intro blog post](http://www.delimited.io/blog/2015/1/21/selections-in-threejs)
-
-SubUnit is a super small library that allows you to rapidly prototype interactive 3D interfaces and data visualizations in WebGL. It sits on top of THREE.js and d3.js and allows you to select into in the scene graph.
-
+<img src="img/spiral-circle.png" height="250px"/>
 <img src="img/arcs.png" height="250px"/>
 <img src="img/earthquakes.png" height="250px"/>
 
-To run the demos...do npm install to get the dependencies for the demo.
+To run the demos, type npm install in the root folder to get the dependencies for the demos.
 
 Run a local server from the root folder...
 
