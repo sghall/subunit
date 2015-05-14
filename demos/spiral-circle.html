@@ -1,48 +1,34 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
+  <head>
+    <title>Spiral Circle - WebGL Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Spiral Circle - WebGL Demo</h3>
+      <h6 style="margin:5px">Based on @mbostock's <a href="http://bl.ocks.org/mbostock/2472e84f78fd03df443f" target="_blank">example</a></h6>
+      <h6 style="margin:5px">Pan it to the left to see how it works.</h6>
+    </div>
+    <div id="loading">Loading...</div>
+    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
+    <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+      System.config({
+        baseURL: '../',
+        map: {
+          d3: 'node_modules/d3/d3',
+          THREE: 'node_modules/three/three',
+          SubUnit: 'src/index'
+        },
+        transpiler: 'babel'
+      });
 
-rect {
-  fill: #fff;
-  stroke: #000;
-  stroke-width: .7px;
-}
-
-</style>
-<svg width="960" height="500">
-  <defs>
-    <clipPath id="clip-upper">
-      <rect width="960" height="250" x="-480" y="-250"></rect>
-    </clipPath>
-    <clipPath id="clip-lower">
-      <rect width="960" height="250" x="-480" y="0"></rect>
-    </clipPath>
-  </defs>
-  <g clip-path="url(#clip-upper)" transform="translate(480,250)"></g>
-  <g clip-path="url(#clip-lower)" transform="translate(480,250)"></g>
-</svg>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-
-var width = 960,
-    height = 500,
-    circleRadius = 180,
-    squareCount = 200,
-    squareSize = 78,
-    speed = .08;
-
-var square = d3.selectAll("g")
-  .append("g")
-    .attr("transform", function(d, i) { return i ? "rotate(180)" : null; })
-  .selectAll("rect")
-    .data(d3.range(squareCount))
-  .enter().append("rect")
-    .datum(function(i) { return i / squareCount; })
-    .attr({width: squareSize, height: squareSize, x: -squareSize / 2, y: -squareSize / 2});
-
-d3.timer(function(elapsed) {
-  square
-      .attr("transform", function(t) { return "rotate(" + (t * 360) + ")translate(0," + circleRadius + ")rotate(" + (t * 360 + elapsed * speed) + ")"; });
-});
-
-</script>
+      System.import('demos/js/spiral-circle');
+  </script>
+  </body>
+</html>
