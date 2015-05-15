@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spiral Circle - WebGL Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Spiral Circle - WebGL Demo</h3>
+      <h6 style="margin:5px">Based on @mbostock's <a href="http://bl.ocks.org/mbostock/2472e84f78fd03df443f" target="_blank">example</a></h6>
+      <h6 style="margin:5px">Pan it to the left to see how it works.</h6>
+    </div>
+    <div id="loading">Loading...</div>
+    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
+    <script src="../node_modules/babel-core/browser.js"></script>
+    <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script>
+      System.config({
+        baseURL: '../',
+        map: {
+          d3: 'node_modules/d3/d3',
+          THREE: 'node_modules/three/three',
+          SubUnit: 'src/index'
+        },
+        transpiler: 'babel'
+      });
+
+      System.import('demos/js/spiral-circle-v2');
+  </script>
+  </body>
+</html>
