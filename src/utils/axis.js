@@ -48,11 +48,22 @@ export var axis = function() {
           x1, x2, y1, y2;
 
       if (orient === "bottom" || orient === "top") {
-        tickTransform = axisX, x1 = "x", y1 = "y", x2 = "x2", y2 = "y2";
+        tickTransform = axisX;
+        x1 = "x";
+        y1 = "y";
+        x2 = "x2";
+        y2 = "y2";
+
         text.attr("dy", sign < 0 ? "0em" : ".71em").style("text-anchor", "middle");
         pathUpdate.attr("d", "M" + range[0] + "," + sign * outerTickSize + "V0H" + range[1] + "V" + sign * outerTickSize);
+
       } else {
-        tickTransform = axisY, x1 = "y", y1 = "x", x2 = "y2", y2 = "x2";
+        tickTransform = axisY;
+        x1 = "y";
+        y1 = "x";
+        x2 = "y2";
+        y2 = "x2";
+
         text.attr("dy", ".32em").style("text-anchor", sign < 0 ? "end" : "start");
         pathUpdate.attr("d", "M" + sign * outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + sign * outerTickSize);
       }
@@ -82,57 +93,75 @@ export var axis = function() {
   }
 
   axis.scale = function(x) {
-    if (!arguments.length) return scale;
+    if (!arguments.length) {
+      return scale;
+    }
     scale = x;
     return axis;
   };
 
   axis.orient = function(x) {
-    if (!arguments.length) return orient;
+    if (!arguments.length) {
+      return orient;
+    }
     orient = x in axisOrients ? x + "" : defaultOrient;
     return axis;
   };
 
   axis.ticks = function() {
-    if (!arguments.length) return tickArguments_;
+    if (!arguments.length) {
+      return tickArguments_;
+    }
     tickArguments_ = arguments;
     return axis;
   };
 
   axis.tickValues = function(x) {
-    if (!arguments.length) return tickValues;
+    if (!arguments.length) {
+      return tickValues;
+    }
     tickValues = x;
     return axis;
   };
 
   axis.tickFormat = function(x) {
-    if (!arguments.length) return tickFormat_;
+    if (!arguments.length) {
+      return tickFormat_;
+    }
     tickFormat_ = x;
     return axis;
   };
 
   axis.tickSize = function(x) {
     var n = arguments.length;
-    if (!n) return innerTickSize;
+    if (!n) {
+      return innerTickSize;
+    }
     innerTickSize = +x;
     outerTickSize = +arguments[n - 1];
     return axis;
   };
 
   axis.innerTickSize = function(x) {
-    if (!arguments.length) return innerTickSize;
+    if (!arguments.length) {
+      return innerTickSize;
+    }
     innerTickSize = +x;
     return axis;
   };
 
   axis.outerTickSize = function(x) {
-    if (!arguments.length) return outerTickSize;
+    if (!arguments.length) {
+      return outerTickSize;
+    }
     outerTickSize = +x;
     return axis;
   };
 
   axis.tickPadding = function(x) {
-    if (!arguments.length) return tickPadding;
+    if (!arguments.length) {
+      return tickPadding;
+    }
     tickPadding = +x;
     return axis;
   };
