@@ -2,6 +2,7 @@ import d3 from 'd3';
 
 let defaultOrient = "bottom";
 let axisOrients = {top: 1, right: 1, bottom: 1, left: 1};
+var ε = 1e-6;
 
 export var axis = function() {
   var scale = d3.scale.linear(),
