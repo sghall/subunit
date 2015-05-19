@@ -32,7 +32,7 @@ export var axis = function() {
           tickTransform;
 
       // Domain.
-      var range = d3_scaleRange(scale1),
+      var range = scaleRange(scale1),
           path = g.selectAll(".domain").data([0]),
           pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
 
@@ -143,6 +143,15 @@ export var axis = function() {
 
   return axis;
 };
+
+function scaleExtent(domain) {
+  var start = domain[0], stop = domain[domain.length - 1];
+  return start < stop ? [start, stop] : [stop, start];
+}
+
+function scaleRange(scale) {
+  return scale.rangeExtent ? scale.rangeExtent() : scaleExtent(scale.range());
+}
 
 function axisX(selection, x0, x1) {
   selection.attr("transform", function(d) { var v0 = x0(d); return "translate(" + (isFinite(v0) ? v0 : x1(d)) + ",0)"; });
