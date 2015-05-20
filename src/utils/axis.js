@@ -18,19 +18,39 @@ export var axis = function() {
     g.each(function() {
       var g = d3.select(this);
 
-      // Stash a snapshot of the new scale, and retrieve the old snapshot.
-      let scale0 = this.__chart__ || scale;
-      let scale1 = this.__chart__ = scale.copy();
+      let scale0 = this.__scale__ || scale;
+      let scale1 = this.__scale__ = scale.copy();
 
-      // Ticks, or domain values for ordinal scales.
-      var ticks = tickValues == null ? (scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_) : scale1.domain()) : tickValues,
-          tickFormat = tickFormat_ == null ? (scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_) : function (d) { return d; }) : tickFormat_,
-          tick = g.selectAll(".tick").data(ticks, scale1),
-          tickEnter = tick.enter().insert("g", ".domain").attr("class", "tick").style("opacity", ε),
-          tickExit = d3.transition(tick.exit()).style("opacity", ε).remove(),
-          tickUpdate = d3.transition(tick.order()).style("opacity", 1),
-          tickSpacing = Math.max(innerTickSize, 0) + tickPadding,
-          tickTransform;
+      var ticks, tickFormat;
+
+      if (tickValues === null) {
+        scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_): scale1.domain();
+      } else {
+        ticks = tickValues;
+      }
+
+      if (tickFormat_ === null) {
+        tickFormat = scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_): d => d);
+      } else {
+        tickFormat = tickFormat_;
+      }
+      
+      var tick = g.selectAll(".tick")
+        .data(ticks, scale1);
+          
+      var tickEnter = tick.enter()
+        .insert("g", ".domain")
+        .attr("class", "tick")
+        .style("opacity", ε)
+
+      var tickExit = d3.transition(tick.exit())
+        .style("opacity", ε).remove(),
+      
+      var tickUpdate = d3.transition(tick.order())
+        .style("opacity", 1),
+      
+      var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
+      var tickTransform;
 
       // Domain.
       var range = scaleRange(scale1),
@@ -40,13 +60,15 @@ export var axis = function() {
       tickEnter.append("line");
       tickEnter.append("text");
 
-      var lineEnter = tickEnter.select("line"),
-          lineUpdate = tickUpdate.select("line"),
-          text = tick.select("text").text(tickFormat),
-          textEnter = tickEnter.select("text"),
-          textUpdate = tickUpdate.select("text"),
-          sign = orient === "top" || orient === "left" ? -1 : 1,
-          x1, x2, y1, y2;
+      var lineEnter = tickEnter.select("line");
+      var lineUpdate = tickUpdate.select("line");
+
+      var text = tick.select("text").text(tickFormat);
+      var textEnter = tickEnter.select("text");
+      var textUpdate = tickUpdate.select("text");
+
+      var sign = orient === "top" || orient === "left" ? -1 : 1;
+      var x1, x2, y1, y2;
 
       if (orient === "bottom" || orient === "top") {
         tickTransform = axisX;
