@@ -3,8 +3,8 @@ import { Selection } from './core/Selection';
 
 export var SubUnit = {};
 
-SubUnit.select = function (object) {
-  var node = typeof object === "function" ? object(): object;
+export var select = function (item) {
+  var node = typeof item === "function" ? item(): item;
   var root = Selection.from([[new THREE.Object3D()]]);
   root.parentNode = node;
   root[0][0].__data__ = {};
@@ -13,6 +13,10 @@ SubUnit.select = function (object) {
   return root;
 };
 
-SubUnit.object = function (object) {
-  return Selection.from([[object]]);
+export var selectObject = function (item) {
+  return Selection.from([[item]]);
 };
+
+SubUnit.select = select;
+
+SubUnit.object = selectObject;

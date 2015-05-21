@@ -1,8 +1,9 @@
 import d3 from 'd3';
+import { selectObject } from '../index';
 
 let defaultOrient = "bottom";
 let axisOrients = {top: 1, right: 1, bottom: 1, left: 1};
-var ε = 1e-6;
+var minValue = 1e-6;
 
 export var axis = function() {
   let scale = d3.scale.linear();
@@ -14,9 +15,9 @@ export var axis = function() {
   let tickValues = null;
   let tickFormat_;
 
-  function axis(g) {
-    g.each(function() {
-      var g = d3.select(this);
+  function axis(object) {
+    object.each(function() {
+      var root = selectObject(this);
 
       let scale0 = this.__scale__ || scale;
       let scale1 = this.__scale__ = scale.copy();
@@ -24,38 +25,37 @@ export var axis = function() {
       var ticks, tickFormat;
 
       if (tickValues === null) {
-        scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_): scale1.domain();
+        ticks = scale1.ticks ? scale1.ticks.apply(scale1, tickArguments_): scale1.domain();
       } else {
         ticks = tickValues;
       }
 
       if (tickFormat_ === null) {
-        tickFormat = scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_): d => d);
+        tickFormat = scale1.tickFormat ? scale1.tickFormat.apply(scale1, tickArguments_): d => d;
       } else {
         tickFormat = tickFormat_;
       }
-      
-      var tick = g.selectAll(".tick")
-        .data(ticks, scale1);
-          
-      var tickEnter = tick.enter()
-        .insert("g", ".domain")
-        .attr("class", "tick")
-        .style("opacity", ε)
 
+      var tick = root.selectAll(".tick")
+        .data(ticks, scale1);
+
+      var tickEnter = tick.enter()
+        .append("object")
+        .attr("tags", "tick");
+      console.log("tick enter", tickEnter);
       var tickExit = d3.transition(tick.exit())
-        .style("opacity", ε).remove(),
-      
+        .style("opacity", minValue).remove();
+
       var tickUpdate = d3.transition(tick.order())
-        .style("opacity", 1),
-      
+        .style("opacity", 1);
+
       var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
       var tickTransform;
 
-      // Domain.
-      var range = scaleRange(scale1),
-          path = g.selectAll(".domain").data([0]),
-          pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
+      var range = scaleRange(scale1);
+
+      var path = root.selectAll(".domain").data([0]);
+      var pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
 
       tickEnter.append("line");
       tickEnter.append("text");
@@ -127,7 +127,7 @@ export var axis = function() {
     if (!arguments.length) {
       return orient;
     }
-    orient = x in axisOrients ? x + "" : defaultOrient;
+    orient = x in axisOrients   ? x + "" : defaultOrient;
     return axis;
   };
 
