@@ -22,7 +22,7 @@ function selectionCreator(name) {
   } else if (name === "g") {
     Func = THREE.Object3D;
   } else {
-    throw new Error("Cannot append: ", name);
+    throw new Error("Cannot append: " + name);
   }
 
   return function (data) {

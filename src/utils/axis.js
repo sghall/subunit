@@ -1,5 +1,6 @@
 import d3 from 'd3';
 import { selectObject } from '../index';
+import { Transition } from '../core/Transition';
 
 let defaultOrient = "bottom";
 let axisOrients = {top: 1, right: 1, bottom: 1, left: 1};
@@ -43,11 +44,11 @@ export var axis = function() {
         .append("object")
         .attr("tags", "tick");
       console.log("tick enter", tickEnter);
-      var tickExit = d3.transition(tick.exit())
-        .style("opacity", minValue).remove();
+      var tickExit = Transition.from(tick.exit());
+        // .style("opacity", minValue).remove();
 
-      var tickUpdate = d3.transition(tick.order())
-        .style("opacity", 1);
+      var tickUpdate = Transition.from(tick);
+        // .style("opacity", 1);
 
       var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
       var tickTransform;
@@ -55,6 +56,7 @@ export var axis = function() {
       var range = scaleRange(scale1);
 
       var path = root.selectAll(".domain").data([0]);
+
       var pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
 
       tickEnter.append("line");
