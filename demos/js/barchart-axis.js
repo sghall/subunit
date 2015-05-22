@@ -54,7 +54,7 @@ d3.json('data/letters.json', function (err, data) {
     });
 
     root.append("object")
-      .pass(yAxis);
+      .call(yAxis);
 
 
   console.log("root: ", window.root = root);
