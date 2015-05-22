@@ -21,7 +21,7 @@ export function transition() {
     }
   }
 
-  return transitionFactory(subgroups, ns, id1);
+  return Transition.factory(subgroups, ns, id1);
 }
 
 export function transitionSelection(selection, name) {
@@ -30,12 +30,4 @@ export function transitionSelection(selection, name) {
   } else {
     return Selection.from([]).transition(selection);
   }
-}
-
-function transitionFactory(groups, ns, id) {
-  var trans = Transition.from(groups);
-  trans.namespace = ns;
-  trans.id = id;
-
-  return trans;
 }

@@ -1,5 +1,5 @@
 import { selectionSelectorAll } from '../selection/selectAll';
-import { transitionNode } from './transitionNode/transitionNode';
+import { transitionNode } from './transitionNode';
 import { Transition } from '../core/Transition';
 
 export function select(selector) {

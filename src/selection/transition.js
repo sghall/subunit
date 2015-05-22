@@ -22,7 +22,7 @@ export function transition(name) {
     }
   }
 
-  return transitionFactory(subgroups, ns, id);
+  return Transition.factory(subgroups, ns, id);
 }
 
 function easeCubicInOut(t) {
@@ -38,12 +38,4 @@ function easeCubicInOut(t) {
 
 function transitionNamespace(name) {
   return name == null ? "__transition__" : "__transition_" + name + "__";
-}
-
-function transitionFactory(groups, ns, id) {
-  var trans = Transition.from(groups);
-  trans.namespace = ns;
-  trans.id = id;
-
-  return trans;
 }
