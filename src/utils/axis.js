@@ -1,10 +1,12 @@
 import d3 from 'd3';
 import { selectObject } from '../index';
-import { Transition } from '../core/Transition';
+import { transition } from '../selection/transition';
 
 let defaultOrient = "bottom";
+
 let axisOrients = {top: 1, right: 1, bottom: 1, left: 1};
-var minValue = 1e-6;
+
+// var minValue = 1e-6;
 
 export var axis = function() {
   let scale = d3.scale.linear();
@@ -43,11 +45,11 @@ export var axis = function() {
       var tickEnter = tick.enter()
         .append("object")
         .attr("tags", "tick");
-      console.log("tick enter", tickEnter);
-      var tickExit = Transition.from(tick.exit());
+
+      var tickExit = tick.exit();
         // .style("opacity", minValue).remove();
 
-      var tickUpdate = Transition.from(tick);
+      var tickUpdate = tick;
         // .style("opacity", 1);
 
       var tickSpacing = Math.max(innerTickSize, 0) + tickPadding;
@@ -57,15 +59,19 @@ export var axis = function() {
 
       var path = root.selectAll(".domain").data([0]);
 
-      var pathUpdate = (path.enter().append("path").attr("class", "domain"), d3.transition(path));
+      var pathUpdate = path.enter()
+        .append("object")
+        .attr("tags", "domain");
 
-      tickEnter.append("line");
-      tickEnter.append("text");
+      tickEnter.append("object").attr("tags", "line");
+
+      tickEnter.append("object").attr("tags", "text");
+      console.log("tick enter", tickEnter);
 
       var lineEnter = tickEnter.select("line");
       var lineUpdate = tickUpdate.select("line");
 
-      var text = tick.select("text").text(tickFormat);
+      var text = tick.select("text"); //.text(tickFormat);
       var textEnter = tickEnter.select("text");
       var textUpdate = tickUpdate.select("text");
 
@@ -79,8 +85,8 @@ export var axis = function() {
         x2 = "x2";
         y2 = "y2";
 
-        text.attr("dy", sign < 0 ? "0em" : ".71em").style("text-anchor", "middle");
-        pathUpdate.attr("d", "M" + range[0] + "," + sign * outerTickSize + "V0H" + range[1] + "V" + sign * outerTickSize);
+        // text.attr("dy", sign < 0 ? "0em" : ".71em").style("text-anchor", "middle");
+        // pathUpdate.attr("d", "M" + range[0] + "," + sign * outerTickSize + "V0H" + range[1] + "V" + sign * outerTickSize);
 
       } else {
         tickTransform = axisY;
@@ -89,8 +95,8 @@ export var axis = function() {
         x2 = "y2";
         y2 = "x2";
 
-        text.attr("dy", ".32em").style("text-anchor", sign < 0 ? "end" : "start");
-        pathUpdate.attr("d", "M" + sign * outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + sign * outerTickSize);
+        // text.attr("dy", ".32em").style("text-anchor", sign < 0 ? "end" : "start");
+        // pathUpdate.attr("d", "M" + sign * outerTickSize + "," + range[0] + "H0V" + range[1] + "H" + sign * outerTickSize);
       }
 
       lineEnter.attr(y2, sign * innerTickSize);
@@ -104,8 +110,13 @@ export var axis = function() {
       // Exiting ticks are likewise undefined in the new scale,
       // and so can fade-out in the old scale’s position.
       if (scale1.rangeBand) {
-        var x = scale1, dx = x.rangeBand() / 2;
-        scale0 = scale1 = function(d) { return x(d) + dx; };
+        let x = scale1;
+        let dx = x.rangeBand() / 2;
+
+        scale0 = scale1 = function(d) {
+          return x(d) + dx;
+        };
+
       } else if (scale0.rangeBand) {
         scale0 = scale1;
       } else {
