@@ -1,6 +1,7 @@
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+
 import { selectionSelectorAll } from '../selection/selectAll';
-import { transitionNode } from './transitionNode';
-import { Transition } from '../core/Transition';
+import { Transition } from '../Transition';
 
 export function select(selector) {
   var id = this.id;

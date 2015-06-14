@@ -1,5 +1,5 @@
 import THREE from 'THREE';
-import { Selection } from './core/Selection';
+import { Selection } from './Selection';
 
 export var SubUnit = {};
 
@@ -18,5 +18,4 @@ export var selectObject = function (item) {
 };
 
 SubUnit.select = select;
-
 SubUnit.object = selectObject;

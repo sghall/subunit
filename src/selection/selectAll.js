@@ -1,5 +1,5 @@
 import { search, array } from "../utils/utils";
-import { Selection } from "../core/Selection";
+import { Selection } from "../Selection";
 
 export function selectAll(selector) {
   var subgroups = [], subgroup, node;

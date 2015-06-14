@@ -1,5 +1,5 @@
-import { transitionNode } from '../transition/transitionNode';
-import { Transition } from '../core/Transition';
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+import { Transition } from '../Transition';
 
 export var transitionID = 0;
 export var transitionInherit = null;

@@ -1,5 +1,5 @@
 import d3 from 'd3';
-import { selectionEach } from "../selection/each";
+import { selectionEach } from "../../node_modules/antigen/selection/each";
 
 export function attr(name, value) {
 

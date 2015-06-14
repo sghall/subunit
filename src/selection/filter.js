@@ -1,4 +1,4 @@
-import { Selection } from "../core/Selection";
+import { Selection } from "../Selection";
 import { search } from "../utils/utils";
 
 export function filter(fun) {

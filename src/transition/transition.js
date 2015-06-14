@@ -1,7 +1,8 @@
-import { Transition } from '../core/Transition';
-import { Selection } from '../core/Selection';
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+
+import { Transition } from '../Transition';
+import { Selection } from '../Selection';
 import { transitionInheritId } from '../selection/transition';
-import { transitionNode } from '../transition/transitionNode';
 
 export function transition() {
   var id0 = this.id;

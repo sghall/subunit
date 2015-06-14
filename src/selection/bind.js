@@ -1,4 +1,4 @@
-import { SubUnitMap } from '../core/SubUnitMap';
+import { DataMap } from '../../node_modules/antigen/DataMap';
 
 export function getBind(enter, update, exit, key) {
   return function (group, groupData) {
@@ -12,8 +12,8 @@ export function getBind(enter, update, exit, key) {
     var exitNodes = new Array(n);
 
     if (key) {
-      var nodeByKeyValue = new SubUnitMap();
-      var dataByKeyValue = new SubUnitMap();
+      var nodeByKeyValue = new DataMap();
+      var dataByKeyValue = new DataMap();
       var keyValues = [], keyValue;
 
       for (i = -1; ++i < n; ) {

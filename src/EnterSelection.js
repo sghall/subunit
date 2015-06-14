@@ -1,7 +1,9 @@
-import { SubUnitArray } from './SubUnitArray';
+import { BaseArray } from '../node_modules/antigen/BaseArray';
 import { Selection } from './Selection';
 
-export class EnterSelection extends SubUnitArray {
+import { append } from './common/append';
+
+export class EnterSelection extends BaseArray {
   constructor(input) {
     super(input);
   }
@@ -26,3 +28,5 @@ EnterSelection.prototype.select = function (selector) {
   }
   return Selection.from(subgroups);
 };
+
+EnterSelection.prototype.append = append;

@@ -1,5 +1,5 @@
-import { Selection } from "../core/Selection";
-import { EnterSelection } from "../core/EnterSelection";
+import { Selection } from "../Selection";
+import { EnterSelection } from "../EnterSelection";
 import { getBind } from './bind';
 
 export function data(value, key) {
