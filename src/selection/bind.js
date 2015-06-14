@@ -72,8 +72,8 @@ export function getBind(enter, update, exit, key) {
 }
 
 function selectionDataNode(nodeData) {
-  var store = {};
-  store.__data__ = nodeData;
-  store.__tags__ = [];
-  return store;
+  var data = {};
+  data.__data__ = nodeData;
+  data.__tags__ = [];
+  return data;
 }
