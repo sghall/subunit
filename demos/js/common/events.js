@@ -15,7 +15,7 @@ export function raycast(camera, items, type) {
 
     raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
 
-    var target = raycaster.intersectObjects(items);
+    var target = raycaster.intersectObjects(items, true);
 
     if (target.length) {
       target[0].type = type;
