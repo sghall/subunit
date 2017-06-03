@@ -28,4 +28,3 @@ export function selectionSelectorAll(selector) {
     return search(this, selector);
   };
 }
-
