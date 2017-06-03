@@ -1,23 +1,31 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+// @flow weak
+/* eslint no-use-before-define: "off", no-cond-assign: "off", no-underscore-dangle: "off" */
 
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { selectionSelectorAll } from '../selection/selectAll';
 import { Transition } from '../Transition';
 
-export function select(selector) {
-  var id = this.id;
-  var ns = this.namespace;
-  var subgroups = [], subgroup;
-  var subnode, node;
+export default function select(selector) {
+  const id = this.id;
+  const ns = this.namespace;
+
+  const subgroups = [];
+
+  let subgroup;
+  let subnode;
+  let node;
 
   selector = selectionSelectorAll(selector);
 
-  for (var j = -1, m = this.length; ++j < m; ) {
+  for (let j = -1, m = this.length; ++j < m;) {
     subgroups.push(subgroup = []);
-    for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
+
+    for (let group = this[j], i = -1, n = group.length; ++i < n;) {
       if ((node = group[i]) && (subnode = selector.call(node, node.__data__, i, j))) {
-        if ("__data__" in node) {
+        if ('__data__' in node) {
           subnode.__data__ = node.__data__;
         }
+
         transitionNode(subnode, i, ns, id, node[ns][id]);
         subgroup.push(subnode);
       } else {
@@ -28,4 +36,3 @@ export function select(selector) {
 
   return Transition.from(subgroups, ns, id);
 }
-
