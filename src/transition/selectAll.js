@@ -1,27 +1,35 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+// @flow weak
+/* eslint no-use-before-define: "off", no-cond-assign: "off", no-underscore-dangle: "off" */
 
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { selectionSelectorAll } from '../selection/selectAll';
 import { Transition } from '../Transition';
 
-export function selectAll(selector) {
-  var id = this.id;
-  var ns = this.namespace;
-  var subgroups = [], subgroup;
-  var subnodes, subnode, node;
-  var transition;
+export default function selectAll(selector) {
+  const id = this.id;
+  const ns = this.namespace;
+
+  const subgroups = [];
+
+  let subgroup;
+  let subnodes;
+  let subnode;
+  let node;
 
   selector = selectionSelectorAll(selector);
 
-  for (var j = -1, m = this.length; ++j < m; ) {
-    for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
+  for (let j = -1, m = this.length; ++j < m;) {
+    for (let group = this[j], i = -1, n = group.length; ++i < n;) {
       if (node = group[i]) {
-        transition = node[ns][id];
+        const transition = node[ns][id];
         subnodes = selector.call(node, node.__data__, i, j);
         subgroups.push(subgroup = []);
-        for (var k = -1, o = subnodes.length; ++k < o; ) {
+
+        for (let k = -1, o = subnodes.length; ++k < o;) {
           if (subnode = subnodes[k]) {
             transitionNode(subnode, k, ns, id, transition);
           }
+
           subgroup.push(subnode);
         }
       }
