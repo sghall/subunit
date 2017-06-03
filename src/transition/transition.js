@@ -1,22 +1,27 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+// @flow weak
 
+import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { Transition } from '../Transition';
 import { Selection } from '../Selection';
-import { transitionInheritId } from '../selection/transition';
+import { transitionInheritID } from '../selection/transition';
 
 export function transition() {
-  var id0 = this.id;
-  var id1 = transitionInheritId;
-  var ns = this.namespace;
-  var subgroups = [], subgroup, node;
-  var trans;
+  const id0 = this.id;
+  const id1 = transitionInheritID;
+  const ns = this.namespace;
 
-  for (var j = 0, m = this.length; j < m; j++) {
+  const subgroups = [];
+
+  let subgroup;
+  let node;
+
+  for (let j = 0, m = this.length; j < m; j++) {
     subgroups.push(subgroup = []);
-    for (var group = this[j], i = 0, n = group.length; i < n; i++) {
-      if (node = group[i]) {
-        trans = node[ns][id0];
-        transitionNode(node, i, ns, id1, {time: trans.time, ease: trans.ease, delay: trans.delay + trans.duration, duration: trans.duration});
+
+    for (let group = this[j], i = 0, n = group.length; i < n; i++) {
+      if (node = group[i]) { // eslint-disable-line no-cond-assign
+        const trans = node[ns][id0];
+        transitionNode(node, i, ns, id1, { ...trans, delay: trans.delay + trans.duration });
       }
       subgroup.push(node);
     }
@@ -27,8 +32,8 @@ export function transition() {
 
 export function transitionSelection(selection, name) {
   if (selection && selection.transition) {
-    return transitionInheritId ? selection.transition(name) : selection;
-  } else {
-    return Selection.from([]).transition(selection);
+    return transitionInheritID ? selection.transition(name) : selection;
   }
+
+  return Selection.from([]).transition(selection);
 }
