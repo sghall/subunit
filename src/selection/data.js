@@ -1,37 +1,44 @@
-import { Selection } from "../Selection";
-import { EnterSelection } from "../EnterSelection";
-import { getBind } from './bind';
+// @flow weak
+/* eslint no-underscore-dangle: "off" */
 
-export function data(value, key) {
-  var i = -1, n = this.length, group, node;
+import { Selection } from '../Selection';
+import { EnterSelection } from '../EnterSelection';
+import bind from './bind';
+
+export default function data(value, key) {
+  let i = -1;
+  let n = this.length;
+
+  let node;
+  let group;
 
   if (!arguments.length) {
     value = new Array(n = (group = this[0]).length);
     while (++i < n) {
-      if (node = group[i]) {
+      if (node = group[i]) { // eslint-disable-line no-cond-assign
         value[i] = node.__data__;
       }
     }
     return value;
   }
 
-  var enter  = new EnterSelection();
-  var update = new Selection();
-  var exit   = new Selection();
+  const enter = new EnterSelection();
+  const update = new Selection();
+  const exit = new Selection();
 
-  var bind = getBind(enter, update, exit, key);
+  const bound = bind(enter, update, exit, key);
 
-  if (typeof value === "function") {
+  if (typeof value === 'function') {
     while (++i < n) {
-      bind(group = this[i], value.call(group, group.parentNode.__data__, i));
+      bound(group = this[i], value.call(group, group.parentNode.__data__, i));
     }
   } else {
     while (++i < n) {
-      bind(group = this[i], value);
+      bound(group = this[i], value);
     }
   }
 
-  update.enter = function() { return enter; };
-  update.exit  = function() { return exit; };
+  update.enter = function getEnter() { return enter; };
+  update.exit = function getExit() { return exit; };
   return update;
 }
