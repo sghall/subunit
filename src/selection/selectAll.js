@@ -1,14 +1,20 @@
-import { search, array } from "../utils/utils";
-import { Selection } from "../Selection";
+// @flow weak
+/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
+
+import { search, array } from '../utils/utils';
+import { Selection } from '../Selection';
 
 export function selectAll(selector) {
-  var subgroups = [], subgroup, node;
+  const subgroups = [];
+
+  let subgroup;
+  let node;
 
   selector = selectionSelectorAll(selector);
 
-  for (var j = -1, m = this.length; ++j < m; ) {
-    for (var group = this[j], i = -1, n = group.length; ++i < n; ) {
-      if (node = group[i]) {
+  for (let j = -1, m = this.length; ++j < m;) {
+    for (let group = this[j], i = -1, n = group.length; ++i < n;) {
+      if (node = group[i]) { // eslint-disable-line no-cond-assign
         subgroups.push(subgroup = array(selector.call(node, node.__data__, i, j)));
         subgroup.parentNode = node;
       }
@@ -18,7 +24,7 @@ export function selectAll(selector) {
 }
 
 export function selectionSelectorAll(selector) {
-  return typeof selector === "function" ? selector : function() {
+  return typeof selector === 'function' ? selector : function searchSelection() {
     return search(this, selector);
   };
 }
