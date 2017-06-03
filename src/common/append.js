@@ -1,34 +1,37 @@
+// @flow weak
+/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
+
 import THREE from 'THREE';
 
-export function append(name) {
+export default function append(name) {
   name = selectionCreator(name);
 
-  return this.select(function () {
-    return name.apply(this, arguments);
+  return this.select(function selactionAppend(...args) {
+    return name.cal(this, ...args);
   });
 }
 
 function selectionCreator(name) {
-  var Func;
+  let Func;
 
-  if (typeof name === "function") {
+  if (typeof name === 'function') {
     Func = name; // SEND ANY CONSTRUCTOR
-  } else if (name === "mesh") {
+  } else if (name === 'mesh') {
     Func = THREE.Mesh;
-  } else if (name === "line") {
+  } else if (name === 'line') {
     Func = THREE.Line;
-  } else if (name === "object") {
+  } else if (name === 'object') {
     Func = THREE.Object3D;
-  } else if (name === "g") {
+  } else if (name === 'g') {
     Func = THREE.Object3D;
   } else {
-    throw new Error("Cannot append: " + name);
+    throw new Error(`Cannot append: ${name}`);
   }
 
-  return function (data) {
-    var node = new Func();
-    node.__data__  = data;
-    node.__tags__  = [];
+  return function createSelection(data) {
+    const node = new Func();
+    node.__data__ = data;
+    node.__tags__ = [];
     node.parentNode = this;
     this.add(node);
     return node;
