@@ -1,64 +1,75 @@
+// @flow weak
+/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
+
 import d3 from 'd3';
-import { selectionEach } from "../../node_modules/antigen/selection/each";
+import { selectionEach } from '../../node_modules/antigen/selection/each';
 
-export function attr(name, value) {
-
+export default function attr(name, value) {
   if (arguments.length < 2) {
-    for (value in name) {
-      this.attr(value, name[value]);
-    }
+    Object.keys(name).forEach((d) => {
+      this.attr(d, name[d]);
+    });
+
     return this;
   }
 
-  var interpolate = d3.interpolateObject;
+  const interpolate = d3.interpolateObject;
 
   function attrNull() {}
 
   function attrTween(b) {
     if (b == null) {
       return attrNull;
-    } else {
-      return function () {
-
-        let a = {
-          x: this[name].x,
-          y: this[name].y,
-          z: this[name].z
-        };
-
-        for (let key in a) {
-          if (!b[key]) {
-             delete a[key];
-          }
-        }
-
-        let i = interpolate(a, b);
-
-        return function (t) {
-          let update = i(t);
-          for (let key in update) {
-            this[name][key] = update[key];
-          }
-        };
-      };
     }
+
+    return function tween() {
+      const a = {
+        x: this[name].x,
+        y: this[name].y,
+        z: this[name].z,
+      };
+
+      if (!b.x) {
+        delete a.x;
+      }
+
+      if (!b.y) {
+        delete a.y;
+      }
+
+      if (!b.z) {
+        delete a.z;
+      }
+
+      const i = interpolate(a, b);
+
+      return function subunitInterpol(t) {
+        const update = i(t);
+
+        Object.keys(update).forEach((d) => {
+          this[name][d] = update[d];
+        });
+      };
+    };
   }
 
-  return transitionTween(this, "attr." + name, value, attrTween);
+  return transitionTween(this, `attr.${name}`, value, attrTween);
 }
 
 function transitionTween(groups, name, value, tween) {
-  var id = groups.id, ns = groups.namespace;
-  var callback;
+  const id = groups.id;
+  const ns = groups.namespace;
 
-  if (typeof value === "function") {
-    callback = function(node, i, j) {
-      let d = value.call(node, node.__data__, i, j);
+  let callback;
+
+  if (typeof value === 'function') {
+    callback = (node, i, j) => {
+      const d = value.call(node, node.__data__, i, j);
       node[ns][id].tween.set(name, tween(d));
     };
   } else {
     value = tween(value);
-    callback = function(node) {
+    callback = (node) => {
       node[ns][id].tween.set(name, value);
     };
   }
