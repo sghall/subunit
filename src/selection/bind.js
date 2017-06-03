@@ -1,22 +1,31 @@
+// @flow weak
+/* eslint no-use-before-define: "off", no-underscore-dangle: "off", no-multi-assign: "off" */
+
 import { DataMap } from '../../node_modules/antigen/DataMap';
 
-export function getBind(enter, update, exit, key) {
-  return function (group, groupData) {
-    var i, node, nodeData;
-    var n = group.length;
-    var m = groupData.length;
-    var n0 = Math.min(n, m);
+export default function getBind(enter, update, exit, key) {
+  return function bind(group, groupData) {
+    let i;
+    let node;
+    let nodeData;
 
-    var updateNodes = new Array(m);
-    var enterNodes = new Array(m);
-    var exitNodes = new Array(n);
+    const n = group.length;
+    const m = groupData.length;
+    const n0 = Math.min(n, m);
+
+    const updateNodes = new Array(m);
+    const enterNodes = new Array(m);
+    const exitNodes = new Array(n);
 
     if (key) {
-      var nodeByKeyValue = new DataMap();
-      var dataByKeyValue = new DataMap();
-      var keyValues = [], keyValue;
+      const nodeByKeyValue = new DataMap();
+      const dataByKeyValue = new DataMap();
 
-      for (i = -1; ++i < n; ) {
+      const keyValues = [];
+
+      let keyValue;
+
+      for (i = -1; ++i < n;) {
         keyValue = key.call(node = group[i], node.__data__, i);
         if (nodeByKeyValue.has(keyValue)) {
           exitNodes[i] = node; // duplicate selection key
@@ -26,9 +35,10 @@ export function getBind(enter, update, exit, key) {
         keyValues.push(keyValue);
       }
 
-      for (i = -1; ++i < m; ) {
+      for (i = -1; ++i < m;) {
         keyValue = key.call(groupData, nodeData = groupData[i], i);
-        if (node = nodeByKeyValue.get(keyValue)) {
+
+        if (node = nodeByKeyValue.get(keyValue)) { // eslint-disable-line no-cond-assign
           updateNodes[i] = node;
           node.__data__ = nodeData;
         } else if (!dataByKeyValue.has(keyValue)) { // no duplicate data key
@@ -38,13 +48,13 @@ export function getBind(enter, update, exit, key) {
         nodeByKeyValue.remove(keyValue);
       }
 
-      for (i = -1; ++i < n; ) {
+      for (i = -1; ++i < n;) {
         if (nodeByKeyValue.has(keyValues[i])) {
           exitNodes[i] = group[i];
         }
       }
     } else {
-      for (i = -1; ++i < n0; ) {
+      for (i = -1; ++i < n0;) {
         node = group[i];
         nodeData = groupData[i];
         if (node) {
@@ -72,7 +82,7 @@ export function getBind(enter, update, exit, key) {
 }
 
 function selectionDataNode(nodeData) {
-  var data = {};
+  const data = {};
   data.__data__ = nodeData;
   data.__tags__ = [];
   return data;
