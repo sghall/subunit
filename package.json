@@ -17,19 +17,20 @@
     "url": "https://github.com/sghall/subunit/issues"
   },
   "homepage": "https://github.com/sghall/subunit",
+  "peerDependencies": {
+    "three": "^0.85.2"  
+  },
   "devDependencies": {
     "eslint": "3",
-    "jsdom": "11",
-    "package-preamble": "0.1",
     "rollup": "0.41",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-watch": "^3.2.2",
-    "tape": "4",
+    "three": "^0.85.2",  
     "uglify-js": "^2.8.11"
   },
   "dependencies": {
     "d3-dispatch": "^1.0.3",
     "d3-interpolate": "^1.1.5",
     "d3-selection": "^1.1.0",
-    "rollup-plugin-node-resolve": "^3.0.0"
   }
 }

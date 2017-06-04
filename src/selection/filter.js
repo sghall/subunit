@@ -1,4 +1,4 @@
-import { Selection } from '../Selection';
+import Selection from '../Selection';
 import { search } from '../utils/utils';
 
 export default function filter(fun) {
