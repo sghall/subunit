@@ -10,6 +10,7 @@
     <div id="info">
       <h3>Development</h3>
     </div>
+    <script src="../demos/node_modules/d3/build/d3.js"></script>
     <script src="../demos/node_modules/three/build/three.js"></script>
     <script src="../dist/subunit.js"></script>
     <script type="text/javascript">
@@ -43,6 +44,15 @@
       var root = SubUnit.select(scene);
       console.log('root', root);
       root.node().position.x = 50;
+
+      var size = [1000, 600]; // Width, Height
+
+      var x = d3.scaleBand()
+        .rangeRound([0, size[0]]);
+
+      var y = d3.scaleLinear()
+        .range([size[1], 0]);
+
     </script>
   </body>
 </html>
