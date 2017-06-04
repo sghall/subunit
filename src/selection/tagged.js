@@ -1,5 +1,5 @@
 
-export function tagged(name, value) {
+export default function tagged(name, value) {
   if (arguments.length < 2) {
 
     if (typeof name === 'string') {

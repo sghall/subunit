@@ -1,13 +1,13 @@
 import BaseArray from './BaseArray';
 import tagged from './selection/tagged';
 import remove from './selection/remove';
-import datum from './selection/datum';
+import datum from 'd3-selection/src/selection/datum';
 import prop from './selection/prop';
 import sort from './selection/sort';
 import each from './selection/each';
 import on from './selection/on';
 
-export class BaseSelection extends BaseArray {
+export default class BaseSelection extends BaseArray {
   constructor(input) {
     super(input);
   }

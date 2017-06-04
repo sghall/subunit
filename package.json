@@ -4,8 +4,8 @@
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-selection.js -- index.js",
-    "dev": "rm -rf build && mkdir build && rollup -f umd -c --watch"
+    "dist": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -f umd -n d3 -o dist/d3-selection.js -- index.js",
+    "dev": "rm -rf dist && mkdir dist && rollup -f umd -c --watch"
   },
   "repository": {
     "type": "git",
