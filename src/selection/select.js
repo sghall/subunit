@@ -1,38 +1,27 @@
 import { search } from '../utils/utils';
-import { Selection } from '../Selection';
+import Selection from '../Selection';
 
-export default function select(selector) {
-  const subgroups = [];
+export default function select(select) {
+  if (typeof select !== 'function') select = selector(select);
 
-  let subgroup;
-  let subnode;
-  let group;
-  let node;
+  const groups = this._groups;
+  const m = groups.length;
+  const subgroups = new Array(m);
 
-  selector = selectionSelector(selector);
-
-  for (let j = -1, m = this.length; ++j < m;) {
-    subgroups.push(subgroup = []);
-    subgroup.parentNode = (group = this[j]).parentNode;
-
-    for (let i = -1, n = group.length; ++i < n;) {
-      if ((node = group[i])) {
-        subgroup.push(subnode = selector.call(node, node.__data__, i, j));
-        if (subnode && '__data__' in node) {
-          subnode.__data__ = node.__data__;
-        }
-      } else {
-        subgroup.push(null);
+  for (let j = 0; j < m; ++j) {
+    for (let group = groups[j], n = group.length, subgroup = subgroups[j] = new Array(n), node, subnode, i = 0; i < n; ++i) {
+      if ((node = group[i]) && (subnode = select.call(node, node.__data__, i, group))) {
+        if ('__data__' in node) subnode.__data__ = node.__data__;
+        subgroup[i] = subnode;
       }
     }
   }
 
-  return Selection.from(subgroups);
+  return new Selection(subgroups, this._parents);
 }
 
-function selectionSelector(selector) {
-  return typeof selector === 'function' ? selector : function searchSelection() {
+function selector(selector) {
+  return function searchTree() {
     return search(this, selector);
   };
 }
-

@@ -64,35 +64,35 @@
 
         root.selectAll("bar")
           .data(data).enter()
-        //   .append("mesh")
-        //   .attr("tags", "bar")
-        //   .tagged("big", function (d) {
-        //     return d.frequency > 0.07;
-        //   })
-        //   .attr("material", material1)
-        //   .attr("geometry", function (d) {
-        //     var w = x.rangeBand();
-        //     var h = size[1] - y(d.frequency);
-        //     return new THREE.BoxGeometry(w, h, 5);
-        //   })
-        //   .each(function (d) {
-        //     var x0 = x(d.letter);
-        //     var y0 = -y(d.frequency) / 2;
-        //     this.position.set(x0, y0, 240);
-        //   });
+          .append("mesh")
+          // .attr("tags", "bar")
+          // .tagged("big", function (d) {
+          //   return d.frequency > 0.07;
+          // })
+          .attr("material", material1)
+          .attr("geometry", function (d) {
+            var w = x.rangeBand();
+            var h = size[1] - y(d.frequency);
+            return new THREE.BoxGeometry(w, h, 5);
+          })
+          .each(function (d) {
+            var x0 = x(d.letter);
+            var y0 = -y(d.frequency) / 2;
+            this.position.set(x0, y0, 240);
+          });
 
         console.log("root: ", window.root = root);
 
         // var control = new THREE.OrbitControls(camera, renderer.domElement);
 
-        function animate() {
-          // control.update();
-          requestAnimationFrame(animate);
-          renderer.render(scene, camera);
-        }
+        // function animate() {
+        //   // control.update();
+        //   requestAnimationFrame(animate);
+        //   renderer.render(scene, camera);
+        // }
 
 
-        animate();
+        // animate();
       });
     </script>
   </body>

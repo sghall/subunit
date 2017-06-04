@@ -4,7 +4,7 @@ export default function append(name) {
   name = selectionCreator(name);
 
   return this.select(function selactionAppend(...args) {
-    return name.cal(this, ...args);
+    return name.call(this, ...args);
   });
 }
 
@@ -28,7 +28,7 @@ function selectionCreator(name) {
     node.__data__ = data;
     node.__tags__ = [];
     node.parentNode = this;
-    this.add(node);
+    this._parent.add(node);
     return node;
   };
 }
