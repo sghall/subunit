@@ -86,10 +86,10 @@ d3.json('data/letters.json', function (err, data) {
 
   bars.sort(function (a, b) { return b.frequency - a.frequency; });
 
-  // bars.transition().delay(2000).duration(2000)
-  //   .attr('position', function (d, i) {
-  //     return { x: x(i) + x.bandwidth() / 2 };
-  //   });
+  bars.transition().delay(2000).duration(2000)
+    // .attr('position', function (d, i) {
+    //   return { x: x(i) + x.bandwidth() / 2 };
+    // });
 
   container.node().position.x = -size[0] / 2;
   container.node().position.y = (-size[1] * 2) + size[1] / 2;

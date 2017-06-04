@@ -1,4 +1,4 @@
-import { Transition, newId } from '../transition/index';
+import { Transition, newId } from '../Transition';
 import schedule from 'd3-transition/src/transition/schedule';
 import { now } from 'd3-timer';
 
