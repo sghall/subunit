@@ -1,52 +1,48 @@
-import { transitionNode } from './transitionNode';
-import { Transition } from '../Transition';
+import { Transition, newId } from '../transition/index';
+import schedule from 'd3-transition/src/transition/schedule';
+import { now } from 'd3-timer';
 
-const defaults = {
-  time: Date.now(),
-  ease: function easeCubicInOut(t) {
-    if (t <= 0) {
-      return 0;
-    }
-    if (t >= 1) {
-      return 1;
-    }
-    const t2 = t * t;
-    const t3 = t2 * t;
-
-    return 4 * (t < 0.5 ? t3 : 3 * (t - t2) + t3 - 0.75);
-  },
+const defaultTiming = {
+  time: null,
   delay: 0,
   duration: 250,
+  ease: function cubicInOut(t) {
+    return ((t *= 2) <= 1 ? t * t * t : (t -= 2) * t * t + 2) / 2;
+  },
 };
 
-export let transitionID = 0;
-export let transitionInherit = null;
-export let transitionInheritID = null;
+function inherit(node, id) {
+  let timing;
 
-export function transition(name) {
-  const id = transitionInheritID || ++transitionID;
-  const ns = transitionNamespace(name);
-
-  const subgroups = [];
-
-  let subgroup;
-  let node;
-
-  const props = transitionInherit || defaults;
-
-  for (let j = -1, m = this.length; ++j < m;) {
-    subgroups.push(subgroup = []);
-    for (let group = this[j], i = -1, n = group.length; ++i < n;) {
-      if ((node = group[i])) {
-        transitionNode(node, i, ns, id, props);
-      }
-      subgroup.push(node);
+  while (!(timing = node.__transition) || !(timing = timing[id])) {
+    if (!(node = node.parentNode)) {
+      return defaultTiming.time = now(), defaultTiming;
     }
   }
 
-  return Transition.factory(subgroups, ns, id);
+  return timing;
 }
 
-function transitionNamespace(name) {
-  return name == null ? '__transition__' : `__transition_${name}__`;
+export default function(name) {
+  let id;
+  let timing;
+
+  if (name instanceof Transition) {
+    id = name._id, name = name._name;
+  } else {
+    id = newId(), (timing = defaultTiming).time = now(), name = name == null ? null : name + '';
+  }
+
+  const groups = this._groups;
+  const m = groups.length;
+
+  for (let j = 0; j < m; ++j) {
+    for (let group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+      if ((node = group[i])) {
+        schedule(node, name, id, i, group, timing || inherit(node, id));
+      }
+    }
+  }
+
+  return new Transition(groups, this._parents, name, id);
 }
