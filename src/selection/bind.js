@@ -25,7 +25,7 @@ export default function getBind(enter, update, exit, key) {
       for (i = -1; ++i < n;) {
         keyValue = key.call(node = group[i], node.__data__, i);
         if (nodeByKeyValue.has(keyValue)) {
-          exitNodes[i] = node; // duplicate selection key
+          exitNodes[i] = node;
         } else {
           nodeByKeyValue.set(keyValue, node);
         }
@@ -35,10 +35,10 @@ export default function getBind(enter, update, exit, key) {
       for (i = -1; ++i < m;) {
         keyValue = key.call(groupData, nodeData = groupData[i], i);
 
-        if (node = nodeByKeyValue.get(keyValue)) { // eslint-disable-line no-cond-assign
+        if ((node = nodeByKeyValue.get(keyValue))) {
           updateNodes[i] = node;
           node.__data__ = nodeData;
-        } else if (!dataByKeyValue.has(keyValue)) { // no duplicate data key
+        } else if (!dataByKeyValue.has(keyValue)) {
           enterNodes[i] = selectionDataNode(nodeData);
         }
         dataByKeyValue.set(keyValue, nodeData);

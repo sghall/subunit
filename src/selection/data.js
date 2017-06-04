@@ -12,7 +12,7 @@ export default function data(value, key) {
   if (!arguments.length) {
     value = new Array(n = (group = this[0]).length);
     while (++i < n) {
-      if (node = group[i]) { // eslint-disable-line no-cond-assign
+      if ((node = group[i])) {
         value[i] = node.__data__;
       }
     }

@@ -17,13 +17,13 @@ export default function selectAll(selector) {
 
   for (let j = -1, m = this.length; ++j < m;) {
     for (let group = this[j], i = -1, n = group.length; ++i < n;) {
-      if (node = group[i]) {
+      if ((node = group[i])) {
         const transition = node[ns][id];
         subnodes = selector.call(node, node.__data__, i, j);
         subgroups.push(subgroup = []);
 
         for (let k = -1, o = subnodes.length; ++k < o;) {
-          if (subnode = subnodes[k]) {
+          if ((subnode = subnodes[k])) {
             transitionNode(subnode, k, ns, id, transition);
           }
 

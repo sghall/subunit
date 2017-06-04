@@ -17,7 +17,7 @@ export function transition() {
     subgroups.push(subgroup = []);
 
     for (let group = this[j], i = 0, n = group.length; i < n; i++) {
-      if (node = group[i]) { // eslint-disable-line no-cond-assign
+      if ((node = group[i])) {
         const trans = node[ns][id0];
         transitionNode(node, i, ns, id1, { ...trans, delay: trans.delay + trans.duration });
       }

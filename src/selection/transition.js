@@ -37,7 +37,7 @@ export function transition(name) {
   for (let j = -1, m = this.length; ++j < m;) {
     subgroups.push(subgroup = []);
     for (let group = this[j], i = -1, n = group.length; ++i < n;) {
-      if (node = group[i]) { // eslint-disable-line no-cond-assign
+      if ((node = group[i])) {
         transitionNode(node, i, ns, id, props);
       }
       subgroup.push(node);
