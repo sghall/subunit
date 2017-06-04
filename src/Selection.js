@@ -1,6 +1,7 @@
 // import BaseSelection from './BaseSelection';
 import filter from './selection/filter';
 import data from './selection/data';
+import sort from './selection/sort';
 import enter from './selection/enter';
 import select from './selection/select';
 import attr from './selection/attr';
@@ -39,6 +40,7 @@ export default function Selection(groups, parents) {
 
 Selection.prototype.filter = filter;
 Selection.prototype.data = data;
+Selection.prototype.sort = sort;
 Selection.prototype.each = each;
 Selection.prototype.on = on;
 Selection.prototype.size = size;

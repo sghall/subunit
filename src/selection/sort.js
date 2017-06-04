@@ -1,22 +1,31 @@
+import Selection from '../Selection';
 
-export default function sort(comparator) {
-  comparator = selectionSortComparator.apply(this, arguments);
+export default function(compare) {
+  if (!compare) compare = ascending;
 
-  for (let j = -1, m = this.length; ++j < m; ) {
-    this[j].sort(comparator);
+  function compareNode(a, b) {
+    return a && b ? compare(a.__data__, b.__data__) : !a - !b;
   }
 
-  return this;
-}
+  const groups = this._groups;
+  const m = groups.length;
+  const sortgroups = new Array(m);
 
-function selectionSortComparator(comparator) {
-  if (!arguments.length) {
-    comparator = ascending;
+  for (let j = 0; j < m; ++j) {
+    const group = groups[j];
+    const n = group.length;
+    const sortgroup = sortgroups[j] = new Array(n);
+
+    for (let node, i = 0; i < n; ++i) {
+      if ((node = group[i])) {
+        sortgroup[i] = node;
+      }
+    }
+
+    sortgroup.sort(compareNode);
   }
 
-  return function(a, b) {
-    return a && b ? comparator(a.__data__, b.__data__) : !a - !b;
-  };
+  return new Selection(sortgroups, this._parents);
 }
 
 function ascending(a, b) {
