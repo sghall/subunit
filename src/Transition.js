@@ -1,5 +1,4 @@
-// import { selection } from 'd3-selection';
-// import attr from '../transition/attr';
+import attr from './transition/attr';
 import delay from 'd3-transition/src/transition/delay';
 import duration from 'd3-transition/src/transition/duration';
 import ease from 'd3-transition/src/transition/ease';
@@ -10,10 +9,6 @@ import size from 'd3-selection/src/selection/size';
 import empty from 'd3-selection/src/selection/empty';
 import each from 'd3-selection/src/selection/each';
 
-// import transition_on from './on';
-// import transition_remove from './remove';
-
-
 let id = 0;
 
 export function Transition(groups, parents, name, id) {
@@ -23,15 +18,9 @@ export function Transition(groups, parents, name, id) {
   this._id = id;
 }
 
-// export default function transition(name) {
-//   return selection().transition(name);
-// }
-
 export function newId() {
   return ++id;
 }
-
-// var selection_prototype = selection.prototype;
 
 Transition.prototype = {
   constructor: Transition,
@@ -41,8 +30,7 @@ Transition.prototype = {
   size,
   empty,
   each,
-  // on: transition_on,
-  // attr,
+  attr,
   delay,
   duration,
   ease,

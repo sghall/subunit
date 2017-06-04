@@ -1,5 +1,5 @@
 import { interpolateObject } from 'd3-interpolate';
-import { selectionEach } from './selection/each';
+import { get, set } from 'd3-transition/src/transition/schedule';
 
 export default function attr(name, value) {
   if (arguments.length < 2) {
@@ -48,26 +48,18 @@ export default function attr(name, value) {
     };
   }
 
-  return transitionTween(this, `attr.${name}`, value, attrTween);
+  return transitionTween(this, `attr.${name}`, attrTween(value));
 }
 
-function transitionTween(groups, name, value, tween) {
-  const id = groups.id;
-  const ns = groups.namespace;
+export function transitionTween(transition, name, value) {
+  const id = transition._id;
 
-  let callback;
+  transition.each(function() {
+    const schedule = set(this, id);
+    (schedule.value || (schedule.value = {}))[name] = value.apply(this, arguments);
+  });
 
-  if (typeof value === 'function') {
-    callback = (node, i, j) => {
-      const d = value.call(node, node.__data__, i, j);
-      node[ns][id].tween.set(name, tween(d));
-    };
-  } else {
-    value = tween(value);
-    callback = (node) => {
-      node[ns][id].tween.set(name, value);
-    };
-  }
-
-  return selectionEach(groups, callback);
+  return function(node) {
+    return get(node, id).value[name];
+  };
 }
