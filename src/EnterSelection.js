@@ -1,6 +1,6 @@
 import BaseArray from './BaseArray';
 import Selection from './Selection';
-import { append } from './common/append';
+import append from './common/append';
 
 export class EnterSelection extends BaseArray {
   constructor(input) {

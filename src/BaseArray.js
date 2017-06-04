@@ -1,7 +1,7 @@
-import { empty } from './common/empty';
-import { node } from './common/node';
-import { call } from './common/call';
-import { use } from './common/use';
+import empty from 'd3-selection/src/selection/empty';
+import node from 'd3-selection/src/selection/node';
+import call from 'd3-selection/src/selection/call';
+import use from './common/use';
 
 export default class BaseArray extends Array {
   constructor(input) {
