@@ -3,7 +3,7 @@ import resolve from 'rollup-plugin-node-resolve';
 
 export default {
   entry: 'index.js',
-  dest: 'build/subunit.js',
+  dest: 'dist/subunit.js',
   moduleName: 'SubUnit',
   format: 'iife',
   plugins: [
