@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bars - WebGL Demo</title>
+    <title>Labeled Bars - WebGL Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
     <div id="info">
-      <h4>Bars - WebGL Demo</h4>
+      <h4>Labeled Bars - WebGL Demo</h4>
+      <div id="msg">Click a bar...</div>
     </div>
     <div id="loading">Loading...</div>
     <script src="../demos/node_modules/systemjs/dist/system.js"></script>
@@ -26,7 +27,7 @@
         transpiler: 'plugin-babel'
       });
 
-      System.import('../demos/js/barchart-basic.js');
+      System.import('../demos/js/bars-labeled.js');
   </script>
   </body>
 </html>
