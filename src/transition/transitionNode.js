@@ -1,7 +1,7 @@
 import { DataMap } from '../DataMap';
 import { activeTimer, createTimer } from '../Timer';
 
-export function transitionNode(node, i, ns, id, inherit) {
+export default function transitionNode(node, i, ns, id, inherit) {
   const lock = node[ns] || (node[ns] = { active: 0, count: 0 });
   
   let transition = lock[id];

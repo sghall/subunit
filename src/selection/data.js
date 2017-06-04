@@ -11,11 +11,13 @@ export default function data(value, key) {
 
   if (!arguments.length) {
     value = new Array(n = (group = this[0]).length);
+
     while (++i < n) {
       if ((node = group[i])) {
         value[i] = node.__data__;
       }
     }
+
     return value;
   }
 
@@ -37,5 +39,6 @@ export default function data(value, key) {
 
   update.enter = function getEnter() { return enter; };
   update.exit = function getExit() { return exit; };
+
   return update;
 }

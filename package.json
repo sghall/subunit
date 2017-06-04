@@ -4,7 +4,8 @@
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf build && mkdir build && rollup --banner \"$(preamble)\" -f umd -n d3 -o build/d3-selection.js -- index.js",
+    "dev": "rm -rf build && mkdir build && rollup -f umd -c --watch"
   },
   "repository": {
     "type": "git",
@@ -21,12 +22,14 @@
     "jsdom": "11",
     "package-preamble": "0.1",
     "rollup": "0.41",
+    "rollup-watch": "^3.2.2",
     "tape": "4",
     "uglify-js": "^2.8.11"
   },
   "dependencies": {
     "d3-dispatch": "^1.0.3",
     "d3-interpolate": "^1.1.5",
-    "d3-selection": "^1.1.0"
+    "d3-selection": "^1.1.0",
+    "rollup-plugin-node-resolve": "^3.0.0"
   }
 }

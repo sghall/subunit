@@ -13,5 +13,6 @@ export function selectionEach(groups, callback) {
       }
     }
   }
+
   return groups;
 }

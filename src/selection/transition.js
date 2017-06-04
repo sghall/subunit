@@ -1,7 +1,7 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+import { transitionNode } from './transitionNode';
 import { Transition } from '../Transition';
 
-const deafults = {
+const defaults = {
   time: Date.now(),
   ease: function easeCubicInOut(t) {
     if (t <= 0) {
@@ -32,7 +32,7 @@ export function transition(name) {
   let subgroup;
   let node;
 
-  const props = transitionInherit || deafults;
+  const props = transitionInherit || defaults;
 
   for (let j = -1, m = this.length; ++j < m;) {
     subgroups.push(subgroup = []);

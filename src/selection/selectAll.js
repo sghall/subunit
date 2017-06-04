@@ -17,6 +17,7 @@ export default function selectAll(selector) {
       }
     }
   }
+
   return Selection.from(subgroups);
 }
 

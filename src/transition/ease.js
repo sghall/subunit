@@ -8,8 +8,10 @@ export function ease(value) {
   if (arguments.length < 1) {
     return this.node()[ns][id].ease;
   }
+
   if (typeof value !== 'function') {
     value = d3.ease.apply(d3, arguments);
   }
+
   return selectionEach(this, node => node[ns][id].ease = value);
 }
