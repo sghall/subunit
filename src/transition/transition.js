@@ -1,4 +1,4 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+import { transitionNode } from './transitionNode';
 import { Transition } from '../Transition';
 import { Selection } from '../Selection';
 import { transitionInheritID } from '../selection/transition';

@@ -1,5 +1,5 @@
-import d3 from 'd3';
-import { selectionEach } from '../../node_modules/antigen/selection/each';
+import { interpolateObject } from 'd3-interpolate';
+import { selectionEach } from './selection/each';
 
 export default function attr(name, value) {
   if (arguments.length < 2) {
@@ -9,8 +9,6 @@ export default function attr(name, value) {
 
     return this;
   }
-
-  const interpolate = d3.interpolateObject;
 
   function attrNull() {}
 
@@ -38,7 +36,7 @@ export default function attr(name, value) {
         delete a.z;
       }
 
-      const i = interpolate(a, b);
+      const i = interpolateObject(a, b);
 
       return function subunitInterpol(t) {
         const update = i(t);
