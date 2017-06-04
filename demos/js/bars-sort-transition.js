@@ -5,7 +5,7 @@ import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
 import { raycast } from './common/events.js';
 
-const carpet = THREE.ImageUtils.loadTexture('images/carpet.jpg', null);
+const metal = new THREE.TextureLoader().load('images/metal.jpg');
 
 d3.json('data/letters.json', function (err, data) {
 
@@ -50,7 +50,7 @@ d3.json('data/letters.json', function (err, data) {
   charts.append('mesh')
     .attr('tags', 'backing')
     .attr('material', function (d) {
-      const opts = { color: d.color, map: carpet, shininess: 100 };
+      const opts = { color: d.color, map: metal, shininess: 100 };
       return new THREE.MeshPhongMaterial(opts);
     })
     .attr('geometry', backing)
@@ -86,17 +86,17 @@ d3.json('data/letters.json', function (err, data) {
 
   bars.sort(function (a, b) { return b.frequency - a.frequency; });
 
-  bars.transition().delay(2000).duration(2000)
-    .attr('position', function (d, i) {
-      return { x: x(i) + x.bandwidth() / 2 };
-    });
+  // bars.transition().delay(2000).duration(2000)
+  //   .attr('position', function (d, i) {
+  //     return { x: x(i) + x.bandwidth() / 2 };
+  //   });
 
   container.node().position.x = -size[0] / 2;
   container.node().position.y = (-size[1] * 2) + size[1] / 2;
 
   camera.position.z = 2500;
 
-  raycast(camera, d3.merge(bars), 'click');
+  raycast(camera, bars.nodes(), 'click');
 
   console.log('root: ', window.root = root);
 
