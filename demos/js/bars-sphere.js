@@ -6,66 +6,66 @@ import './common/OrbitControls';
 import { raycast } from './common/events';
 import { sphere } from './common/layouts';
 
-var metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
+const metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
 
 d3.json('data/letters.json', function (err, data) {
 
-  d3.select("#loading").transition().duration(800)
-    .style("opacity", 0).remove();
+  d3.select('#loading').transition().duration(800)
+    .style('opacity', 0).remove();
 
-  var size = [1000, 700]; // Chart width, height
+  const size = [1000, 600]; // [width, height]
 
-  var x = d3.scale.ordinal().rangeRoundBands([0, size[0]], 0.2);
-  var y = d3.scale.linear().range([size[1], 0]);
+  const x = d3.scale.ordinal().rangeRoundBands([0, size[0]], 0.2);
+  const y = d3.scale.linear().range([size[1], 0]);
 
-  var black = new THREE.MeshPhongMaterial({color: '#222222'});
-  var red = new THREE.MeshPhongMaterial({color: '#ff0000'});
+  const black = new THREE.MeshPhongMaterial({ color: '#222222' });
+  const red = new THREE.MeshPhongMaterial({ color: '#ff0000' });
 
-  var backing = new THREE.PlaneBufferGeometry(size[0], size[1]);
+  const backing = new THREE.PlaneBufferGeometry(size[0], size[1]);
 
   x.domain(d3.range(data.length));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-  var root = SubUnit.select(scene);
-  var container = root.append("g");
+  const root = SubUnit.select(scene);
+  const container = root.append('g');
 
   data = data.sort(function (a, b) { return b.frequency - a.frequency; });
 
-  var charts = container.selectAll("chart")
+  const charts = container.selectAll('chart')
     .data(data).enter()
-    .append("object")
-    .tagged("chart", true)
+    .append('object')
+    .tagged('chart', true)
     .each(function (d, i) {
-      var pos = sphere(i, data.length, 1800);
+      const pos = sphere(i, data.length, 1800);
       this.position.copy(pos);
       this.lookAt(container.node().position);
     });
 
-  charts.append("mesh")
-    .attr("tags", "backing")
-    .attr("material", new THREE.MeshPhongMaterial({map: metal}))
-    .attr("geometry", backing)
+  charts.append('mesh')
+    .attr('tags', 'backing')
+    .attr('material', new THREE.MeshPhongMaterial({ map: metal }))
+    .attr('geometry', backing)
     .each(function () {
       this.position.x = size[0] / 2;
     });
 
-  var bars = charts.selectAll("bar")
+  const bars = charts.selectAll('bar')
     .data(function () { return data; }).enter()
-    .append("mesh")
-    .attr("tags", "bar")
-    .attr("material", black)
-    .attr("geometry", function (d) {
-      var w = x.rangeBand();
-      var h = size[1] - y(d.frequency);
+    .append('mesh')
+    .attr('tags', 'bar')
+    .attr('material', black)
+    .attr('geometry', function (d) {
+      const w = x.rangeBand();
+      const h = size[1] - y(d.frequency);
       return new THREE.BoxGeometry(w, h, 5);
     })
     .each(function (d, i) {
-      var x0 = x(i) + x.rangeBand() / 2;
-      var y0 = -y(d.frequency) / 2;
+      const x0 = x(i) + x.rangeBand() / 2;
+      const y0 = -y(d.frequency) / 2;
       this.position.set(x0, y0, 0);
     })
     .on('click', function (event, d) {
-      d3.select("#msg").html("Letter: " + d.letter);
+      d3.select('#msg').html('Letter: ' + d.letter);
 
       if (this.material === black) {
         this.material = red;
@@ -80,11 +80,11 @@ d3.json('data/letters.json', function (err, data) {
 
   raycast(camera, d3.merge(bars), 'click');
 
-  var theta = 0.003;
+  const theta = 0.003;
 
-  console.log("root: ", window.root = root);
+  console.log('root: ', window.root = root);
 
-  var control = new THREE.OrbitControls(camera, renderer.domElement);
+  const control = new THREE.OrbitControls(camera, renderer.domElement);
 
   function animate() {
     control.update();
