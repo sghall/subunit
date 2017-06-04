@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Development</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <div id="info">
+      <h3>Development</h3>
+    </div>
+    <script src="../dist/subunit.js"></script>
+    <script type="text/javascript">
+      const a = SubUnit.BaseSelection.from([1,2,3,4]);
+      console.log('SubUnit.BaseSelection', a);
+
+      const b = SubUnit.BaseArray.from([1,2,3,4]);
+      console.log('SubUnit.BaseArray', b);
+    </script>
+  </body>
+</html>
