@@ -1,24 +1,22 @@
-import { search, array } from '../utils/utils';
-import { Selection } from '../Selection';
+import { search } from '../utils/utils';
+import Selection from '../Selection';
 
-export default function selectAll(selector) {
+export default function selectAll(select) {
+  const parents = [];
   const subgroups = [];
 
-  let subgroup;
-  let node;
+  if (typeof select !== 'function') select = selectionSelectorAll(select);
 
-  selector = selectionSelectorAll(selector);
-
-  for (let j = -1, m = this.length; ++j < m;) {
-    for (let group = this[j], i = -1, n = group.length; ++i < n;) {
+  for (let groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
+    for (let group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
       if ((node = group[i])) {
-        subgroups.push(subgroup = array(selector.call(node, node.__data__, i, j)));
-        subgroup.parentNode = node;
+        subgroups.push(select.call(node, node.__data__, i, group));
+        parents.push(node);
       }
     }
   }
 
-  return Selection.from(subgroups);
+  return new Selection(subgroups, parents);
 }
 
 export function selectionSelectorAll(selector) {

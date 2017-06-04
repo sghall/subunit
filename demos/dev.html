@@ -14,11 +14,11 @@
     <script src="../demos/node_modules/three/build/three.js"></script>
     <script src="../dist/subunit.js"></script>
     <script type="text/javascript">
-      const a = SubUnit.BaseSelection.from([1,2,3,4]);
-      console.log('SubUnit.BaseSelection', a);
+      // const a = SubUnit.BaseSelection.from([1,2,3,4]);
+      // console.log('SubUnit.BaseSelection', a);
 
-      const b = SubUnit.BaseArray.from([1,2,3,4]);
-      console.log('SubUnit.BaseArray', b);
+      // const b = SubUnit.BaseArray.from([1,2,3,4]);
+      // console.log('SubUnit.BaseArray', b);
 
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 6000);
@@ -41,18 +41,59 @@
         renderer.setSize( window.innerWidth, window.innerHeight );
       }
 
-      var root = SubUnit.select(scene);
-      console.log('root', root);
-      root.node().position.x = 50;
+      d3.json('data/letters.json', function (err, data) {
 
-      var size = [1000, 600]; // Width, Height
+        d3.select("#loading").transition().duration(500)
+          .style("opacity", 0).remove();
 
-      var x = d3.scaleBand()
-        .rangeRound([0, size[0]]);
+        var size = [1000, 600]; // Width, Height
 
-      var y = d3.scaleLinear()
-        .range([size[1], 0]);
+        var x = d3.scaleOrdinal()
+          .range([0, size[0]]);
 
+        var y = d3.scaleLinear()
+          .range([size[1], 0]);
+
+        var material1 = new THREE.MeshPhongMaterial({color: '#4183c4'});
+
+        x.domain(data.map(function (d) { return d.letter; }));
+        y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+        var root = SubUnit.select(scene);
+        root.node().position.x = -size[0] / 2;
+
+        root.selectAll("bar")
+          .data(data).enter()
+        //   .append("mesh")
+        //   .attr("tags", "bar")
+        //   .tagged("big", function (d) {
+        //     return d.frequency > 0.07;
+        //   })
+        //   .attr("material", material1)
+        //   .attr("geometry", function (d) {
+        //     var w = x.rangeBand();
+        //     var h = size[1] - y(d.frequency);
+        //     return new THREE.BoxGeometry(w, h, 5);
+        //   })
+        //   .each(function (d) {
+        //     var x0 = x(d.letter);
+        //     var y0 = -y(d.frequency) / 2;
+        //     this.position.set(x0, y0, 240);
+        //   });
+
+        console.log("root: ", window.root = root);
+
+        // var control = new THREE.OrbitControls(camera, renderer.domElement);
+
+        function animate() {
+          // control.update();
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
+
+
+        animate();
+      });
     </script>
   </body>
 </html>

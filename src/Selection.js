@@ -1,5 +1,6 @@
 // import BaseSelection from './BaseSelection';
 import filter from './selection/filter';
+import selectAll from './selection/selectAll';
 import node from 'd3-selection/src/selection/node';
 
 // import data from './selection/data';
@@ -27,6 +28,7 @@ export default function Selection(groups, parents) {
 // }
 
 Selection.prototype.filter = filter;
+Selection.prototype.selectAll = selectAll;
 Selection.prototype.node = node;
 
 // Selection.prototype.data = data;
