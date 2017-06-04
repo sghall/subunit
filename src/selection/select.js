@@ -1,8 +1,8 @@
 import { search } from '../utils/utils';
 import Selection from '../Selection';
 
-export default function select(select) {
-  if (typeof select !== 'function') select = selector(select);
+export default function select(selector) {
+  if (typeof selector !== 'function') selector = searchSelector(selector);
 
   const groups = this._groups;
   const m = groups.length;
@@ -10,7 +10,7 @@ export default function select(select) {
 
   for (let j = 0; j < m; ++j) {
     for (let group = groups[j], n = group.length, subgroup = subgroups[j] = new Array(n), node, subnode, i = 0; i < n; ++i) {
-      if ((node = group[i]) && (subnode = select.call(node, node.__data__, i, group))) {
+      if ((node = group[i]) && (subnode = selector.call(node, node.__data__, i, group))) {
         if ('__data__' in node) subnode.__data__ = node.__data__;
         subgroup[i] = subnode;
       }
@@ -20,7 +20,7 @@ export default function select(select) {
   return new Selection(subgroups, this._parents);
 }
 
-function selector(selector) {
+function searchSelector(selector) {
   return function searchTree() {
     return search(this, selector);
   };

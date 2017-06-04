@@ -1,10 +1,21 @@
 import THREE from 'three';
 
-export default function append(name) {
-  name = selectionCreator(name);
+// export default function append(name) {
+//   name = selectionCreator(name);
 
-  return this.select(function selactionAppend(...args) {
-    return name.call(this, ...args);
+//   return this.select(function selectionAppend(...args) {
+//     return name.call(this, ...args);
+//   });
+// }
+
+
+export default function append(name) {
+  const create = typeof name === 'function' ? name : selectionCreator(name);
+  return this.select(function() {
+    const child = create.apply(this, arguments);
+    this.add(child);
+
+    return child;
   });
 }
 
@@ -27,8 +38,6 @@ function selectionCreator(name) {
     const node = new Func();
     node.__data__ = data;
     node.__tags__ = [];
-    node.parentNode = this;
-    this._parent.add(node);
     return node;
   };
 }

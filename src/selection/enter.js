@@ -13,5 +13,5 @@ export function EnterNode(parent, datum) {
 
 EnterNode.prototype = {
   constructor: EnterNode,
-  add: function(child) { return this._parent.add(child, this._next); },
+  add: function(child) { return this._parent.add(child); },
 };
