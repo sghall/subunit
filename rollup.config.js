@@ -1,4 +1,3 @@
-// import { rollup } from 'rollup';
 import resolve from 'rollup-plugin-node-resolve';
 
 export default {
@@ -6,6 +5,10 @@ export default {
   dest: 'dist/subunit.js',
   moduleName: 'SubUnit',
   format: 'iife',
+  globals: {
+    three: 'THREE'
+  },
+  external: ['three'],
   plugins: [
     resolve({
       module: true,

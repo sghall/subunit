@@ -10,7 +10,7 @@
     <div id="info">
       <h3>Development</h3>
     </div>
-    <script src="../node_modules/three/build/three.js"></script>
+    <script src="../demos/node_modules/three/build/three.js"></script>
     <script src="../dist/subunit.js"></script>
     <script type="text/javascript">
       const a = SubUnit.BaseSelection.from([1,2,3,4]);
@@ -18,6 +18,32 @@
 
       const b = SubUnit.BaseArray.from([1,2,3,4]);
       console.log('SubUnit.BaseArray', b);
+
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 6000);
+      camera.position.z = 1000;
+
+      var renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild(renderer.domElement);
+      renderer.setClearColor(0x999999);
+
+
+      var light = new THREE.HemisphereLight('#fff', '#666', 1.5);
+      light.position.set(0, 1000, 0);
+      scene.add(light);
+
+      window.addEventListener('resize', onWindowResize, false);
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+      }
+
+      var root = SubUnit.select(scene);
+      console.log('root', root);
+      root.node().position.x = 50;
     </script>
   </body>
 </html>

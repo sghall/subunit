@@ -1,5 +1,7 @@
-import BaseSelection from './BaseSelection';
+// import BaseSelection from './BaseSelection';
 import filter from './selection/filter';
+import node from 'd3-selection/src/selection/node';
+
 // import data from './selection/data';
 // import attr from './selection/attr';
 // import transition from './selection/transition';
@@ -7,13 +9,26 @@ import filter from './selection/filter';
 // import select from './selection/select';
 // import append from './common/append';
 
-export default class Selection extends BaseSelection {
-  constructor(input) {
-    super(input);
-  }
+
+export default function Selection(groups, parents) {
+  this._groups = groups;
+  this._parents = parents;
 }
 
+// function selection() {
+//   return new Selection([[document.documentElement]], root);
+// }
+
+
+// export default class Selection extends BaseSelection {
+//   constructor(input) {
+//     super(input);
+//   }
+// }
+
 Selection.prototype.filter = filter;
+Selection.prototype.node = node;
+
 // Selection.prototype.data = data;
 // Selection.prototype.attr = attr;
 // Selection.prototype.transition = transition;
