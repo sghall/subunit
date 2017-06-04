@@ -28,7 +28,6 @@ import on from './selection/on';
 // ON D3 SELCTION BUT NOT IMPLEMENTED IN SUBUNIT
 // *********************************************************
 // import exit from 'd3-selection/src/selection/exit';
-// import merge from 'd3-selection/src/selection/merge';
 // import order from 'd3-selection/src/selection/order';
 // import style from 'd3-selection/src/selection/style';
 // import classed from 'd3-selection/src/selection/classed';

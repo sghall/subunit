@@ -31,6 +31,7 @@
     "d3-dispatch": "^1.0.3",
     "d3-interpolate": "^1.1.5",
     "d3-selection": "^1.1.0",
+    "d3-timer": "^1.0.5",
     "d3-transition": "^1.1.0"
   }
 }

@@ -8,6 +8,7 @@ export default {
   globals: {
     three: 'THREE'
   },
+  sourceMap: true,
   external: ['three'],
   plugins: [
     resolve({
