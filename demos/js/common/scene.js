@@ -8,7 +8,7 @@ camera.position.z = 1000;
 export var renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild(renderer.domElement);
-renderer.setClearColor(0x999999);
+renderer.setClearColor(0x333333);
 
 d3.select(renderer.domElement).style("opacity", 0)
   .transition().duration(500).style("opacity", 1);

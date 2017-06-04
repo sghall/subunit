@@ -1,8 +1,8 @@
 body, html {
-  background-color: #999;
+  background-color: #333;
   margin: 0px;
   font-family: helvetica, arial;
-  color: #333;
+  color: #fff;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -13,19 +13,19 @@ body, html {
 
 #info {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.5);
   padding: 15px;
   left: 9px;
   top: 9px;
   z-index: 1;
 }
 
-#info h3 {
+#info h4 {
   margin: 1px;
 }
 
 #loading {
-  color: black;
+  color: #fff;
   width: 100px;
   height: 100px;
   position: absolute;
