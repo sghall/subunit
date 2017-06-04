@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-cond-assign: "off", no-underscore-dangle: "off" */
-
 import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { selectionSelectorAll } from '../selection/selectAll';
 import { Transition } from '../Transition';

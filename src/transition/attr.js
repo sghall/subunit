@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
-
 import d3 from 'd3';
 import { selectionEach } from '../../node_modules/antigen/selection/each';
 

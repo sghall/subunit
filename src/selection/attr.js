@@ -1,5 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off", no-nested-ternary: "off" */
 
 export default function attr(name, value) {
   if (arguments.length < 2) {
@@ -41,7 +39,7 @@ function selectionAttr(name, value) {
     }
   }
 
-  function attrFunction(...args) { // eslint-disable-line consistent-return
+  function attrFunction(...args) {
     const res = value.apply(this, [...args]);
 
     if (res === null) {

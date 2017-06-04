@@ -1,7 +1,4 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
-
-import THREE from 'THREE';
+import THREE from 'three';
 
 export default function append(name) {
   name = selectionCreator(name);
@@ -20,9 +17,7 @@ function selectionCreator(name) {
     Func = THREE.Mesh;
   } else if (name === 'line') {
     Func = THREE.Line;
-  } else if (name === 'object') {
-    Func = THREE.Object3D;
-  } else if (name === 'g') {
+  } else if (name === 'object' || name === 'g') {
     Func = THREE.Object3D;
   } else {
     throw new Error(`Cannot append: ${name}`);

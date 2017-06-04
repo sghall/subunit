@@ -1,10 +1,7 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
-
 import { search, array } from '../utils/utils';
 import { Selection } from '../Selection';
 
-export function selectAll(selector) {
+export default function selectAll(selector) {
   const subgroups = [];
 
   let subgroup;

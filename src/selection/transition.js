@@ -1,7 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
-/* eslint import/no-mutable-exports: "off", prefer-const: "off" */
-
 import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { Transition } from '../Transition';
 

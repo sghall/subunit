@@ -1,13 +1,13 @@
 export function search(node, selector) {
   var result = [], tagsArray;
 
-  if (typeof selector === "string") {
-    tagsArray = selector.replace(/\./g, " ").trim().split(" ");
+  if (typeof selector === 'string') {
+    tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
   }
 
   var searchIterator = function (node) {
 
-    if (typeof selector === "string") {
+    if (typeof selector === 'string') {
 
       if (!node.__data__) {
         return;
@@ -53,7 +53,7 @@ export function assign(target, source) {
   var to = toObject(target);
 
   if (!source) {
-    throw new Error("No source(s) provided to assign.");
+    throw new Error('No source(s) provided to assign.');
   }
 
   for (var s = 1; s < arguments.length; s++) {

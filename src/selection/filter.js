@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-cond-assign:"off", no-use-before-define: "off", no-underscore-dangle: "off" */
-
 import { Selection } from '../Selection';
 import { search } from '../utils/utils';
 

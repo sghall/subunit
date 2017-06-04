@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-underscore-dangle: "off" */
-
 import { Selection } from '../Selection';
 import { EnterSelection } from '../EnterSelection';
 import bind from './bind';

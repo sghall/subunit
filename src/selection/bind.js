@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off", no-multi-assign: "off" */
-
 import { DataMap } from '../../node_modules/antigen/DataMap';
 
 export default function getBind(enter, update, exit, key) {

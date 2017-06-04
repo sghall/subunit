@@ -1,5 +1,3 @@
-// @flow weak
-
 import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
 import { Transition } from '../Transition';
 import { Selection } from '../Selection';

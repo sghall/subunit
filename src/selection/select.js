@@ -1,6 +1,3 @@
-// @flow weak
-/* eslint no-use-before-define: "off", no-underscore-dangle: "off" */
-
 import { search } from '../utils/utils';
 import { Selection } from '../Selection';
 

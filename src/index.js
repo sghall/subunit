@@ -4,7 +4,7 @@ import { Selection } from './Selection';
 export var SubUnit = {};
 
 export var select = function (item) {
-  var node = typeof item === "function" ? item(): item;
+  var node = typeof item === "function" ? item() : item;
   var root = Selection.from([[new THREE.Object3D()]]);
   root.parentNode = node;
   root[0][0].__data__ = {};
