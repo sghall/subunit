@@ -1,4 +1,4 @@
-import THREE from 'THREE';
+import THREE from 'three';
 import d3 from 'd3';
 
 export const scene = new THREE.Scene();

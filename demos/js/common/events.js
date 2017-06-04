@@ -1,21 +1,21 @@
-import THREE from 'THREE';
+import THREE from 'three';
 
-var raycaster = new THREE.Raycaster();
+const raycaster = new THREE.Raycaster();
 
 export function raycast(camera, items, type) {
 
-  var listener = function(event) {
-    var vector = new THREE.Vector3();
+  const listener = function(event) {
+    const vector = new THREE.Vector3();
 
-    let x = ((event.clientX - 1) / window.innerWidth ) * 2 - 1;
-    let y = -((event.clientY - 1) / window.innerHeight) * 2 + 1;
+    const x = ((event.clientX - 1) / window.innerWidth ) * 2 - 1;
+    const y = -((event.clientY - 1) / window.innerHeight) * 2 + 1;
 
     vector.set(x, y, 0.5);
     vector.unproject(camera);
 
     raycaster.ray.set(camera.position, vector.sub(camera.position).normalize());
 
-    var target = raycaster.intersectObjects(items, true);
+    const target = raycaster.intersectObjects(items, true);
 
     if (target.length) {
       target[0].type = type;

@@ -1,6 +1,6 @@
 import d3 from 'd3';
-import THREE from 'THREE';
-import SubUnit from 'SubUnit';
+import THREE from 'three';
+import SubUnit from 'subunit';
 import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
 import { raycast } from './common/events.js';
