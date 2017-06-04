@@ -1,52 +1,39 @@
-/**
- * @author alteredq / http://alteredqualia.com/
- */
 import THREE from 'THREE';
 
 THREE.RenderPass = function ( scene, camera, overrideMaterial, clearColor, clearAlpha ) {
+  this.scene = scene;
+  this.camera = camera;
 
-	this.scene = scene;
-	this.camera = camera;
+  this.overrideMaterial = overrideMaterial;
 
-	this.overrideMaterial = overrideMaterial;
+  this.clearColor = clearColor;
+  this.clearAlpha = ( clearAlpha !== undefined ) ? clearAlpha : 1;
 
-	this.clearColor = clearColor;
-	this.clearAlpha = ( clearAlpha !== undefined ) ? clearAlpha : 1;
+  this.oldClearColor = new THREE.Color();
+  this.oldClearAlpha = 1;
 
-	this.oldClearColor = new THREE.Color();
-	this.oldClearAlpha = 1;
-
-	this.enabled = true;
-	this.clear = true;
-	this.needsSwap = false;
-
+  this.enabled = true;
+  this.clear = true;
+  this.needsSwap = false;
 };
 
 THREE.RenderPass.prototype = {
+  render: function ( renderer, writeBuffer, readBuffer) {
+    this.scene.overrideMaterial = this.overrideMaterial;
 
-	render: function ( renderer, writeBuffer, readBuffer, delta ) {
+    if ( this.clearColor ) {
+      this.oldClearColor.copy( renderer.getClearColor() );
+      this.oldClearAlpha = renderer.getClearAlpha();
 
-		this.scene.overrideMaterial = this.overrideMaterial;
+      renderer.setClearColor( this.clearColor, this.clearAlpha );
+    }
 
-		if ( this.clearColor ) {
+    renderer.render( this.scene, this.camera, readBuffer, this.clear );
 
-			this.oldClearColor.copy( renderer.getClearColor() );
-			this.oldClearAlpha = renderer.getClearAlpha();
+    if (this.clearColor) {
+      renderer.setClearColor( this.oldClearColor, this.oldClearAlpha );
+    }
 
-			renderer.setClearColor( this.clearColor, this.clearAlpha );
-
-		}
-
-		renderer.render( this.scene, this.camera, readBuffer, this.clear );
-
-		if ( this.clearColor ) {
-
-			renderer.setClearColor( this.oldClearColor, this.oldClearAlpha );
-
-		}
-
-		this.scene.overrideMaterial = null;
-
-	}
-
+    this.scene.overrideMaterial = null;
+  }
 };
