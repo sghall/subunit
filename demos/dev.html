@@ -12,6 +12,7 @@
     </div>
     <script src="../demos/node_modules/d3/build/d3.js"></script>
     <script src="../demos/node_modules/three/build/three.js"></script>
+    <script src="../demos/js/common/OrbitControls.js"></script>
     <script src="../dist/subunit.js"></script>
     <script type="text/javascript">
       // const a = SubUnit.BaseSelection.from([1,2,3,4]);
@@ -48,7 +49,7 @@
 
         var size = [1000, 600]; // Width, Height
 
-        var x = d3.scaleOrdinal()
+        var x = d3.scaleBand()
           .range([0, size[0]]);
 
         var y = d3.scaleLinear()
@@ -65,13 +66,13 @@
         root.selectAll("bar")
           .data(data).enter()
           .append("mesh")
-          // .attr("tags", "bar")
-          // .tagged("big", function (d) {
-          //   return d.frequency > 0.07;
-          // })
+          .attr("tags", "bar")
+          .tagged("big", function (d) {
+            return d.frequency > 0.07;
+          })
           .attr("material", material1)
           .attr("geometry", function (d) {
-            var w = x.rangeBand();
+            var w = x.bandwidth();
             var h = size[1] - y(d.frequency);
             return new THREE.BoxGeometry(w, h, 5);
           })
@@ -83,16 +84,16 @@
 
         console.log("root: ", window.root = root);
 
-        // var control = new THREE.OrbitControls(camera, renderer.domElement);
+        var control = new THREE.OrbitControls(camera, renderer.domElement);
 
-        // function animate() {
-        //   // control.update();
-        //   requestAnimationFrame(animate);
-        //   renderer.render(scene, camera);
-        // }
+        function animate() {
+          control.update();
+          requestAnimationFrame(animate);
+          renderer.render(scene, camera);
+        }
 
 
-        // animate();
+        animate();
       });
     </script>
   </body>

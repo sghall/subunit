@@ -40,7 +40,7 @@ function selectionAttr(name, value) {
   }
 
   function attrFunction(...args) {
-    const res = value.apply(this, [...args]);
+    const res = value.call(this, ...args);
 
     if (res === null) {
       return this[name] && delete this[name];
