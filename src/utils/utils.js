@@ -1,11 +1,14 @@
+
 export function search(node, selector) {
-  var result = [], tagsArray;
+  const result = [];
+
+  let tagsArray;
 
   if (typeof selector === 'string') {
     tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
   }
 
-  var searchIterator = function (node) {
+  const searchIterator = function (node) {
 
     if (typeof selector === 'string') {
 
@@ -13,14 +16,16 @@ export function search(node, selector) {
         return;
       }
 
-      for (var i = 0; i < tagsArray.length; i++) {
+      for (let i = 0; i < tagsArray.length; i++) {
         if (node.__tags__.indexOf(tagsArray[i]) < 0) {
           return;
         }
       }
     } else {
-      for (var s in selector) {
-        if (node[s] !== selector[s]) {
+      const keys = Object.keys(selector);
+
+      for (let i = 0; i < keys.length; i++) {
+        if (node[keys[i]] !== selector[keys[i]]) {
           return;
         }
       }
@@ -47,22 +52,21 @@ function toObject(val) {
 }
 
 export function assign(target, source) {
-  var pendingException;
-  var from;
-  var keys;
-  var to = toObject(target);
+  let pendingException;
+  
+  const to = toObject(target);
 
   if (!source) {
     throw new Error('No source(s) provided to assign.');
   }
 
   for (let s = 1; s < arguments.length; s++) {
-    from = arguments[s];
-    keys = Object.keys(Object(from));
+    const fromObj = arguments[s];
+    const objKeys = Object.keys(Object(fromObj));
 
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < objKeys.length; i++) {
       try {
-        to[keys[i]] = from[keys[i]];
+        to[objKeys[i]] = fromObj[objKeys[i]];
       } catch (err) {
         if (pendingException === undefined) {
           pendingException = err;
