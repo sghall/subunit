@@ -1,4 +1,4 @@
-import { transitionNode } from '../../node_modules/antigen/transition/transitionNode';
+import { transitionNode } from './transitionNode';
 import { selectionSelectorAll } from '../selection/selectAll';
 import { Transition } from '../Transition';
 

@@ -56,11 +56,11 @@ export function assign(target, source) {
     throw new Error('No source(s) provided to assign.');
   }
 
-  for (var s = 1; s < arguments.length; s++) {
+  for (let s = 1; s < arguments.length; s++) {
     from = arguments[s];
     keys = Object.keys(Object(from));
 
-    for (var i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys.length; i++) {
       try {
         to[keys[i]] = from[keys[i]];
       } catch (err) {

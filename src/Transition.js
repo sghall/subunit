@@ -1,9 +1,8 @@
-import { BaseTransition } from '../node_modules/antigen/BaseTransition';
-
-import { attr } from './transition/attr';
-import { select } from './transition/select';
-import { selectAll } from './transition/selectAll';
-import { transition } from './transition/transition';
+import BaseTransition from './BaseTransition';
+import attr from './transition/attr';
+import select from './transition/select';
+import selectAll from './transition/selectAll';
+import transition from './transition/transition';
 
 export class Transition extends BaseTransition {
   constructor(input) {
@@ -11,7 +10,7 @@ export class Transition extends BaseTransition {
   }
 
   static factory(groups, ns, id) {
-    var trans = Transition.from(groups);
+    const trans = Transition.from(groups);
     trans.namespace = ns;
     trans.id = id;
 
