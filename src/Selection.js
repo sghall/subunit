@@ -9,6 +9,7 @@ import append from './common/append';
 import selectAll from './selection/selectAll';
 import node from 'd3-selection/src/selection/node';
 import each from 'd3-selection/src/selection/each';
+import size from 'd3-selection/src/selection/size';
 
 // import data from './selection/data';
 // import attr from './selection/attr';
@@ -37,6 +38,7 @@ export default function Selection(groups, parents) {
 Selection.prototype.filter = filter;
 Selection.prototype.data = data;
 Selection.prototype.each = each;
+Selection.prototype.size = size;
 Selection.prototype.enter = enter;
 Selection.prototype.attr = attr;
 Selection.prototype.append = append;
