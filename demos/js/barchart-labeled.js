@@ -14,7 +14,7 @@ d3.json('data/letters.json', function (err, data) {
 
   const x = d3.scaleBand()
     .range([0, size[0]])
-    .padding(0.5);
+    .padding(0.3);
 
   const y = d3.scaleLinear()
     .range([size[1], 0]);
@@ -37,28 +37,24 @@ d3.json('data/letters.json', function (err, data) {
     .attr('tags', 'bar')
     .attr('material', blue)
     .attr('geometry', (d) => {
-      return new THREE.BoxGeometry(
-        x.bandwidth(),
-        size[1] - y(d.frequency),
-        5
-      );
+      const w = x.bandwidth();
+      const h = size[1] - y(d.frequency);
+      return new THREE.BoxGeometry(w, h, 5);
     })
     .each(function (d) {
       const x0 = x(d.letter);
       const y0 = -y(d.frequency) / 2;
       this.position.set(x0, y0, 240);
+    })
+    .on('click', function (event, d) {
+      d3.select('#msg').html('Letter: ' + d.letter);
+
+      if (this.material === blue) {
+        this.material = grey;
+      } else {
+        this.material = blue;
+      }
     });
-
-  console.log('bars', bars);
-    // .on('click', function (event, d) {
-    //   d3.select('#msg').html('Letter: ' + d.letter);
-
-    //   if (this.material === blue) {
-    //     this.material = grey;
-    //   } else {
-    //     this.material = blue;
-    //   }
-    // });
 
   const loader = new THREE.FontLoader();
 
@@ -87,7 +83,7 @@ d3.json('data/letters.json', function (err, data) {
       });
   });
 
-  // raycast(camera, bars[0], 'click');
+  raycast(camera, bars.nodes(), 'click');
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
 

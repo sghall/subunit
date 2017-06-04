@@ -5,9 +5,11 @@ import enter from './selection/enter';
 import select from './selection/select';
 import attr from './selection/attr';
 import tagged from './selection/tagged';
+import on from './selection/on';
 import append from './common/append';
 import selectAll from './selection/selectAll';
 import node from 'd3-selection/src/selection/node';
+import nodes from 'd3-selection/src/selection/nodes';
 import each from 'd3-selection/src/selection/each';
 import size from 'd3-selection/src/selection/size';
 
@@ -38,6 +40,7 @@ export default function Selection(groups, parents) {
 Selection.prototype.filter = filter;
 Selection.prototype.data = data;
 Selection.prototype.each = each;
+Selection.prototype.on = on;
 Selection.prototype.size = size;
 Selection.prototype.enter = enter;
 Selection.prototype.attr = attr;
@@ -46,6 +49,7 @@ Selection.prototype.tagged = tagged;
 Selection.prototype.select = select;
 Selection.prototype.selectAll = selectAll;
 Selection.prototype.node = node;
+Selection.prototype.nodes = nodes;
 
 // Selection.prototype.data = data;
 // Selection.prototype.attr = attr;
