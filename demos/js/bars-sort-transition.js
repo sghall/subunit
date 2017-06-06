@@ -16,12 +16,12 @@ d3.json('data/letters.json', function (err, data) {
 
   const x = d3.scaleBand()
     .range([0, size[0]])
-    .padding(0.3);
+    .padding(0.1);
 
   const y = d3.scaleLinear()
     .range([size[1], 0]);
 
-  const color1 = new THREE.MeshPhongMaterial({ color: '#ADD8E6', shininess: 100 });
+  const color1 = new THREE.MeshPhongMaterial({ color: '#ffffff', shininess: 100 });
   const color2 = new THREE.MeshPhongMaterial({ color: '#ff0000' });
 
   const backing = new THREE.BoxGeometry(size[0], size[1], 100);
@@ -122,6 +122,36 @@ d3.json('data/letters.json', function (err, data) {
   }
 
   sortBars(sortAlpha, 2000, 2000);
+
+  const materialOptions = { color: '#333', shading: THREE.FlatShading };
+  const material = new THREE.MeshPhongMaterial(materialOptions);
+
+  const loader = new THREE.FontLoader();
+
+  loader.load('fonts/helvetiker_regular.typeface.json', function(font) {
+    const textOptions = {
+      font,
+      size: 30,
+      height: 5,
+      curveSegments: 20,
+      bevelEnabled: false,
+    };
+
+    bars.append('mesh')
+      .tagged('label', true)
+      .attr('material', material)
+      .attr('geometry', function (d) {
+        const text = new THREE.TextGeometry(d.letter, textOptions);
+        text.computeBoundingBox();
+        text.computeVertexNormals();
+        return text;
+      })
+      .each(function () {
+        const min = this.geometry.boundingBox.min.x;
+        const max = this.geometry.boundingBox.max.x;
+        this.position.set(-0.5 * (max - min), 0, 10);
+      });
+  });
 
   d3.select('#sort-alpha').on('click', () => {
     sortBars(sortAlpha, 0, 2000);
