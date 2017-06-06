@@ -39,7 +39,6 @@ function attrFunction(name, value) {
   };
 }
 
-
 export default function(name, value) {
   return this.attrTween(name, attrFunction(name, tweenValue(this, 'attr.' + name, value)));
 }
