@@ -42,8 +42,7 @@ export function lineCache(colorScale) {
   };
 }
 
-// Reference: http://nisatapps.prio.org/armsglobe/
-export function arc(beg, end, detail){
+export function arc(beg, end){
 
   const distance = beg.distanceTo(end);
 
@@ -66,16 +65,13 @@ export function arc(beg, end, detail){
   const splineCurveA = new THREE.CubicBezierCurve3(beg, begAnchor, midbegAnchor, mid);
   const splineCurveB = new THREE.CubicBezierCurve3(mid, midEndAnchor, endAnchor, end);
 
-  const vertexCount = Math.floor(distance * 0.02 + 6) * detail;
+  const curve = new THREE.CurvePath();
+  curve.add(splineCurveA);
+  curve.add(splineCurveB);
 
-  let points = splineCurveA.getPoints(vertexCount);
-  points = points.splice(0, points.length - 1); // Avoid Duplicate
-  points = points.concat(splineCurveB.getPoints(vertexCount));
+  // console.log(splineCurveA.getPoints(5));
 
-  const geometry = new THREE.Geometry();
-  geometry.vertices = points;
-
-  return geometry;
+  return new THREE.TubeBufferGeometry(curve, 100, 0.5, 8, false );
 }
 
 

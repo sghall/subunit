@@ -58,7 +58,7 @@ d3.json('data/top-cities.json', function (err, json) {
       return arc(s, t, 5);
     })
     .attr('material', function (d) {
-      return getColor(d.source.name, 100);
+      return new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
     })
     .on('click', function (event, d) {
       d3.select('#msg').html(function () {
@@ -66,7 +66,7 @@ d3.json('data/top-cities.json', function (err, json) {
       });
 
       arcs.attr('material', function (g) {
-        return getColor(g.source.name, 1.5);
+        return getColor(g.source.name, 2);
       });
 
       this.material = highlight;
