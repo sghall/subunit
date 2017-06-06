@@ -22,12 +22,11 @@ export function materialsCache(colorScale) {
     const color = colorScale(value);
 
     if (!cache[color]) {
-      cache[color] = new THREE.MeshPhongMaterial({ color: color, shininess: 80 });
+      cache[color] = new THREE.MeshPhongMaterial({ color, shininess: 80 });
     }
     return cache[color];
   };
 }
-
 
 export function lineCache(colorScale) {
   const cache = {};
@@ -36,7 +35,6 @@ export function lineCache(colorScale) {
     const color = colorScale(value);
 
     size = size || 1;
-
     if (!cache[color]) {
       cache[color] = new THREE.LineBasicMaterial({ color, linewidth: size });
     }

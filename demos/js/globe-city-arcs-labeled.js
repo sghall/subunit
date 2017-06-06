@@ -55,10 +55,10 @@ d3.json('data/top-cities.json', function (err, json) {
     .attr('geometry', function (d) {
       const s = getCoords(d.source.lat, d.source.lng, true);
       const t = getCoords(d.target.lat, d.target.lng, true);
-      return arc(s, t, 10);
+      return arc(s, t, 5);
     })
     .attr('material', function (d) {
-      return getColor(d.source.name, 1.5);
+      return getColor(d.source.name, 100);
     })
     .on('click', function (event, d) {
       d3.select('#msg').html(function () {
