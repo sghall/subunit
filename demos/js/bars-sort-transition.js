@@ -98,13 +98,38 @@ d3.json('data/letters.json', function (err, data) {
     return result;
   };
 
+  const sortFrequency = (a, b) => {
+    let result = 0;
 
-  bars.sort(sortAlpha).transition()
-    .delay(1000).duration(2000)
-    .each((d) => console.log(d.letter))
-    .attr('position', function tweenPosition(d, i) {
-      return { x: x(i) + x.bandwidth() / 2 };
-    });
+    if (a.frequency > b.frequency) {
+      result = 1;
+    }
+
+    if (a.frequency < b.frequency) {
+      result = -1;
+    }
+
+    return result;
+  };
+
+
+  function sortBars(sortFunc, delay, duration) {
+    bars.sort(sortFunc).transition()
+      .delay(delay).duration(duration)
+      .attr('position', function tweenPosition(d, i) {
+        return { x: x(i) + x.bandwidth() / 2 };
+      }); 
+  }
+
+  sortBars(sortAlpha, 2000, 2000);
+
+  d3.select('#sort-alpha').on('click', () => {
+    sortBars(sortAlpha, 0, 2000);
+  });
+
+  d3.select('#sort-frequency').on('click', () => {
+    sortBars(sortFrequency, 0, 2000);
+  });
 
   container.node().position.x = -size[0] / 2;
   container.node().position.y = (-size[1] * 2) + size[1] / 2;

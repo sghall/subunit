@@ -11,6 +11,22 @@ body, html {
   user-select: none;
 }
 
+#sort-alpha {
+  position: absolute;
+  left: 30%;
+  bottom: 10px;
+  height: 30px;
+  width: 40%;
+}
+
+#sort-frequency {
+  position: absolute;
+  left: 30%;
+  bottom: 40px;
+  height: 30px;
+  width: 40%;
+}
+
 #info {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.5);
