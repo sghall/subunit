@@ -109,6 +109,7 @@ d3.json('data/top-cities.json', function (err, json) {
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
   control.zoomSpeed = 0.1;
+  control.enablePan = false;
 
   function animate() {
     control.update();
