@@ -31,12 +31,11 @@ export function materialsCache(colorScale) {
 export function lineCache(colorScale) {
   const cache = {};
 
-  return function (value, size) {
+  return function (value) {
     const color = colorScale(value);
 
-    size = size || 1;
     if (!cache[color]) {
-      cache[color] = new THREE.LineBasicMaterial({ color, linewidth: size });
+      cache[color] = new THREE.MeshBasicMaterial({ color });
     }
     return cache[color];
   };
@@ -69,12 +68,5 @@ export function arc(beg, end){
   curve.add(splineCurveA);
   curve.add(splineCurveB);
 
-  // console.log(splineCurveA.getPoints(5));
-
-  return new THREE.TubeBufferGeometry(curve, 100, 0.5, 8, false );
+  return new THREE.TubeBufferGeometry(curve, 100, 0.5, 20, false );
 }
-
-
-
-
-

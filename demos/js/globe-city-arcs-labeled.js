@@ -3,7 +3,6 @@ import THREE from 'three';
 import Subunit from 'subunit';
 import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
-import { raycast } from './common/events.js';
 import { getCoords, arc, lineCache } from './common/geo.js';
 
 const world = THREE.ImageUtils.loadTexture('images/world.jpg', null);
@@ -15,13 +14,9 @@ const circleGeometry = new THREE.CircleGeometry(3, 30);
 const circleMaterial = new THREE.MeshPhongMaterial({ color: '#4ECDC4' });
 
 const colors = d3.scaleOrdinal()
-  .range(['#594F4F', '#547980', '#45ADA8', '#9DE0AD', '#E5FCC2', '#ECD078']);
+  .range(['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69']);
 
 const getColor = lineCache(colors);
-
-const highlight = new THREE.LineBasicMaterial({
-  color: '#EEEE00', linewidth: 5
-});
 
 const earth  = new THREE.MeshPhongMaterial({ map: world, shininess: 5 });
 const sphere = new THREE.SphereGeometry(200, 40, 40);
@@ -48,7 +43,7 @@ d3.json('data/top-cities.json', function (err, json) {
 
   globe.node().rotation.y = Math.PI;
 
-  const arcs = rootNode.selectAll('.line')
+  rootNode.selectAll('.line')
     .data(data).enter()
     .append('line')
     .attr('tags', 'line')
@@ -58,18 +53,7 @@ d3.json('data/top-cities.json', function (err, json) {
       return arc(s, t, 5);
     })
     .attr('material', function (d) {
-      return new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-    })
-    .on('click', function (event, d) {
-      d3.select('#msg').html(function () {
-        return d.source.name + ' to ' + d.target.name;
-      });
-
-      arcs.attr('material', function (g) {
-        return getColor(g.source.name, 2);
-      });
-
-      this.material = highlight;
+      return getColor(d.source.name);
     });
 
   const cities = rootNode.selectAll('.node')
@@ -122,8 +106,6 @@ d3.json('data/top-cities.json', function (err, json) {
   rootNode.node().rotation.y = Math.PI;
   rootNode.node().rotation.x = Math.PI / 6;
   rootNode.node().scale.set(2.75, 2.75, 2.75);
-
-  raycast(camera, arcs[0], 'click');
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
   control.zoomSpeed = 0.1;
