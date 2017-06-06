@@ -5,13 +5,13 @@ import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
 import { getCoords, arc, lineCache } from './common/geo.js';
 
-const world = THREE.ImageUtils.loadTexture('images/world.jpg', null);
+const world = new THREE.TextureLoader().load('images/earth.jpg');
 
 d3.select('#loading').transition().duration(500)
   .style('opacity', 0).remove();
 
-const circleGeometry = new THREE.CircleGeometry(3, 30);
-const circleMaterial = new THREE.MeshPhongMaterial({ color: '#4ECDC4' });
+const circleGeometry = new THREE.CircleGeometry(5, 30);
+const circleMaterial = new THREE.MeshPhongMaterial({ color: '#777' });
 
 const colors = d3.scaleOrdinal()
   .range(['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69']);
