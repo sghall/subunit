@@ -1,4 +1,4 @@
-import THREE from 'THREE';
+import THREE from 'three';
 
 const temp = new THREE.Object3D();
 

@@ -25,9 +25,6 @@ d3.json('data/letters.json', function (err, data) {
   x.domain(data.map(function (d) { return d.letter; }));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-  const materialOptions = { color: '#fff', shading: THREE.FlatShading };
-  const material = new THREE.MeshPhongMaterial(materialOptions);
-
   const rootNode = SubUnit.select(scene);
   rootNode.node().position.set(-size[0] / 2, 0, 0);
 
@@ -55,6 +52,9 @@ d3.json('data/letters.json', function (err, data) {
         this.material = blue;
       }
     });
+
+  const materialOptions = { color: '#fff', shading: THREE.FlatShading };
+  const material = new THREE.MeshPhongMaterial(materialOptions);
 
   const loader = new THREE.FontLoader();
 

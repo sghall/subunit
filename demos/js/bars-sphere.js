@@ -1,10 +1,10 @@
 import d3 from 'd3';
-import THREE from 'THREE';
-import { SubUnit } from 'SubUnit';
-import { camera, scene, renderer } from './common/scene';
-import './common/OrbitControls';
-import { raycast } from './common/events';
-import { sphere } from './common/layouts';
+import THREE from 'three';
+import Subunit from 'subunit';
+import { camera, scene, renderer } from './common/scene.js';
+import './common/OrbitControls.js';
+import { raycast } from './common/events.js';
+import { sphere } from './common/layouts.js';
 
 const metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
 
@@ -15,10 +15,10 @@ d3.json('data/letters.json', function (err, data) {
 
   const size = [1000, 600]; // [width, height]
 
-  const x = d3.scale.ordinal().rangeRoundBands([0, size[0]], 0.2);
-  const y = d3.scale.linear().range([size[1], 0]);
+  const x = d3.scaleBand().range([0, size[0]]).padding(0.2);
+  const y = d3.scaleLinear().range([size[1], 0]);
 
-  const black = new THREE.MeshPhongMaterial({ color: '#222222' });
+  const black = new THREE.MeshPhongMaterial({ color: '#ffffff' });
   const red = new THREE.MeshPhongMaterial({ color: '#ff0000' });
 
   const backing = new THREE.PlaneBufferGeometry(size[0], size[1]);
@@ -26,8 +26,8 @@ d3.json('data/letters.json', function (err, data) {
   x.domain(d3.range(data.length));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-  const root = SubUnit.select(scene);
-  const container = root.append('g');
+  const root = Subunit.select(scene);
+  const container = root.append('object');
 
   data = data.sort(function (a, b) { return b.frequency - a.frequency; });
 
@@ -55,12 +55,12 @@ d3.json('data/letters.json', function (err, data) {
     .attr('tags', 'bar')
     .attr('material', black)
     .attr('geometry', function (d) {
-      const w = x.rangeBand();
+      const w = x.bandwidth();
       const h = size[1] - y(d.frequency);
       return new THREE.BoxGeometry(w, h, 5);
     })
     .each(function (d, i) {
-      const x0 = x(i) + x.rangeBand() / 2;
+      const x0 = x(i) + x.bandwidth() / 2;
       const y0 = -y(d.frequency) / 2;
       this.position.set(x0, y0, 0);
     })
@@ -78,7 +78,7 @@ d3.json('data/letters.json', function (err, data) {
 
   camera.position.z = 2500;
 
-  raycast(camera, d3.merge(bars), 'click');
+  raycast(camera, bars.nodes(), 'click');
 
   const theta = 0.003;
 
