@@ -43,8 +43,8 @@ function attrFunction(name, interpolate, value) {
       interpolate0;
   return function() {
     var value0, value1 = value(this);
-    if (value1 == null) return void this.removeAttribute(name);
-    value0 = this.getAttribute(name);
+    // if (value1 == null) return void this.removeAttribute(name);
+    // value0 = this.getAttribute(name);
     return value0 === value1 ? null
         : value0 === value00 && value1 === value10 ? interpolate0
         : interpolate0 = interpolate(value00 = value0, value10 = value1);

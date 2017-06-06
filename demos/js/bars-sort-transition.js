@@ -100,9 +100,9 @@ d3.json('data/letters.json', function (err, data) {
 
 
   bars.sort(sortAlpha).transition()
-    .delay(2000).duration(2000)
+    .delay(1000).duration(2000)
     .each((d) => console.log(d.letter))
-    .attr('position', function (d, i) {
+    .attr('position', function tweenPosition(d, i) {
       return { x: x(i) + x.bandwidth() / 2 };
     });
 
