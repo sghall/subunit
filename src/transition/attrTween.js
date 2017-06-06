@@ -15,7 +15,7 @@ function attrTween(name, value) {
   function tween() {
     var node = this, i = value.apply(node, arguments);
     return i && function(t) {
-      node.setAttribute(name, i(t));
+      console.log(name, i(t));
     };
   }
   tween._value = value;
