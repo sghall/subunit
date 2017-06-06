@@ -10,7 +10,7 @@ const metal = new THREE.TextureLoader().load('images/metal.jpg');
 d3.json('data/letters.json', function (err, data) {
 
   d3.select('#loading').transition().duration(800)
-    .style('opacity', 0).remove();
+    .attr('opacity', 0).remove();
 
   const size = [1000, 600]; // [width, height]
 
@@ -60,7 +60,7 @@ d3.json('data/letters.json', function (err, data) {
     });
 
   const bars = charts.selectAll('bar')
-    .data(function (d) {return d.data; }).enter()
+    .data((d) => d.data).enter()
     .append('mesh')
     .attr('tags', 'bar')
     .attr('material', color1)
@@ -84,9 +84,24 @@ d3.json('data/letters.json', function (err, data) {
       }
     });
 
-  bars.sort(function (a, b) { return b.frequency - a.frequency; });
+  const sortAlpha = (a, b) => {
+    let result = 0;
 
-  bars.transition().delay(2000).duration(2000)
+    if (a.letter > b.letter) {
+      result = 1;
+    }
+
+    if (a.letter < b.letter) {
+      result = -1;
+    }
+
+    return result;
+  };
+
+
+  bars.sort(sortAlpha).transition()
+    .delay(2000).duration(2000)
+    .each((d) => console.log(d.letter))
     .attr('position', function (d, i) {
       return { x: x(i) + x.bandwidth() / 2 };
     });

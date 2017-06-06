@@ -1,4 +1,6 @@
 import attr from './transition/attr';
+import tween from './transition/tween';
+import attrTween from './transition/attrTween';
 import delay from 'd3-transition/src/transition/delay';
 import duration from 'd3-transition/src/transition/duration';
 import ease from 'd3-transition/src/transition/ease';
@@ -31,6 +33,8 @@ Transition.prototype = {
   empty,
   each,
   attr,
+  tween,
+  attrTween,
   delay,
   duration,
   ease,
