@@ -7,7 +7,7 @@ import select from './selection/select';
 import attr from './selection/attr';
 import tagged from './selection/tagged';
 import on from './selection/on';
-import append from './common/append';
+import append from './selection/append';
 import selectAll from './selection/selectAll';
 import transition from './selection/transition';
 import call from 'd3-selection/src/selection/call';

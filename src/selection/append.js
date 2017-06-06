@@ -1,14 +1,5 @@
 import THREE from 'three';
 
-// export default function append(name) {
-//   name = selectionCreator(name);
-
-//   return this.select(function selectionAppend(...args) {
-//     return name.call(this, ...args);
-//   });
-// }
-
-
 export default function append(name) {
   const create = typeof name === 'function' ? name : selectionCreator(name);
   return this.select(function() {
