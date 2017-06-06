@@ -1,4 +1,4 @@
-/**
+/*
  * @author felixturner / http://airtight.cc/
  *
  * Mirror Shader
@@ -7,14 +7,14 @@
  * side: side of input to mirror (0 = left, 1 = right, 2 = top, 3 = bottom)
  */
 
-import THREE from 'THREE';
+import THREE from 'three';
 
 THREE.MirrorShader = {
 
 	uniforms: {
 
-		"tDiffuse": { type: "t", value: null },
-		"side":     { type: "i", value: 1 }
+		"tDiffuse": { value: null },
+		"side":     { value: 1 }
 
 	},
 
@@ -29,7 +29,7 @@ THREE.MirrorShader = {
 
 		"}"
 
-	].join("\n"),
+	].join( "\n" ),
 
 	fragmentShader: [
 
@@ -57,6 +57,6 @@ THREE.MirrorShader = {
 
 		"}"
 
-	].join("\n")
+	].join( "\n" )
 
 };

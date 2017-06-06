@@ -1,5 +1,5 @@
 /* eslint indent: "off" */
-import THREE from 'THREE';
+import THREE from 'three';
 
 THREE.CopyShader = {
   uniforms: {
