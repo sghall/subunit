@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Earthquakes (~8,000 meshes) - WebGL Demo</title>
+    <title>~8,000 Earthquakes | Subunit Demo (WebGL)</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
     <div id="info">
-      <h3>Earthquakes (~8,000 meshes) - WebGL Demo</h3>
-      <div id="msg">Click an earthquake...</div>
+      <h4>~8,000 Earthquakes | Subunit Demo (WebGL)</h4>
+      <div id="msg">Click a bar...</div>
     </div>
     <div id="loading">Loading...</div>
-    <script src="../node_modules/babel-core/browser-polyfill.js"></script>
-    <script src="../node_modules/babel-core/browser.js"></script>
-    <script src="../node_modules/es6-module-loader/dist/es6-module-loader.js"></script>
-    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script src="../demos/node_modules/systemjs/dist/system.js"></script>
     <script>
       System.config({
-        baseURL: '../',
+        defaultExtension: 'js',
+        baseURL: '/',
         map: {
-          d3: 'node_modules/d3/d3',
-          THREE: 'node_modules/three/three',
-          SubUnit: 'src/index'
+          'plugin-babel': './node_modules/systemjs-plugin-babel/plugin-babel.js',
+          'systemjs-babel-build': './node_modules/systemjs-plugin-babel/systemjs-babel-browser.js',
+          d3: './node_modules/d3/build/d3.js',
+          three: './node_modules/three/build/three.js',
+          subunit: '../dist/subunit.js'
         },
-        transpiler: 'babel'
+        transpiler: 'plugin-babel'
       });
 
-      System.import('demos/js/globe-earthquakes-full');
+      System.import('demos/js/globe-earthquakes-full.js');
   </script>
   </body>
 </html>
