@@ -2,7 +2,6 @@ import d3 from 'd3';
 import THREE from 'three';
 import Subunit from 'subunit';
 import { camera, scene, renderer } from './common/scene.js';
-import './common/OrbitControls.js';
 import './common/EffectComposer.js';
 import './common/CopyShader.js';
 import './common/MirrorShader.js';
@@ -64,11 +63,7 @@ mirrorPass.uniforms.side.value = 0;
 
 console.log('rootNode: ', window.rootNode = rootNode, rootNode);
 
-const control = new THREE.OrbitControls(camera, renderer.domElement);
-control.noRotate = true;
-
 function animate() {
-  control.update();
   composer.render(0.8);
   requestAnimationFrame(animate);
 }

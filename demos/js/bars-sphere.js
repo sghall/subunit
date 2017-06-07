@@ -6,8 +6,6 @@ import './common/OrbitControls.js';
 import { raycast } from './common/events.js';
 import { sphere } from './common/layouts.js';
 
-const metal = THREE.ImageUtils.loadTexture('images/metal.jpg', null);
-
 d3.json('data/letters.json', function (err, data) {
 
   d3.select('#loading').transition().duration(800)
@@ -21,13 +19,11 @@ d3.json('data/letters.json', function (err, data) {
   const black = new THREE.MeshPhongMaterial({ color: '#ffffff' });
   const red = new THREE.MeshPhongMaterial({ color: '#ff0000' });
 
-  const backing = new THREE.PlaneBufferGeometry(size[0], size[1]);
-
   x.domain(d3.range(data.length));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-  const root = Subunit.select(scene);
-  const container = root.append('object');
+  const rootNode = Subunit.select(scene);
+  const container = rootNode.append('object');
 
   data = data.sort(function (a, b) { return b.frequency - a.frequency; });
 
@@ -40,14 +36,6 @@ d3.json('data/letters.json', function (err, data) {
       this.position.copy(pos);
       this.lookAt(container.node().position);
     });
-
-  // charts.append('mesh')
-  //   .attr('tags', 'backing')
-  //   .attr('material', new THREE.MeshPhongMaterial({ map: metal }))
-  //   .attr('geometry', backing)
-  //   .each(function () {
-  //     this.position.x = size[0] / 2;
-  //   });
 
   const bars = charts.selectAll('bar')
     .data(function () { return data; }).enter()
@@ -82,13 +70,13 @@ d3.json('data/letters.json', function (err, data) {
 
   const theta = 0.003;
 
-  console.log('root: ', window.root = root);
+  console.log('rootNode: ', window.rootNode = rootNode);
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
 
   function animate() {
     control.update();
-    root.node().rotation.y += theta;
+    rootNode.node().rotation.y += theta;
 
     bars.each(function (d, i) {
       this.rotation.x += theta * ((i + 1) * 2);
@@ -97,5 +85,6 @@ d3.json('data/letters.json', function (err, data) {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
+
   animate();
 });

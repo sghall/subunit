@@ -7,7 +7,7 @@ import { raycast } from './common/events.js';
 
 d3.json('data/letters.json', function (err, data) {
 
-  d3.select('#loading').transition().duration(800)
+  d3.select('#loading').transition().duration(500)
     .style('opacity', 0).remove();
 
   const size = [1000, 600]; // [width, height]
