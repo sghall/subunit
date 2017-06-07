@@ -25,6 +25,14 @@ body, html {
   width: 20%;
 }
 
+#demos-home {
+  color: #fff;
+  position: absolute;
+  left: 80%;
+  bottom: 10px;
+  width: 20%;
+}
+
 #info {
   position: absolute;
   left: 9px;
@@ -52,4 +60,24 @@ body, html {
   position: absolute;
   bottom: 10px;
   left: 0px;
+}
+
+@media (max-width: 767px) {
+  #icons {
+    position:absolute;
+    width:200px;
+    height:50px;
+    bottom:60px;
+    right:25%;
+    left:50%;
+    margin-left:-80px;
+  }
+}
+
+@media (min-width: 768px) {
+  #icons {
+    position: absolute;
+    bottom: 20px;
+    left: 0px;
+  }
 }
