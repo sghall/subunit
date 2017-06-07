@@ -10,11 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.24.1",
-    "d3": "^4.9.1",
     "install": "^0.10.1",
     "npm": "^5.0.2",
     "systemjs": "^0.20.13",
-    "systemjs-plugin-babel": "0.0.21",
-    "three": "^0.85.2"
+    "systemjs-plugin-babel": "0.0.21"
   }
 }
