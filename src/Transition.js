@@ -4,6 +4,7 @@ import attrTween from './transition/attrTween';
 import delay from 'd3-transition/src/transition/delay';
 import duration from 'd3-transition/src/transition/duration';
 import ease from 'd3-transition/src/transition/ease';
+import on from 'd3-transition/src/transition/on';
 import call from 'd3-selection/src/selection/call';
 import nodes from 'd3-selection/src/selection/nodes';
 import node from 'd3-selection/src/selection/node';
@@ -38,4 +39,5 @@ Transition.prototype = {
   delay,
   duration,
   ease,
+  on,
 };

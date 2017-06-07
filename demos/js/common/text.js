@@ -1,30 +1,28 @@
 import THREE from 'three';
 import d3 from 'd3';
-import { memoize } from './utils';
+import { memoize } from './utils.js';
 
-export var getLabel = memoize(makeSprite);
+export const getLabel = memoize(makeSprite);
 
 export function makeSprite(text, color, points) {
-  var canvas, texture, context, textWidth;
+  const pad = points * 0.5;
 
-  var pad = points * 0.5;
+  const canvas = d3.select('body').append('canvas')
+    .style('display', 'none');
 
-  canvas = d3.select("body").append("canvas")
-    .style("display", "none");
+  const context = canvas.node().getContext('2d');
+  context.font = 'normal ' + points + 'pt helvetica';
 
-  context = canvas.node().getContext("2d");
-  context.font = "normal " + points + "pt helvetica";
+  const textWidth = context.measureText(text).width + pad;
+  canvas.attr({ width: textWidth, height: points + pad });
 
-  textWidth = context.measureText(text).width + pad;
-  canvas.attr({width: textWidth, height: points + pad});
-
-  context.font = "normal " + points + "pt helvetica";
-  context.textAlign    = "center";
-  context.textBaseline = "middle";
+  context.font = 'normal ' + points + 'pt helvetica';
+  context.textAlign    = 'center';
+  context.textBaseline = 'middle';
   context.fillStyle    = color;
   context.fillText(text, textWidth / 2, (points + pad) / 2);
 
-  texture = new THREE.Texture(canvas.node());
+  const texture = new THREE.Texture(canvas.node());
   texture.needsUpdate = true;
 
   canvas.remove();
@@ -36,40 +34,44 @@ export function makeSprite(text, color, points) {
   };
 }
 
-export var getText = memoize(wrapText);
+export const getText = memoize(wrapText);
 
 export function wrapText(text, color, points, maxWidth) {
 
-  var canvas = d3.select("body").append("canvas")
-    .style("display", "none");
+  const canvas = d3.select('body').append('canvas')
+    .style('display', 'none');
 
-  var texture, context;
-  var testLine, testWidth;
+  let context;
+  let testLine;
+  let testWidth;
 
-  var pad = points * 0.5;
-  var lineHeight = points + pad;
+  const pad = points * 0.5;
+  const lineHeight = points + pad;
 
-  var total = lineHeight;
+  let total = lineHeight;
 
   canvas.attr({
     width: maxWidth + (pad * 2)
   });
 
-  context = canvas.node().getContext("2d");
-  context.font = "normal " + points + "pt arial";
-  context.textBaseline = "bottom";
+  context = canvas.node().getContext('2d');
+  context.font = 'normal ' + points + 'pt "Raleway"';
+  context.textBaseline = 'bottom';
   context.fillStyle = color;
 
-  var line  = "", lines = [], words = text.split(" ");
+  let line  = '';
 
-  for(var n = 0; n < words.length; n++) {
+  const lines = [];
+  const words = text.split(' ');
 
-    testLine  = line + words[n] + " ";
+  for(let n = 0; n < words.length; n++) {
+
+    testLine  = line + words[n] + ' ';
     testWidth = context.measureText(testLine).width;
 
     if (testWidth > maxWidth) {
       lines.push([line, pad, total]);
-      line = words[n] + " ";
+      line = words[n] + ' ';
       total += lineHeight;
     } else {
       line = testLine;
@@ -82,16 +84,16 @@ export function wrapText(text, color, points, maxWidth) {
     height: total
   });
 
-  context = canvas.node().getContext("2d");
-  context.font = "normal " + points + "pt arial";
-  context.textBaseline = "bottom";
+  context = canvas.node().getContext('2d');
+  context.font = 'normal ' + points + 'pt "Raleway"';
+  context.textBaseline = 'bottom';
   context.fillStyle = color;
 
-  for (var i = 0; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     context.fillText(lines[i][0], lines[i][1], lines[i][2]);
   }
 
-  texture = new THREE.Texture(canvas.node());
+  const texture = new THREE.Texture(canvas.node());
   texture.needsUpdate = true;
 
   canvas.remove();
@@ -102,13 +104,3 @@ export function wrapText(text, color, points, maxWidth) {
     height: total + (pad * 2)
   };
 }
-
-
-
-
-
-
-
-
-
-

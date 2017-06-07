@@ -19,7 +19,7 @@ d3.csv('data/quotes.csv', function (err, data) {
     .attr('scale', { x: 0.005, y: 0.005, z: 0.005 });
 
   rootNode.transition().duration(2000)
-    .attr('scale', { x: 0.255, y: 0.255, z: 0.255 });
+    .attr('scale', () => ({ x: 0.255, y: 0.255, z: 0.255 }));
 
   const nodes = rootNode.selectAll('node')
     .data(data).enter()
@@ -33,7 +33,7 @@ d3.csv('data/quotes.csv', function (err, data) {
   const quotes = nodes.append('mesh')
     .attr('tags', 'quote')
     .each(function (d) {
-      const quote = getText(d.quote, '#ff0004', 20, cardWidth);
+      const quote = getText(d.quote, '#fff', 20, cardWidth);
 
       this.material = new THREE.MeshBasicMaterial({
         map: quote.map,
@@ -44,10 +44,10 @@ d3.csv('data/quotes.csv', function (err, data) {
       this.geometry = new THREE.PlaneBufferGeometry(cardWidth, quote.height);
     })
     .on('click', function () {
-      Subunit.object(this)
+      Subunit.selectObject(this)
         .transition().duration(1000)
-        .attr('rotation', { x: Math.PI * 2 })
-        .each('end', function () {
+        .attr('rotation', () => ({ x: Math.PI * 2 }))
+        .on('end', function () {
           this.rotation.x = 0;
         });
     });
@@ -55,7 +55,7 @@ d3.csv('data/quotes.csv', function (err, data) {
   const author = nodes.append('mesh')
     .attr('tags', 'name')
     .each(function (d) {
-      const quote = getText(d.quote, '#ff0004', 20, cardWidth);
+      const quote = getText(d.quote, '#fff', 20, cardWidth);
       const label = getLabel('-' + d.name, '#fff', 30);
 
       this.material = new THREE.MeshBasicMaterial({
@@ -72,21 +72,21 @@ d3.csv('data/quotes.csv', function (err, data) {
       this.position.set(x, y, 0);
     })
     .on('click', function () {
-      Subunit.object(this)
+      Subunit.selectObject(this)
         .transition().duration(2000)
-        .attr('rotation', { z: Math.PI * 2 })
-        .each('end', function () {
+        .attr('rotation', () => ({ z: Math.PI * 2 }))
+        .on('end', function () {
           this.rotation.z = 0;
         });
 
-      const PY = this.parentNode.rotation.y;
-      const PZ = this.parentNode.rotation.z;
+      const PY = this.parent.rotation.y;
+      const PZ = this.parent.rotation.z;
       const P2 = Math.PI * 2;
 
-      Subunit.object(this.parentNode)
+      Subunit.selectObject(this.parent)
         .transition().duration(2000)
-        .attr('rotation', { y: PY + P2, z: PZ + P2 })
-        .each('end', function () {
+        .attr('rotation', () => ({ y: PY + P2, z: PZ + P2 }))
+        .on('end', function () {
           this.rotation.y = PY;
           this.rotation.z = PZ;
         });

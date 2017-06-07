@@ -9,3 +9,8 @@ export default function select(item) {
   node.add(root._groups[0][0]);
   return root;
 }
+
+export function object(item) {
+  const root = new Selection([[item]], [item.parent]);
+  return root;
+}

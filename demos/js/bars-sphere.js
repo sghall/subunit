@@ -11,7 +11,7 @@ d3.json('data/letters.json', function (err, data) {
   d3.select('#loading').transition().duration(800)
     .style('opacity', 0).remove();
 
-  const size = [1000, 2000]; // [width, height]
+  const size = [1200, 1800]; // [width, height]
 
   const x = d3.scaleBand().range([0, size[0]]).padding(0.2);
   const y = d3.scaleLinear().range([size[1], 0]);
@@ -68,7 +68,7 @@ d3.json('data/letters.json', function (err, data) {
 
   raycast(camera, bars.nodes(), 'click');
 
-  const theta = 0.003;
+  const theta = 0.001;
 
   console.log('rootNode: ', window.rootNode = rootNode);
 

@@ -1,2 +1,2 @@
 
-export { default as select } from './src/select';
+export { object as selectObject, default as select } from './src/select';
