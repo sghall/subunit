@@ -20,7 +20,9 @@
     "three": "^0.85.2"
   },
   "devDependencies": {
+    "d3": "^4.9.1",
     "eslint": "3",
+    "jasmine-core": "^2.6.3",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-firefox-launcher": "^1.0.1",
@@ -30,10 +32,10 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-serve": "^0.3.0",
     "rollup-watch": "^3.2.2",
+    "three": "^0.85.2",
     "uglify-js": "^2.8.11"
   },
   "dependencies": {
-    "d3-dispatch": "^1.0.3",
     "d3-interpolate": "^1.1.5",
     "d3-selection": "^1.1.0",
     "d3-timer": "^1.0.5",
