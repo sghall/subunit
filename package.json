@@ -4,7 +4,7 @@
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
-    "start": "rm -rf dist && mkdir dist && rollup -f umd -c --watch"
+    "start": "rm -rf dist && mkdir dist && rollup -c --watch"
   },
   "repository": {
     "type": "git",
