@@ -11,12 +11,12 @@ export function makeSprite(text, color, points) {
     .style('display', 'none');
 
   const context = canvas.node().getContext('2d');
-  context.font = 'normal ' + points + 'pt helvetica';
+  context.font = 'Bold ' + points + 'pt Arial';
 
   const textWidth = context.measureText(text).width + pad;
   canvas.attr({ width: textWidth, height: points + pad });
 
-  context.font = 'normal ' + points + 'pt helvetica';
+  context.font = 'Bold ' + points + 'pt Arial';
   context.textAlign    = 'center';
   context.textBaseline = 'middle';
   context.fillStyle    = color;
@@ -55,7 +55,7 @@ export function wrapText(text, color, points, maxWidth) {
   });
 
   context = canvas.node().getContext('2d');
-  context.font = 'normal ' + points + 'pt "Raleway"';
+  context.font = 'Bold ' + (points * 1.5) + 'pt Arial';
   context.textBaseline = 'bottom';
   context.fillStyle = color;
 
@@ -85,7 +85,7 @@ export function wrapText(text, color, points, maxWidth) {
   });
 
   context = canvas.node().getContext('2d');
-  context.font = 'normal ' + points + 'pt "Raleway"';
+  context.font = 'Bold ' + points + 'pt Arial';
   context.textBaseline = 'bottom';
   context.fillStyle = color;
 

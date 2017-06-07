@@ -12,7 +12,7 @@ d3.json('data/letters.json', function (err, data) {
   d3.select('#loading').transition().duration(800)
     .style('opacity', 0).remove();
 
-  const size = [1000, 600]; // [width, height]
+  const size = [7200, 600]; // [width, height]
 
   const x = d3.scaleBand()
     .range([0, size[0]])
@@ -36,8 +36,10 @@ d3.json('data/letters.json', function (err, data) {
     { color: '#00BFFF', data: d3.shuffle(data).slice() }
   ];
 
-  const root = SubUnit.select(scene);
-  const container = root.append('object');
+  const rootNode = SubUnit.select(scene);
+  const container = rootNode.append('object');
+
+  container.node().rotation.x = 120;
 
   const charts = container.selectAll('chart')
     .data(data).enter()
@@ -112,6 +114,9 @@ d3.json('data/letters.json', function (err, data) {
     return result;
   };
 
+  function sortKindaRandom(){
+    return (Math.round(Math.random()) - 0.5);
+  }
 
   function sortBars(sortFunc, delay, duration) {
     bars.sort(sortFunc).transition()
@@ -161,14 +166,18 @@ d3.json('data/letters.json', function (err, data) {
     sortBars(sortFrequency, 0, 2000);
   });
 
+  d3.select('#sort-kinda-random').on('click', () => {
+    sortBars(sortKindaRandom, 0, 2000);
+  });
+
   container.node().position.x = -size[0] / 2;
   container.node().position.y = (-size[1] * 2) + size[1] / 2;
 
-  camera.position.z = 2500;
+  camera.position.z = 2000;
 
   raycast(camera, bars.nodes(), 'click');
 
-  console.log('root: ', window.root = root);
+  console.log('rootNode: ', window.rootNode = rootNode);
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
 
