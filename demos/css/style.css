@@ -1,14 +1,7 @@
 body, html {
   background-color: #333;
   margin: 0px;
-  font-family: helvetica, arial;
   color: #fff;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 #sort-alpha {
@@ -29,8 +22,6 @@ body, html {
 
 #info {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 15px;
   left: 9px;
   top: 9px;
   z-index: 1;

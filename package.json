@@ -4,8 +4,7 @@
   "description": "D3 Selections in THREE.js, D3 Syntax in WebGL",
   "main": "index.js",
   "scripts": {
-    "dist": "rm -rf dist && mkdir dist && rollup --banner \"$(preamble)\" -f umd -n d3 -o dist/d3-selection.js -- index.js",
-    "dev": "rm -rf dist && mkdir dist && rollup -f umd -c --watch"
+    "start": "rm -rf dist && mkdir dist && rollup -f umd -c --watch"
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,9 @@
   "devDependencies": {
     "eslint": "3",
     "rollup": "0.41",
+    "rollup-plugin-livereload": "^0.4.0",
     "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-serve": "^0.3.0",
     "rollup-watch": "^3.2.2",
     "uglify-js": "^2.8.11"
   },

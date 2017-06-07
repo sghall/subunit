@@ -1,53 +1,49 @@
 import d3 from 'd3';
-import THREE from 'THREE';
-import { SubUnit } from 'SubUnit';
-import { camera, scene, renderer } from './common/scene';
-import './common/OrbitControls';
-import './common/EffectComposer';
-import './common/CopyShader';
-import './common/MirrorShader';
-import './common/RenderPass';
-import './common/ShaderPass';
-import './common/MaskPass';
+import THREE from 'three';
+import Subunit from 'subunit';
+import { camera, scene, renderer } from './common/scene.js';
+import './common/OrbitControls.js';
+import './common/EffectComposer.js';
+import './common/CopyShader.js';
+import './common/MirrorShader.js';
+import './common/RenderPass.js';
+import './common/ShaderPass.js';
+import './common/MaskPass.js';
 
-var circleRadius = 180;
-var squareCount  = 100;
-var squareSize = 150;
+const circleRadius = 180;
+const squareCount  = 80;
+const squareSize = 100;
 
-var speed = 0.0005;
+const speed = 0.002;
 
-var metal = THREE.ImageUtils.loadTexture('images/leaf.png', null);
+const carpet = new THREE.TextureLoader().load('images/carpet.jpg');
 
-var options  = {map: metal, transparent: true};
-var material = new THREE.MeshPhongMaterial(options);
-var geometry = new THREE.PlaneBufferGeometry(squareSize, squareSize);
+const material = new THREE.MeshPhongMaterial({ map: carpet, transparent: true });
+const geometry = new THREE.PlaneBufferGeometry(squareSize, squareSize);
 
-d3.select("#loading").transition().duration(500)
-  .style("opacity", 0).remove();
+d3.select('#loading').transition().duration(500)
+  .style('opacity', 0).remove();
 
-var root = SubUnit.select(scene)
-  .attr("scale", {x: 0.1, y: 0.1, z: 0.1});
+const rootNode = Subunit.select(scene)
+  .attr('scale', { x: 2.75, y: 2.75, z: 2.75 });
 
-root.transition().duration(4000).ease("bounce")
-  .attr("scale", {x: 3, y: 3, z: 3});
-
-var containers = root.selectAll("rect")
+const containers = rootNode.selectAll('rect')
   .data(d3.range(squareCount))
-  .enter().append("object")
+  .enter().append('object')
   .datum(function(i) { return i / squareCount; })
-  .attr("rotation", function (d) {
-    return {z: d * Math.PI * 2};
+  .attr('rotation', function (d) {
+    return { z: d * Math.PI * 2 };
   })
-  .attr("translation", function (d, i) {
-    return {x: circleRadius, z: (i / squareCount) * 5};
+  .attr('translation', function () {
+    return { x: circleRadius };
   });
 
-containers.append("mesh")
+containers.append('mesh')
   .datum(function(i) { return i / squareCount; })
-  .attr("material", material)
-  .attr("geometry", geometry)
-  .attr("translation", function () {
-    return {z: Math.PI / 5};
+  .attr('material', material)
+  .attr('geometry', geometry)
+  .attr('translation', function () {
+    return { z: Math.PI / 5 };
   });
 
 d3.timer(function(elapsed) {
@@ -56,19 +52,19 @@ d3.timer(function(elapsed) {
   });
 });
 
-var renderPass = new THREE.RenderPass(scene, camera);
-var mirrorPass = new THREE.ShaderPass(THREE.MirrorShader);
+const renderPass = new THREE.RenderPass(scene, camera);
+const mirrorPass = new THREE.ShaderPass(THREE.MirrorShader);
 
-var composer = new THREE.EffectComposer(renderer);
+const composer = new THREE.EffectComposer(renderer);
 composer.addPass(renderPass);
 composer.addPass(mirrorPass);
 
 mirrorPass.renderToScreen = true;
 mirrorPass.uniforms.side.value = 0;
 
-console.log("root: ", window.root = root, root);
+console.log('rootNode: ', window.rootNode = rootNode, rootNode);
 
-var control = new THREE.OrbitControls(camera, renderer.domElement);
+const control = new THREE.OrbitControls(camera, renderer.domElement);
 control.noRotate = true;
 
 function animate() {

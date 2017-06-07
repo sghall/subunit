@@ -12,7 +12,7 @@ import './common/MaskPass.js';
 
 const circleRadius = 180;
 const squareCount  = 100;
-const squareSize = 60;
+const squareSize = 80;
 
 const speed = 0.003;
 
