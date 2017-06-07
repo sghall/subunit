@@ -1,12 +1,8 @@
+/* eslint-disable */
+
 module.exports = function(config){
   config.set({
     basePath : '../',
-    files : [
-      'node_modules/babel-core/browser-polyfill.js',
-      'node_modules/babel-core/browser.js',
-      'node_modules/three/three.js',
-      'node_modules/d3/d3.js'
-    ],
     systemjs: {
       files: [
         'src/**/*.js',
@@ -15,10 +11,11 @@ module.exports = function(config){
       configFile: 'test/system.config.js',
       config: {
         map: {
-          d3: 'node_modules/d3/d3',
-          THREE: 'node_modules/three/three',
-          babel: 'node_modules/babel-core/browser',
-          SubUnit: 'src/index'
+          'plugin-babel': './node_modules/systemjs-plugin-babel/plugin-babel.js',
+          'systemjs-babel-build': './node_modules/systemjs-plugin-babel/systemjs-babel-browser.js',
+          d3: './node_modules/d3/build/d3.js',
+          three: './node_modules/three/build/three.js',
+          subunit: '../dist/subunit.js'
         }
       },
       testFileSuffix: '.spec.js'

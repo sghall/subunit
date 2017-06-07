@@ -1,69 +1,61 @@
 /*global describe, it, expect*/
 /*eslint no-unused-expressions: 0*/
 
-import THREE from 'THREE';
-import { SubUnit } from 'SubUnit';
+import THREE from 'three';
+import Subunit from 'subunit';
 
-describe('SubUnit.select', function() {
+describe('Subunit.select', function() {
 
-  let scene = new THREE.Scene();
-  let root = SubUnit.select(scene);
+  const scene = new THREE.Scene();
+  const rootNode = Subunit.select(scene);
 
-  it('SubUnit.select method should exist', function() {
-    expect(SubUnit.select).toExist;
+  it('Subunit.select method should exist', function() {
+    expect(Subunit.select).toExist;
   });
 
   it('Returned selection is a subclassed Array', function() {
-    expect(root instanceof Array).toBe(true);
-  });
-
-  it('Returned selection is an Array of Arrays', function() {
-    expect(root[0] instanceof Array).toBe(true);
+    expect(rootNode instanceof Array).toBe(true);
   });
 
   it('selection.node() should be a THREE.Object3D', function() {
-    expect(root.node() instanceof THREE.Object3D).toBe(true);
+    expect(rootNode.node() instanceof THREE.Object3D).toBe(true);
   });
 
 });
 
-describe('SubUnit.object', function() {
+describe('Subunit.object', function() {
 
-  let root = SubUnit.object(new THREE.Object3D());
+  const rootNode = Subunit.object(new THREE.Object3D());
 
-  it('SubUnit.object method should exist', function() {
-    expect(SubUnit.object).toExist;
+  it('Subunit.object method should exist', function() {
+    expect(Subunit.object).toExist;
   });
 
   it('Returned selection is a subclassed Array', function() {
-    expect(root instanceof Array).toBe(true);
-  });
-
-  it('Returned selection is an Array of Arrays', function() {
-    expect(root[0] instanceof Array).toBe(true);
+    expect(rootNode instanceof Array).toBe(true);
   });
 
   it('selection.node() should be a THREE.Object3D', function() {
-    expect(root.node() instanceof THREE.Object3D).toBe(true);
+    expect(rootNode.node() instanceof THREE.Object3D).toBe(true);
   });
 
 });
 
 describe('selection.data', function() {
 
-  let scene = new THREE.Scene();
-  let root = SubUnit.select(scene);
+  const scene = new THREE.Scene();
+  const rootNode = Subunit.select(scene);
 
   it('selection.data method should exist', function() {
-    expect(root.data).toExist;
+    expect(rootNode.data).toExist;
   });
 
   it('invoking .data should return an object with an enter function', function() {
-    expect(root.data([1]).enter).toExist;
+    expect(rootNode.data([1])._enter).toExist;
   });
 
   it('invoking .data should return an object with an exit function', function() {
-    expect(root.data([1]).exit).toExist;
+    expect(rootNode.data([1])._exit).toExist;
   });
 
 });
