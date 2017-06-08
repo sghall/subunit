@@ -19,16 +19,16 @@
     </div>
     <div id="loading">Loading...</div>
     <a id="demos-home" class="button button-primary" href="/">Demos Home</a>
-    <script src="../demos/node_modules/systemjs/dist/system.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
     <script>
       System.config({
         defaultExtension: 'js',
         baseURL: '/',
         map: {
-          'plugin-babel': './node_modules/systemjs-plugin-babel/plugin-babel.js',
-          'systemjs-babel-build': './node_modules/systemjs-plugin-babel/systemjs-babel-browser.js',
-          d3: './node_modules/d3/build/d3.js',
-          three: './node_modules/three/build/three.js',
+          'plugin-babel': '../node_modules/systemjs-plugin-babel/plugin-babel.js',
+          'systemjs-babel-build': '../node_modules/systemjs-plugin-babel/systemjs-babel-browser.js',
+          d3: '../node_modules/d3/build/d3.js',
+          three: '../node_modules/three/build/three.js',
           subunit: '../dist/subunit.js'
         },
         transpiler: 'plugin-babel'
