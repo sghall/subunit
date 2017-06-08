@@ -7,7 +7,12 @@ A small library that gives you D3 style selections in THREE.js. Now you can do a
 npm install subunit
 ```
 
-<h4>Syntax</h4>
+<h4>Example Code</h4>
+
+The code below is an excerpt from this simple demo that creates some blue and red bars.
+<a href="https://sghall.github.io/subunit/demos/bars-simple.html">
+  <img src="demos/images/screenshots/simple.png" height="250px"/>
+</a>
 
 ```js
 ...
