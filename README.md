@@ -30,17 +30,8 @@ bower install subunit
 <a href="https://sghall.github.io/subunit/demos/spiral-circle.html">
   <img src="demos/images/screenshots/spiral2.png" height="250px"/>
 </a>
-<a href="https://sghall.github.io/subunit/demos/bars-labeled.html">
-  <img src="demos/images/screenshots/labeled.png" height="250px"/>
-</a>
-<a href="https://sghall.github.io/subunit/demos/bars-simple.html">
-  <img src="demos/images/screenshots/simple.png" height="250px"/>
-</a>
 
-
-
-To run the demos locally...
-
+<h4>To run the demos locally...</h4>
 1. clone the repo
 2. cd subunit
 2. npm install && npm start
