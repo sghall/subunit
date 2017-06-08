@@ -8,6 +8,7 @@ npm install subunit
 ```
 
 <h4>Syntax</h4>
+
 ```js
 ...
 const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' }); // blue material
@@ -40,6 +41,7 @@ rootNode.selectAll('bar')        // select with tags separated by periods e.g 't
 
 rootNode.selectAll('bar.big')      // use the tags like classes to select items
   .attr('material', bigMaterial);
+...
 ```
 
 <h4>Live Demos: </h4>
