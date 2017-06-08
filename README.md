@@ -32,8 +32,11 @@ bower install subunit
 </a>
 
 <h4>To run the demos locally...</h4>
+
 1. clone the repo
+
 2. cd subunit
-2. npm install && npm start
+
+3. npm install && npm start
 
 That will fire up a dev server and open your browser to the demos index.
