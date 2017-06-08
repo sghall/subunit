@@ -22,8 +22,8 @@
       <img src="images/single.png">
       <img src="images/pinch.png">
     </div>
-    <a id="demos-home" class="button button-primary" href="/">Demos Home</a>
-    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <a id="demos-home" class="button button-primary" href="/subunit">Demos Home</a>
+    <script src="/subunit/node_modules/systemjs/dist/system.js"></script>
     <script>
       System.config({
         defaultExtension: 'js',
@@ -38,7 +38,7 @@
         transpiler: 'plugin-babel'
       });
 
-      System.import('demos/js/globe-earthquakes-1k.js');
+      System.import('/subunit/demos/js/globe-earthquakes-1k.js');
   </script>
   </body>
 </html>
