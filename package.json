@@ -1,16 +1,25 @@
 {
   "name": "subunit",
   "version": "v0.5.0",
+  "private": true,
   "description": "D3 style selections in WebGL, select into a THREE.js scene graph",
   "main": "index.js",
+  "keywords": [
+    "d3",
+    "webgl",
+    "threejs"
+  ],
   "scripts": {
-    "start": "rm -rf dist && mkdir dist && rollup -c --watch"
+    "build": "rm -rf dist && mkdir dist && npm run build:lib && npm run build:copy-files",
+    "build:lib": "rollup --config rollup.config.prd.js",
+    "build:copy-files": "babel-node ./scripts/copy-files.js",
+    "start": "rm -rf dist && mkdir dist && rollup -c rollup.config.dev.js --watch"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sghall/subunit.git"
   },
-  "author": "Steve Hall <shall@delimited.io> (http://delimited.io/)",
+  "author": "Steve Hall <hall.steven.g@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sghall/subunit/issues"
@@ -20,9 +29,11 @@
     "three": "^0.85.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.24.1",
     "d3": "^4.9.1",
     "eslint": "3",
+    "fs-extra": "^3.0.1",
     "jasmine-core": "^2.6.3",
     "karma": "^1.7.0",
     "karma-chrome-launcher": "^2.1.1",
@@ -35,8 +46,7 @@
     "rollup-watch": "^3.2.2",
     "systemjs": "^0.20.13",
     "systemjs-plugin-babel": "0.0.21",
-    "three": "^0.85.2",
-    "uglify-js": "^2.8.11"
+    "three": "^0.85.2"
   },
   "dependencies": {
     "d3-interpolate": "^1.1.5",
