@@ -7,6 +7,8 @@ A small library that gives you D3 style selections in THREE.js. Now you can do a
 npm install subunit
 ```
 
+The library only has peer dependency on THREE.js.  D3 is not required to be loaded on the page. 
+
 <h4>Example Code</h4>
 
 The code below is an excerpt from this [simple demo](https://sghall.github.io/subunit/demos/bars-simple.html) that creates some blue and red bars.
@@ -19,9 +21,6 @@ The code below is an excerpt from this [simple demo](https://sghall.github.io/su
 ...
 const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' }); // blue material
 const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' }); // red material
-
-x.domain(data.map(function (d) { return d.letter; }));
-y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
 const rootNode = SubUnit.select(scene);     // select the scene
 rootNode.node().position.x = -size[0] / 2;  // adjust the root node
