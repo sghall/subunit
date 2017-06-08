@@ -1,8 +1,7 @@
-<h2>SubUnit</h2>
+<h2>Subunit</h2>
 <h4>Selections in THREE.js</h4>
 
-SubUnit gives you an ES6 version of D3 selections that work against a THREE.js scene graph.  It allows you to select into the scene and use D3 style syntax.
-
+A small library that gives you D3 style selections in WebGL to do awesome stuff, quickly.  You can select into a THREE.js scene graph just like you are selecting into the DOM with D3.
 
 ```html
 npm install subunit
@@ -12,15 +11,19 @@ npm install subunit
 bower install subunit
 ```
 
-<img src="img/spiral-circle.png" height="250px"/>
-<img src="img/arcs.png" height="250px"/>
-<img src="img/earthquakes.png" height="250px"/>
+<img src="demos/images/screenshots/abstract.png" height="250px"/>
+<img src="demos/images/screenshots/sort.png" height="250px"/>
+<img src="demos/images/screenshots/quakes1k.png" height="250px"/>
+<img src="demos/images/screenshots/quakes8k.png" height="250px"/>
+<img src="demos/images/screenshots/spiral1.png" height="250px"/>
+<img src="demos/images/screenshots/spiral2.png" height="250px"/>
+<img src="demos/images/screenshots/labeled.png" height="250px"/>
+<img src="demos/images/screenshots/simple.png" height="250px"/>
 
-To run the demos, type npm install in the root folder to get the dependencies for the demos.
+To run the demos locally...
 
-Run a local server from the root folder...
+1. clone the repo
+2. cd subunit
+2. npm install && npm start
 
-```html
-cd subunit
-python -m SimpleHTTPServer 8000 (or your favorite local server)
-```
+That will fire up a dev server and open your browser to the demos index.
