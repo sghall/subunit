@@ -10,16 +10,34 @@ npm install subunit
 ```html
 bower install subunit
 ```
+
+<h4>Live Demos: </h4>
 <a href="https://sghall.github.io/subunit/demos/bars-sphere.html">
   <img src="demos/images/screenshots/abstract.png" height="250px"/>
 </a>
+<a href="https://sghall.github.io/subunit/demos/bars-sort-transition.html">
 <img src="demos/images/screenshots/sort.png" height="250px"/>
-<img src="demos/images/screenshots/quakes1k.png" height="250px"/>
-<img src="demos/images/screenshots/quakes8k.png" height="250px"/>
-<img src="demos/images/screenshots/spiral1.png" height="250px"/>
-<img src="demos/images/screenshots/spiral2.png" height="250px"/>
-<img src="demos/images/screenshots/labeled.png" height="250px"/>
-<img src="demos/images/screenshots/simple.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/globe-earthquakes-1k.html">
+  <img src="demos/images/screenshots/quakes1k.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/globe-earthquakes-full.html">
+  <img src="demos/images/screenshots/quakes8k.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/spiral-circle-v2.html">
+  <img src="demos/images/screenshots/spiral1.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/spiral-circle.html">
+  <img src="demos/images/screenshots/spiral2.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/bars-labeled.html">
+  <img src="demos/images/screenshots/labeled.png" height="250px"/>
+</a>
+<a href="https://sghall.github.io/subunit/demos/bars-simple.html">
+  <img src="demos/images/screenshots/simple.png" height="250px"/>
+</a>
+
+
 
 To run the demos locally...
 
