@@ -7,17 +7,19 @@ A small library that gives you D3 style selections in THREE.js. Now you can do a
 npm install subunit
 ```
 
+<h4>Syntax</h4>
 ```js
-const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' });
-const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' });
+...
+const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' }); // blue material
+const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' }); // red material
 
 x.domain(data.map(function (d) { return d.letter; }));
 y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-const rootNode = SubUnit.select(scene); 	// select the scene
+const rootNode = SubUnit.select(scene);     // select the scene
 rootNode.node().position.x = -size[0] / 2;  // adjust the root node
 
-rootNode.selectAll('bar')        // select with tags seperated by periods e.g 'tag1.tag2.tag3'
+rootNode.selectAll('bar')        // select with tags separated by periods e.g 'tag1.tag2.tag3'
   .data(data).enter()            // specify your data and call enter on the selection
   .append('mesh')                // append a mesh
   .attr('tags', 'bar')           // add a tag
