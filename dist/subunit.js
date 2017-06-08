@@ -1226,9 +1226,6 @@ var value = function(a, b) {
       : number)(a, b);
 };
 
-// p0 = [ux0, uy0, w0]
-// p1 = [ux1, uy1, w1]
-
 function cubehelix$1(hue$$1) {
   return (function cubehelixGamma(y) {
     y = +y;
