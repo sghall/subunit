@@ -7,10 +7,6 @@ A small library that gives you D3 style selections in WebGL to do awesome stuff,
 npm install subunit
 ```
 
-```html
-bower install subunit
-```
-
 <h4>Live Demos: </h4>
 <a href="https://sghall.github.io/subunit/demos/bars-sphere.html">
   <img src="demos/images/screenshots/abstract.png" height="250px"/>
