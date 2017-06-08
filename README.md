@@ -10,8 +10,9 @@ npm install subunit
 ```html
 bower install subunit
 ```
-
-<img src="demos/images/screenshots/abstract.png" height="250px"/>
+<a href="https://sghall.github.io/subunit/demos/bars-sphere.html">
+  <img src="demos/images/screenshots/abstract.png" height="250px"/>
+</a>
 <img src="demos/images/screenshots/sort.png" height="250px"/>
 <img src="demos/images/screenshots/quakes1k.png" height="250px"/>
 <img src="demos/images/screenshots/quakes8k.png" height="250px"/>
