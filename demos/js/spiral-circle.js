@@ -27,8 +27,8 @@ const rootNode = Subunit.select(scene)
   .attr('scale', { x: 3, y: 3, z: 3 });
 
 const containers = rootNode.selectAll('rect')
-  .data(d3.range(squareCount))
-  .enter().append('object')
+  .data(d3.range(squareCount)).enter()
+  .append('object')
   .datum(function(i) { return i / squareCount; })
   .attr('rotation', function (d) {
     return { z: d * Math.PI * 2 };

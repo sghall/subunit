@@ -7,12 +7,45 @@ A small library that gives you D3 style selections in THREE.js. Now you can do a
 npm install subunit
 ```
 
+```js
+const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' });
+const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' });
+
+x.domain(data.map(function (d) { return d.letter; }));
+y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
+
+const rootNode = SubUnit.select(scene); 	// select the scene
+rootNode.node().position.x = -size[0] / 2;  // adjust the root node
+
+rootNode.selectAll('bar')        // select with tags seperated by periods e.g 'tag1.tag2.tag3'
+  .data(data).enter()            // specify your data and call enter on the selection
+  .append('mesh')                // append a mesh
+  .attr('tags', 'bar')           // add a tag
+  .tagged('big', function (d) {  // conditionally add a tag
+    return d.frequency > 0.07;
+  })
+  .attr('material', barMaterial)
+  .attr('geometry', function (d) {
+    const w = x.bandwidth();
+    const h = size[1] - y(d.frequency);
+    return new THREE.BoxGeometry(w, h, 5);
+  })
+  .each(function (d) {
+    const x0 = x(d.letter);
+    const y0 = -y(d.frequency) / 2;
+    this.position.set(x0, y0, 240);
+  });
+
+rootNode.selectAll('bar.big')      // use the tags like classes to select items
+  .attr('material', bigMaterial);
+```
+
 <h4>Live Demos: </h4>
 <a href="https://sghall.github.io/subunit/demos/bars-sphere.html">
   <img src="demos/images/screenshots/abstract.png" height="250px"/>
 </a>
 <a href="https://sghall.github.io/subunit/demos/bars-sort-transition.html">
-<img src="demos/images/screenshots/sort.png" height="250px"/>
+  <img src="demos/images/screenshots/sort.png" height="250px"/>
 </a>
 <a href="https://sghall.github.io/subunit/demos/globe-earthquakes-1k.html">
   <img src="demos/images/screenshots/quakes1k.png" height="250px"/>

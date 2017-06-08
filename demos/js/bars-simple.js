@@ -18,7 +18,8 @@ d3.json('data/letters.json', function (err, data) {
   const y = d3.scaleLinear()
     .range([size[1], 0]);
 
-  const material1 = new THREE.MeshPhongMaterial({ color: '#4183c4' });
+  const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' });
+  const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' });
 
   x.domain(data.map(function (d) { return d.letter; }));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
@@ -33,7 +34,7 @@ d3.json('data/letters.json', function (err, data) {
     .tagged('big', function (d) {
       return d.frequency > 0.07;
     })
-    .attr('material', material1)
+    .attr('material', barMaterial)
     .attr('geometry', function (d) {
       const w = x.bandwidth();
       const h = size[1] - y(d.frequency);
@@ -44,6 +45,9 @@ d3.json('data/letters.json', function (err, data) {
       const y0 = -y(d.frequency) / 2;
       this.position.set(x0, y0, 240);
     });
+
+  rootNode.selectAll('bar.big')
+    .attr('material', bigMaterial);
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
 
