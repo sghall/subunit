@@ -22,7 +22,7 @@ The code below is an excerpt from this [simple demo](https://sghall.github.io/su
 const barMaterial = new THREE.MeshPhongMaterial({ color: '#4183c4' }); // blue material
 const bigMaterial = new THREE.MeshPhongMaterial({ color: '#ff0000' }); // red material
 
-const rootNode = SubUnit.select(scene);     // select the scene
+const rootNode = Subunit.select(scene);     // select the scene
 rootNode.node().position.x = -size[0] / 2;  // adjust the root node
 
 rootNode.selectAll('bar')        // select with tags separated by periods e.g 'tag1.tag2.tag3'
