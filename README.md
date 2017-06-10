@@ -69,6 +69,10 @@ rootNode.selectAll('bar.big')      // use the tags like classes to select items
   <img src="demos/images/screenshots/spiral2.png" height="250px"/>
 </a>
 
+<h4>Getting started</h4>
+
+There is starter repo for [loading Subunit in browser](https://github.com/sghall/subunit-simple-example) with THREE.js.
+
 <h4>To run the demos locally...</h4>
 
 1. clone the repo
