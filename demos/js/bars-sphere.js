@@ -70,9 +70,9 @@ d3.json('data/letters.json', function (err, data) {
 
   const theta = 0.001;
 
-  console.log('rootNode: ', window.rootNode = rootNode);
-
   const control = new THREE.OrbitControls(camera, renderer.domElement);
+
+  console.log('rootNode: ', window.rootNode = rootNode);
 
   function animate() {
     control.update();

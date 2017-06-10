@@ -111,6 +111,8 @@ d3.json('data/top-cities.json', function (err, json) {
   control.zoomSpeed = 0.1;
   control.enablePan = false;
 
+  console.log('rootNode: ', window.rootNode = rootNode, rootNode);
+
   function animate() {
     control.update();
     requestAnimationFrame(animate);

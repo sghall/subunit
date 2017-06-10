@@ -87,6 +87,8 @@ d3.json('data/letters.json', function (err, data) {
 
   const control = new THREE.OrbitControls(camera, renderer.domElement);
 
+  console.log('rootNode: ', window.rootNode = rootNode);
+
   function animate() {
     control.update();
     requestAnimationFrame(animate);

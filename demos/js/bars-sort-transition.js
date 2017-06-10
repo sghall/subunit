@@ -177,9 +177,9 @@ d3.json('data/letters.json', function (err, data) {
 
   raycast(camera, bars.nodes(), 'click');
 
-  console.log('rootNode: ', window.rootNode = rootNode);
-
   const control = new THREE.OrbitControls(camera, renderer.domElement);
+
+  console.log('rootNode: ', window.rootNode = rootNode);
 
   function animate() {
     control.update();
