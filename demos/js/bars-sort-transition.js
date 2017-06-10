@@ -1,6 +1,6 @@
 import d3 from 'd3';
 import THREE from 'three';
-import SubUnit from 'subunit';
+import Subunit from 'subunit';
 import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
 import { raycast } from './common/events.js';
@@ -36,7 +36,7 @@ d3.json('data/letters.json', function (err, data) {
     { color: '#00BFFF', data: d3.shuffle(data).slice() }
   ];
 
-  const rootNode = SubUnit.select(scene);
+  const rootNode = Subunit.select(scene);
   const container = rootNode.append('object');
 
   container.node().rotation.x = 120;

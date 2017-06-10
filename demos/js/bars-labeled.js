@@ -1,6 +1,6 @@
 import d3 from 'd3';
 import THREE from 'three';
-import SubUnit from 'subunit';
+import Subunit from 'subunit';
 import { camera, scene, renderer } from './common/scene.js';
 import './common/OrbitControls.js';
 import { raycast } from './common/events.js';
@@ -25,7 +25,7 @@ d3.json('data/letters.json', function (err, data) {
   x.domain(data.map(function (d) { return d.letter; }));
   y.domain([0, d3.max(data, function (d) { return d.frequency; })]);
 
-  const rootNode = SubUnit.select(scene);
+  const rootNode = Subunit.select(scene);
   rootNode.node().position.set(-size[0] / 2, 0, 0);
 
   const bars = rootNode.selectAll('bar')
