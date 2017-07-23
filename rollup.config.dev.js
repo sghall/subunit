@@ -17,7 +17,7 @@ export default {
       verbose: true, 
       contentBase: '',
       host: 'localhost',
-      port: 8000
+      port: 7070
     }),
     resolve({
       module: true,
