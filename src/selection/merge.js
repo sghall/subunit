@@ -9,7 +9,7 @@ export default function(selection) {
   const m = Math.min(m0, m1);
   const merges = new Array(m0);
 
-  let j = 0;
+  var j = 0;
 
   for (; j < m; ++j) {
 
@@ -18,7 +18,7 @@ export default function(selection) {
     const n = group0.length;
     const merge = merges[j] = new Array(n);
 
-    for (let node, i = 0; i < n; ++i) {
+    for (var node, i = 0; i < n; ++i) {
       if ((node = group0[i] || group1[i])) {
         merge[i] = node;
       }

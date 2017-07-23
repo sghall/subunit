@@ -1,8 +1,8 @@
 import { get, set } from 'd3-transition/src/transition/schedule';
 
 function tweenFunction(id, name, value) {
-  let tween0;
-  let tween1;
+  var tween0;
+  var tween1;
 
   if (typeof value !== 'function') throw new Error;
   
@@ -11,9 +11,9 @@ function tweenFunction(id, name, value) {
     const tween = schedule.tween;
 
     if (tween !== tween0) {
-      let i;
-      let t;
-      let n;
+      var i;
+      var t;
+      var n;
 
       tween1 = (tween0 = tween).slice();
 
@@ -38,7 +38,7 @@ export default function(name, value) {
   if (arguments.length < 2) {
     const tween = get(this.node(), id).tween;
 
-    for (let i = 0, n = tween.length, t; i < n; ++i) {
+    for (var i = 0, n = tween.length, t; i < n; ++i) {
       if ((t = tween[i]).name === name) {
         return t.value;
       }

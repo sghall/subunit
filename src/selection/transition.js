@@ -12,7 +12,7 @@ const defaultTiming = {
 };
 
 function inherit(node, id) {
-  let timing;
+  var timing;
 
   while (!(timing = node.__transition) || !(timing = timing[id])) {
     if (!(node = node.parentNode)) {
@@ -24,8 +24,8 @@ function inherit(node, id) {
 }
 
 export default function(name) {
-  let id;
-  let timing;
+  var id;
+  var timing;
 
   if (name instanceof Transition) {
     id = name._id, name = name._name;
@@ -36,8 +36,8 @@ export default function(name) {
   const groups = this._groups;
   const m = groups.length;
 
-  for (let j = 0; j < m; ++j) {
-    for (let group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+  for (var j = 0; j < m; ++j) {
+    for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
       if ((node = group[i])) {
         schedule(node, name, id, i, group, timing || inherit(node, id));
       }

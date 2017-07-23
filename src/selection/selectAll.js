@@ -7,8 +7,8 @@ export default function selectAll(select) {
 
   if (typeof select !== 'function') select = selectionSelectorAll(select);
 
-  for (let groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
-    for (let group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
+  for (var groups = this._groups, m = groups.length, j = 0; j < m; ++j) {
+    for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {
       if ((node = group[i])) {
         subgroups.push(select.call(node, node.__data__, i, group));
         parents.push(node);

@@ -12,7 +12,7 @@ import size from 'd3-selection/src/selection/size';
 import empty from 'd3-selection/src/selection/empty';
 import each from 'd3-selection/src/selection/each';
 
-let id = 0;
+var id = 0;
 
 export function Transition(groups, parents, name, id) {
   this._groups = groups;

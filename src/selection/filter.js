@@ -4,19 +4,19 @@ import { search } from '../utils/utils';
 export default function filter(fun) {
   const subgroups = [];
 
-  let subgroup;
-  let group;
-  let node;
+  var subgroup;
+  var group;
+  var node;
 
   if (typeof fun !== 'function') {
     fun = selectionFilter(fun);
   }
 
-  for (let j = 0, m = this.length; j < m; j++) {
+  for (var j = 0, m = this.length; j < m; j++) {
     subgroups.push(subgroup = []);
     subgroup.parentNode = (group = this[j]).parentNode;
 
-    for (let i = 0, n = group.length; i < n; i++) {
+    for (var i = 0, n = group.length; i < n; i++) {
       if ((node = group[i]) && fun.call(node, node.__data__, i, j)) {
         subgroup.push(node);
       }

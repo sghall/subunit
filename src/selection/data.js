@@ -8,8 +8,8 @@ function bindIndex(parent, group, enter, update, exit, data) {
   const groupLength = group.length;
   const dataLength = data.length;
 
-  let i = 0;
-  let node;
+  var i = 0;
+  var node;
 
   for (; i < dataLength; ++i) {
     if ((node = group[i])) {
@@ -33,9 +33,9 @@ function bindKey(parent, group, enter, update, exit, data, key) {
   const dataLength = data.length;
   const keyValues = new Array(groupLength);
   
-  let i;
-  let node;
-  let keyValue;
+  var i;
+  var node;
+  var keyValue;
 
   for (i = 0; i < groupLength; ++i) {
     if ((node = group[i])) {
@@ -70,7 +70,7 @@ export default function(value, key) {
   if (!value) {
     const data = new Array(this.size());
 
-    let j = -1;
+    var j = -1;
 
     this.each(function(d) { data[++j] = d; });
 
@@ -88,7 +88,7 @@ export default function(value, key) {
   const update = new Array(m);
   const exit = new Array(m);
 
-  for (let j = 0; j < m; ++j) {
+  for (j = 0; j < m; ++j) {
     const parent = parents[j];
     const group = groups[j];
     const groupLength = group.length;
@@ -102,7 +102,7 @@ export default function(value, key) {
 
     bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
 
-    for (let i0 = 0, i1 = 0, previous, next; i0 < dataLength; ++i0) {
+    for (var i0 = 0, i1 = 0, previous, next; i0 < dataLength; ++i0) {
       if ((previous = enterGroup[i0])) {
         if (i0 >= i1) i1 = i0 + 1;
         while (!(next = updateGroup[i1]) && ++i1 < dataLength);

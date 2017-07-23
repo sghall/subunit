@@ -19,7 +19,7 @@ function selectionAttr(name, value) {
     if (name === 'tags' || name === 'class') {
       const arr = value.split(' ');
 
-      for (let i = 0; i < arr.length; i++) {
+      for (var i = 0; i < arr.length; i++) {
         this.__tags__.push(arr[i]);
       }
     } else if (name === 'position' || name === 'scale') {

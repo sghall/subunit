@@ -11,7 +11,7 @@ export default function append(name) {
 }
 
 function selectionCreator(name) {
-  let Func;
+  var Func;
 
   if (typeof name === 'function') {
     Func = name; // SEND ANY CONSTRUCTOR

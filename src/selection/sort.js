@@ -11,12 +11,12 @@ export default function(compare) {
   const m = groups.length;
   const sortgroups = new Array(m);
 
-  for (let j = 0; j < m; ++j) {
+  for (var j = 0; j < m; ++j) {
     const group = groups[j];
     const n = group.length;
     const sortgroup = sortgroups[j] = new Array(n);
 
-    for (let node, i = 0; i < n; ++i) {
+    for (var node, i = 0; i < n; ++i) {
       if ((node = group[i])) {
         sortgroup[i] = node;
       }

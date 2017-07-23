@@ -9,7 +9,6 @@ module.exports = {
   },
   rules: {
     'indent': ['error', 2],
-    'no-var': 'error',
     'prefer-const': 'error',
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single'],

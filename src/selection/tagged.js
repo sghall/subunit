@@ -6,7 +6,7 @@ export default function tagged(name, value) {
       const node = this.node();
       const n = (name = selectionTags(name)).length;
       
-      let i = -1;
+      var i = -1;
 
       if ((value = node.__tags__.length)) {
         while (++i < n) {
@@ -41,7 +41,7 @@ function selectionTagged(name, value) {
   const n = name.length;
 
   function taggedConstant() {
-    let i = -1;
+    var i = -1;
 
     while (++i < n) {
       name[i](this, value);
@@ -51,7 +51,7 @@ function selectionTagged(name, value) {
   function taggedFunction() {
     const x = value.apply(this, arguments);
 
-    let i = -1;
+    var i = -1;
 
     while (++i < n) {
       name[i](this, x);

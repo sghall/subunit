@@ -14,7 +14,8 @@
     "build:lib": "rollup --config rollup.config.prd.js",
     "build:min": "uglifyjs dist/subunit.js -ecma 5 -c -m -o dist/subunit.min.js",
     "build:copy-files": "babel-node ./scripts/copy-files.js",
-    "start": "rm -rf dist && mkdir dist && rollup -c rollup.config.dev.js --watch"
+    "start": "rm -rf dist && mkdir dist && rollup -c rollup.config.dev.js --watch",
+    "lint": "eslint src --quiet --cache && echo \"eslint: no lint errors\""
   },
   "repository": {
     "type": "git",
