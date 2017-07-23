@@ -2,11 +2,11 @@
 export function search(node, selector) {
   const result = [];
 
-  let tagsArray;
-
-  if (typeof selector === 'string') {
-    tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
+  if (typeof selector !== 'string') {
+    throw new Error('selector must be a string');
   }
+
+  const tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
 
   const searchIterator = function (node) {
 
