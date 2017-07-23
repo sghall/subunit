@@ -1,6 +1,6 @@
 {
   "name": "subunit",
-  "version": "v0.5.0",
+  "version": "v0.5.1",
   "private": true,
   "description": "D3 style selections in WebGL, select into a THREE.js scene graph",
   "main": "index.js",
