@@ -1,6 +1,6 @@
 {
   "name": "subunit",
-  "version": "v0.5.1",
+  "version": "v0.5.2",
   "private": true,
   "description": "D3 style selections in WebGL, select into a THREE.js scene graph",
   "main": "index.js",
@@ -10,8 +10,9 @@
     "threejs"
   ],
   "scripts": {
-    "build": "rm -rf dist && mkdir dist && npm run build:lib && npm run build:copy-files",
+    "build": "rm -rf dist && mkdir dist && npm run build:lib && npm run build:min && npm run build:copy-files",
     "build:lib": "rollup --config rollup.config.prd.js",
+    "build:min": "uglifyjs dist/subunit.js -ecma 5 -c -m -o dist/subunit.min.js",
     "build:copy-files": "babel-node ./scripts/copy-files.js",
     "start": "rm -rf dist && mkdir dist && rollup -c rollup.config.dev.js --watch"
   },
@@ -46,7 +47,8 @@
     "rollup-watch": "^3.2.2",
     "systemjs": "^0.20.13",
     "systemjs-plugin-babel": "0.0.21",
-    "three": "^0.85.2"
+    "three": "^0.85.2",
+    "uglify-es": "^3.0.26"
   },
   "dependencies": {
     "d3-interpolate": "^1.1.5",
