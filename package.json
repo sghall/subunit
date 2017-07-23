@@ -12,7 +12,7 @@
   "scripts": {
     "build": "rm -rf dist && mkdir dist && npm run build:lib && npm run build:min && npm run build:copy-files",
     "build:lib": "rollup --config rollup.config.prd.js",
-    "build:min": "uglifyjs dist/subunit.js -ecma 5 -c -m -o dist/subunit.min.js",
+    "build:min": "uglifyjs dist/subunit.js -c -m -o dist/subunit.min.js",
     "build:copy-files": "babel-node ./scripts/copy-files.js",
     "start": "rm -rf dist && mkdir dist && rollup -c rollup.config.dev.js --watch",
     "lint": "eslint src --quiet --cache && echo \"eslint: no lint errors\""
@@ -49,7 +49,7 @@
     "systemjs": "^0.20.13",
     "systemjs-plugin-babel": "0.0.21",
     "three": "^0.85.2",
-    "uglify-es": "^3.0.26"
+    "uglify-js": "^3.0.26"
   },
   "dependencies": {
     "d3-interpolate": "^1.1.5",

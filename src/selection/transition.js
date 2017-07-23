@@ -2,7 +2,7 @@ import { Transition, newId } from '../Transition';
 import schedule from 'd3-transition/src/transition/schedule';
 import { now } from 'd3-timer';
 
-const defaultTiming = {
+var defaultTiming = {
   time: null,
   delay: 0,
   duration: 250,
@@ -33,8 +33,8 @@ export default function(name) {
     id = newId(), (timing = defaultTiming).time = now(), name = name == null ? null : name + '';
   }
 
-  const groups = this._groups;
-  const m = groups.length;
+  var groups = this._groups;
+  var m = groups.length;
 
   for (var j = 0; j < m; ++j) {
     for (var group = groups[j], n = group.length, node, i = 0; i < n; ++i) {

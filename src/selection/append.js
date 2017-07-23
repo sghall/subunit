@@ -1,9 +1,9 @@
 import THREE from 'three';
 
 export default function append(name) {
-  const create = typeof name === 'function' ? name : selectionCreator(name);
+  var create = typeof name === 'function' ? name : selectionCreator(name);
   return this.select(function() {
-    const child = create.apply(this, arguments);
+    var child = create.apply(this, arguments);
     this.add(child);
 
     return child;
@@ -22,11 +22,11 @@ function selectionCreator(name) {
   } else if (name === 'object' || name === 'g') {
     Func = THREE.Object3D;
   } else {
-    throw new Error(`Cannot append: ${name}`);
+    throw new Error('Cannot append:' + name);
   }
 
   return function createSelection(data) {
-    const node = new Func();
+    var node = new Func();
     node.__data__ = data;
     node.__tags__ = [];
     return node;

@@ -2,7 +2,7 @@ import Selection from '../Selection';
 import { search } from '../utils/utils';
 
 export default function filter(fun) {
-  const subgroups = [];
+  var subgroups = [];
 
   var subgroup;
   var group;

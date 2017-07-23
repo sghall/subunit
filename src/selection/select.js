@@ -4,9 +4,9 @@ import Selection from '../Selection';
 export default function select(selector) {
   if (typeof selector !== 'function') selector = searchSelector(selector);
 
-  const groups = this._groups;
-  const m = groups.length;
-  const subgroups = new Array(m);
+  var groups = this._groups;
+  var m = groups.length;
+  var subgroups = new Array(m);
 
   for (var j = 0; j < m; ++j) {
     for (var group = groups[j], n = group.length, subgroup = subgroups[j] = new Array(n), node, subnode, i = 0; i < n; ++i) {

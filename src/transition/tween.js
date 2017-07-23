@@ -7,8 +7,8 @@ function tweenFunction(id, name, value) {
   if (typeof value !== 'function') throw new Error;
   
   return function() {
-    const schedule = set(this, id);
-    const tween = schedule.tween;
+    var schedule = set(this, id);
+    var tween = schedule.tween;
 
     if (tween !== tween0) {
       var i;
@@ -31,12 +31,12 @@ function tweenFunction(id, name, value) {
 }
 
 export default function(name, value) {
-  const id = this._id;
+  var id = this._id;
 
   name += '';
 
   if (arguments.length < 2) {
-    const tween = get(this.node(), id).tween;
+    var tween = get(this.node(), id).tween;
 
     for (var i = 0, n = tween.length, t; i < n; ++i) {
       if ((t = tween[i]).name === name) {
@@ -51,10 +51,10 @@ export default function(name, value) {
 }
 
 export function tweenValue(transition, name, value) {
-  const id = transition._id;
+  var id = transition._id;
 
   transition.each(function() {
-    const schedule = set(this, id);
+    var schedule = set(this, id);
     (schedule.value || (schedule.value = {}))[name] = value.apply(this, arguments);
   });
 

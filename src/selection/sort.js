@@ -7,14 +7,14 @@ export default function(compare) {
     return a && b ? compare(a.__data__, b.__data__) : !a - !b;
   }
 
-  const groups = this._groups;
-  const m = groups.length;
-  const sortgroups = new Array(m);
+  var groups = this._groups;
+  var m = groups.length;
+  var sortgroups = new Array(m);
 
   for (var j = 0; j < m; ++j) {
-    const group = groups[j];
-    const n = group.length;
-    const sortgroup = sortgroups[j] = new Array(n);
+    var group = groups[j];
+    var n = group.length;
+    var sortgroup = sortgroups[j] = new Array(n);
 
     for (var node, i = 0; i < n; ++i) {
       if ((node = group[i])) {

@@ -3,13 +3,13 @@ import { tweenValue } from './tween';
 
 function attrFunction(name, value) {
   return function() {
-    const b = value(this);
+    var b = value(this);
 
     if (b == null) {
       return null;
     }
 
-    const a = {
+    var a = {
       x: this[name].x,
       y: this[name].y,
       z: this[name].z,
@@ -27,15 +27,19 @@ function attrFunction(name, value) {
       delete a.z;
     }
 
-    const i = interpolateObject(a, b);
+    var i = interpolateObject(a, b);
 
-    return (t) => {
-      const update = i(t);
+    function tween(t) {
+      var update = i(t);
 
-      Object.keys(update).forEach((d) => {
+      function updater(d) {
         this[name][d] = update[d];
-      });
-    };
+      }
+
+      Object.keys(update).forEach(updater.bind(this));
+    }
+
+    return tween.bind(this);
   };
 }
 

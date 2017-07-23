@@ -2,8 +2,8 @@ import { Object3D } from 'three';
 import Selection from './Selection';
 
 export default function select(item) {
-  const node = typeof item === 'function' ? item() : item;
-  const root = new Selection([[new Object3D()]], [node]);
+  var node = typeof item === 'function' ? item() : item;
+  var root = new Selection([[new Object3D()]], [node]);
   root._groups[0][0].__data__ = {};
   root._groups[0][0].__tags__ = [];
   node.add(root._groups[0][0]);
@@ -11,6 +11,6 @@ export default function select(item) {
 }
 
 export function object(item) {
-  const root = new Selection([[item]], [item.parent]);
+  var root = new Selection([[item]], [item.parent]);
   return root;
 }

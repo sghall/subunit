@@ -1,7 +1,7 @@
 
 export default function attr(name, value) {
   if (arguments.length < 2) {
-    Object.keys(name).forEach((d) => {
+    Object.keys(name).forEach(function(d) {
       this.each(selectionAttr(d, name[d]));
     });
 
@@ -17,7 +17,7 @@ function selectionAttr(name, value) {
 
   function attrConstant() {
     if (name === 'tags' || name === 'class') {
-      const arr = value.split(' ');
+      var arr = value.split(' ');
 
       for (var i = 0; i < arr.length; i++) {
         this.__tags__.push(arr[i]);
@@ -39,8 +39,8 @@ function selectionAttr(name, value) {
     }
   }
 
-  function attrFunction(...args) {
-    const res = value.call(this, ...args);
+  function attrFunction() {
+    var res = value.apply(this, arguments);
 
     if (res === null) {
       return this[name] && delete this[name];

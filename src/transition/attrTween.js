@@ -1,7 +1,7 @@
 
 function attrTween(name, value) {
   function tween() {
-    const i = value.apply(this, arguments);
+    var i = value.apply(this, arguments);
 
     return i && function(t) {
       i(t);

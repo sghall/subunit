@@ -2,8 +2,8 @@ import { search } from '../utils/utils';
 import Selection from '../Selection';
 
 export default function selectAll(select) {
-  const parents = [];
-  const subgroups = [];
+  var parents = [];
+  var subgroups = [];
 
   if (typeof select !== 'function') select = selectionSelectorAll(select);
 

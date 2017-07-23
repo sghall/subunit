@@ -26,7 +26,7 @@ function getProperty(name, value) {
   }
 
   function propertyFunction() {
-    const x = value.apply(this, arguments);
+    var x = value.apply(this, arguments);
     if (x == null) {
       delete this[name];
     } else {

@@ -3,8 +3,8 @@ export default function tagged(name, value) {
   if (arguments.length < 2) {
 
     if (typeof name === 'string') {
-      const node = this.node();
-      const n = (name = selectionTags(name)).length;
+      var node = this.node();
+      var n = (name = selectionTags(name)).length;
       
       var i = -1;
 
@@ -38,7 +38,7 @@ function selectionTagged(name, value) {
   name = selectionTags(name)
     .map(selectionTaggedName);
 
-  const n = name.length;
+  var n = name.length;
 
   function taggedConstant() {
     var i = -1;
@@ -49,7 +49,7 @@ function selectionTagged(name, value) {
   }
 
   function taggedFunction() {
-    const x = value.apply(this, arguments);
+    var x = value.apply(this, arguments);
 
     var i = -1;
 
@@ -66,7 +66,7 @@ function selectionTagged(name, value) {
 function selectionTaggedName(name) {
   return function(node, value) {
     if (node.__tags__) {
-      const index = node.__tags__.indexOf(name);
+      var index = node.__tags__.indexOf(name);
       if (value && index === -1) {
         return node.__tags__.push(name);
       } else if (index !== -1){

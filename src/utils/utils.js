@@ -1,14 +1,14 @@
 
 export function search(node, selector) {
-  const result = [];
+  var result = [];
 
   if (typeof selector !== 'string') {
     throw new Error('selector must be a string');
   }
 
-  const tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
+  var tagsArray = selector.replace(/\./g, ' ').trim().split(' ');
 
-  const searchIterator = function (node) {
+  var searchIterator = function (node) {
 
     if (typeof selector === 'string') {
 
@@ -22,7 +22,7 @@ export function search(node, selector) {
         }
       }
     } else {
-      const keys = Object.keys(selector);
+      var keys = Object.keys(selector);
 
       for (var j = 0; j < keys.length; j++) {
         if (node[keys[j]] !== selector[keys[j]]) {
@@ -54,15 +54,15 @@ function toObject(val) {
 export function assign(target, source) {
   var pendingException;
   
-  const to = toObject(target);
+  var to = toObject(target);
 
   if (!source) {
     throw new Error('No source(s) provided to assign.');
   }
 
   for (var s = 1; s < arguments.length; s++) {
-    const fromObj = arguments[s];
-    const objKeys = Object.keys(Object(fromObj));
+    var fromObj = arguments[s];
+    var objKeys = Object.keys(Object(fromObj));
 
     for (var i = 0; i < objKeys.length; i++) {
       try {

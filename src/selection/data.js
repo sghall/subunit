@@ -2,11 +2,11 @@ import Selection from '../Selection';
 import { EnterNode } from './enter';
 import constant from 'd3-selection/src/constant';
 
-const keyPrefix = '$';
+var keyPrefix = '$';
 
 function bindIndex(parent, group, enter, update, exit, data) {
-  const groupLength = group.length;
-  const dataLength = data.length;
+  var groupLength = group.length;
+  var dataLength = data.length;
 
   var i = 0;
   var node;
@@ -28,10 +28,10 @@ function bindIndex(parent, group, enter, update, exit, data) {
 }
 
 function bindKey(parent, group, enter, update, exit, data, key) {
-  const nodeByKeyValue = {};
-  const groupLength = group.length;
-  const dataLength = data.length;
-  const keyValues = new Array(groupLength);
+  var nodeByKeyValue = {};
+  var groupLength = group.length;
+  var dataLength = data.length;
+  var keyValues = new Array(groupLength);
   
   var i;
   var node;
@@ -68,7 +68,7 @@ function bindKey(parent, group, enter, update, exit, data, key) {
 
 export default function(value, key) {
   if (!value) {
-    const data = new Array(this.size());
+    var data = new Array(this.size());
 
     var j = -1;
 
@@ -77,28 +77,28 @@ export default function(value, key) {
     return data;
   }
 
-  const bind = key ? bindKey : bindIndex;
-  const parents = this._parents;
-  const groups = this._groups;
+  var bind = key ? bindKey : bindIndex;
+  var parents = this._parents;
+  var groups = this._groups;
 
   if (typeof value !== 'function') value = constant(value);
 
-  const m = groups.length;
-  const enter = new Array(m);
-  const update = new Array(m);
-  const exit = new Array(m);
+  var m = groups.length;
+  var enter = new Array(m);
+  var update = new Array(m);
+  var exit = new Array(m);
 
   for (j = 0; j < m; ++j) {
-    const parent = parents[j];
-    const group = groups[j];
-    const groupLength = group.length;
-    const data = value.call(parent, parent && parent.__data__, j, parents);
+    var parent = parents[j];
+    var group = groups[j];
+    var groupLength = group.length;
+    data = value.call(parent, parent && parent.__data__, j, parents);
     
-    const dataLength = data.length;
+    var dataLength = data.length;
     
-    const enterGroup = enter[j] = new Array(dataLength);
-    const updateGroup = update[j] = new Array(dataLength);
-    const exitGroup = exit[j] = new Array(groupLength);
+    var enterGroup = enter[j] = new Array(dataLength);
+    var updateGroup = update[j] = new Array(dataLength);
+    var exitGroup = exit[j] = new Array(groupLength);
 
     bind(parent, group, enterGroup, updateGroup, exitGroup, data, key);
 
@@ -111,7 +111,7 @@ export default function(value, key) {
     }
   }
 
-  const updateSelection = new Selection(update, parents);
+  var updateSelection = new Selection(update, parents);
   updateSelection._enter = enter;
   updateSelection._exit = exit;
   return updateSelection;
