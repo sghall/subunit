@@ -1,33 +1,22 @@
 import Selection from '../Selection';
 import { search } from '../utils/utils';
 
-export default function filter(fun) {
-  var subgroups = [];
+export default function(match) {
+  if (typeof match !== 'function') match = selectionFilter(match);
 
-  var subgroup;
-  var group;
-  var node;
-
-  if (typeof fun !== 'function') {
-    fun = selectionFilter(fun);
-  }
-
-  for (var j = 0, m = this.length; j < m; j++) {
-    subgroups.push(subgroup = []);
-    subgroup.parentNode = (group = this[j]).parentNode;
-
-    for (var i = 0, n = group.length; i < n; i++) {
-      if ((node = group[i]) && fun.call(node, node.__data__, i, j)) {
+  for (var groups = this._groups, m = groups.length, subgroups = new Array(m), j = 0; j < m; ++j) {
+    for (var group = groups[j], n = group.length, subgroup = subgroups[j] = [], node, i = 0; i < n; ++i) {
+      if ((node = group[i]) && match.call(node, node.__data__, i, group)) {
         subgroup.push(node);
       }
     }
   }
-  return Selection.from(subgroups);
+
+  return new Selection(subgroups, this._parents);
 }
 
 function selectionFilter(selector) {
   return function filterSelection() {
-    return search(this, selector, true);
+    return search(this, selector, true).length > 0;
   };
 }
-

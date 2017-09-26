@@ -1,0 +1,22 @@
+{
+  "name": "subunit-demo",
+  "version": "0.1.0",
+  "license": "MIT",
+  "dependencies": {
+    "d3-array": "^1.2.0",
+    "d3-scale": "^1.0.6",
+    "subunit": "^0.5.4",
+    "three": "^0.87.1"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.13",
+    "rimraf": "^2.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build && rimraf build/static/js/*.map",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "homepage": "http://projects.delimited.io/shader-zoo/shadowbars"
+}

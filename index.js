@@ -1,2 +1,4 @@
+import { default as select, object as selectObject } from './src/select';
 
-export { object as selectObject, default as select } from './src/select';
+export { select, selectObject };
+export default { select, selectObject };
